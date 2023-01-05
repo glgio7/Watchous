@@ -211,7 +211,7 @@ const StyledHeader = styled.header`
       opacity: 1;
     }
   }
-  @media screen and (max-width: 900px) and (max-height: 768px) and (orientation: landscape) {
+  @media screen and (max-width: 900px) and (min-width: 480px) and (orientation: landscape) {
   width: 100%;
   height: 72px;
   display: flex;
@@ -276,14 +276,14 @@ const StyledHeader = styled.header`
     }
 `;
 
-export default function Header({ valorDoFiltro, setValorDoFiltro, reset }) {
+export default function Header({ setValorDoFiltro, reset }) {
   const [navOpen, setNavOpen] = useState(false);
   const toggleMenu = () => setNavOpen(!navOpen);
   const hideNav = () => setNavOpen(false);
-
-  const busca = valorDoFiltro;
+  const [input, setInput] = useState("")
   const setBusca = setValorDoFiltro;
   const clearLists = reset;
+  const searchOnEnter = props => props.keyCode === 13 ? setBusca(input) : '';
 
   return (
     <>
@@ -298,11 +298,12 @@ export default function Header({ valorDoFiltro, setValorDoFiltro, reset }) {
             <input
               type="text"
               placeholder="Pesquisar"
-              onChange={(e) => setBusca(e.target.value)}
-              value={busca}
+              onChange={(e) => setInput(e.target.value)}
+              value={input}
               onFocus={clearLists}
+              onKeyDown={(e) => searchOnEnter(e)}
             />
-            <RiSearchLine className="searchIcon" />
+            <RiSearchLine className="searchIcon" onClick={() => setBusca(input)}/>
           </div>
           <RiMenu3Fill className="menu" onClick={toggleMenu} />
         </div>

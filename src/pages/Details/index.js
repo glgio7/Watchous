@@ -493,6 +493,7 @@ export function Details() {
         const movie = {
           id,
           title: data.title,
+          video: data.video,
           fullSinopse: data.overview,
           sinopse: data.overview.substring(0, 199) + "...",
           poster: data.poster_path,
@@ -501,6 +502,7 @@ export function Details() {
           genres: data.genres.map(value => value.name).join(' / ').replace('Thriller', 'Suspense'),
           nota: Math.round(data.vote_average),
         };
+        console.log(data)
         setMovie(movie);
       });
   }, [id]);
@@ -512,7 +514,7 @@ export function Details() {
       .then((data) => {
         const trailer = {
           id,
-          key: data.results[0].key
+          key: data.results?[0].key : ''
         };
         setTrailer(trailer);
       });

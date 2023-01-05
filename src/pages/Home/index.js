@@ -49,7 +49,6 @@ export default function Home() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.results)
         setFromSearch(data.results)
       });
   }, [serverSearch]);
@@ -193,9 +192,9 @@ export default function Home() {
         valorDoFiltro={valorDoFiltro}
         setValorDoFiltro={setValorDoFiltro}
       />
-      <Container>
-        {upcoming.length < 15 && <div className="loading" >
-          <img src="https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif" />
+      <Container onLoad={() => window.scrollTo(0,0)} style={{overflow: 'hidden'}}>
+        {upcoming.length < 20 && <div className="loading">
+          <img src="https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif" alt="Loading"/>
         </div>}
         <div className="banner">
           <h2>

@@ -10,7 +10,7 @@ export const Container = styled.main`
     align-items: center;
     justify-content: center;
     top: 0;
-    bottom: 0;
+    bottom: -30px;
     left: 0;
     right: 0;
     z-index: 90;
@@ -31,9 +31,7 @@ export const Container = styled.main`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url("https://thumbs.gfycat.com/GlaringBossyCrustacean-size_restricted.gif");
-    background-size: cover;
-    background-position: center;
+    background-color: #000;
     animation: sub;
     animation-duration: 1s;
     h1 {
