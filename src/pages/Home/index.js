@@ -229,7 +229,7 @@ export default function Home() {
                     <span>{movie.title}</span>
                   </Movie>
                 ))}
-              <NextPage loadMore={loadMore} />
+              <NextPage/>
             </MovieList>
             <RiArrowRightSLine
               className="move-right"

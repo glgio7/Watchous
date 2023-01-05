@@ -1,13 +1,16 @@
 // import styled from "styled-components"
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../../components/header";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { RiArrowLeftLine, RiCloseFill } from "react-icons/ri";
+import { RiArrowLeftLine, RiArrowLeftSLine, RiArrowRightSLine, RiCloseFill } from "react-icons/ri";
 import { apiKey } from "../../api/api_key";
+import { NextPage } from "../../components/nextpage";
+import { PreviousPage } from "../../components/previouspage";
+import { MovieList } from "../../components/movielist";
+import { Movie } from "../../components/movieitem";
 
 export const Container = styled.div`
-position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -116,6 +119,7 @@ position: relative;
     justify-content: space-between;
     padding: 0 3rem;
 }
+
   .container{
     margin-top: 60px;
     display: flex;
@@ -243,6 +247,12 @@ position: relative;
       opacity: .75;
     }
   }
+
+  .search-results{
+    max-width: 100vw;
+    overflow-x: scroll;
+  }
+
   //mobile portrait
   @media screen and (max-width: 768px) {
   margin-top: 114px;
@@ -491,17 +501,19 @@ position: relative;
 `;
 
 export function Details() {
+  const [valorDoFiltro, setValorDoFiltro] = useState("");
   const { id } = useParams();
   const image_path = "https://themoviedb.org/t/p/original";
   const [movie, setMovie] = useState({});
   const [trailer, setTrailer] = useState({});
   const [fullDescription, setFullDescription] = useState(false);
   const [player, setPlayer] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const goBack = () => window.history.back();
   const showFull = () => setFullDescription(!fullDescription);
-  const onTop = () => window.scrollTo(0, 0);
-  const togglePlayer = () => { setPlayer(!player); onTop() }
+  const Load = () => window.scrollTo(0, 0);
+  const togglePlayer = () => { setPlayer(!player); Load() }
+
 
   useEffect(() => {
     fetch(
@@ -523,34 +535,67 @@ export function Details() {
         };
         setMovie(movie);
       });
+    }, [id]);
+    useEffect(() => {
+      fetch(
+        `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
+        )
+        .then((response) => response.json())
+        .then((data) => {
+          const trailer = {
+            id,
+            key: data.results.length > 0 ? data.results[0].key : '',
+          };
+          setTrailer(trailer);
+          setLoading(true)
+      });
   }, [id]);
+  /////////////////////////////////////////////////// search
+  const [fromSearch, setFromSearch] = useState([]);
+  const serverSearch = valorDoFiltro.replaceAll(' ', '+')
   useEffect(() => {
     fetch(
-      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
+      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${serverSearch}&language=pt-BR`
     )
       .then((response) => response.json())
       .then((data) => {
-        const trailer = {
-          id,
-          key: data.results.length > 0 ? data.results[0].key : '',
-        };
-        setTrailer(trailer);
+        setFromSearch(data.results)
       });
-  }, [id]);
-
-
+  }, [serverSearch]);
+  ///////////////////////////////////////////////////////////////////////////////////
   return (
     <>
-      <Header />
-      <Container onLoad={onTop}>
-        {!trailer &&
+      <Header valorDoFiltro={valorDoFiltro}
+        setValorDoFiltro={setValorDoFiltro} />
+      <Container onLoad={Load}>
+        {fromSearch &&
+          <>
+              <MovieList className="search-results">
+                {fromSearch
+                  .map((movie) => (
+                    <Movie key={movie.id} onClick={() => setFromSearch()}>
+                      <Link to={`/details/${movie.id}`}>
+                        <img
+                          src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/movie.jpg'}
+                          alt={""}
+                          className="moviePoster"
+                        />
+                      </Link>
+                      <span>{movie.title}</span>
+                    </Movie>
+                  ))}
+              </MovieList>
+          </>
+        }
+        {/* ///////////// */}
+        {loading === false &&
           <div className="loading">
             <img src="https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif" alt="Loading" />
           </div>}
         <section>
           <img
             className="background"
-            src={movie.poster ? `${image_path}${movie.background}` : '/img/tmdb.jpg'}
+            src={movie.background ? `${image_path}${movie.background}` : '/img/tmdb.jpg'}
             alt=""
           />
           <div className="fade"></div>

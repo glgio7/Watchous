@@ -283,7 +283,7 @@ export default function Header({ setValorDoFiltro, reset }) {
   const [input, setInput] = useState("")
   const setBusca = setValorDoFiltro;
   const clearLists = reset;
-  const searchOnEnter = props => props.keyCode === 13 ? setBusca(input) : '';
+  const searchOnEnter = props => {if (props.keyCode === 13) setBusca(input);};
 
   return (
     <>
@@ -301,9 +301,9 @@ export default function Header({ setValorDoFiltro, reset }) {
               onChange={(e) => setInput(e.target.value)}
               value={input}
               onFocus={clearLists}
-              onKeyDown={(e) => searchOnEnter(e)}
+              onKeyDown={(e) => {searchOnEnter(e);}}
             />
-            <RiSearchLine className="searchIcon" onClick={() => setBusca(input)}/>
+            <RiSearchLine className="searchIcon" onClick={() => {setBusca(input); setInput('')}}/>
           </div>
           <RiMenu3Fill className="menu" onClick={toggleMenu} />
         </div>
