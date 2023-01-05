@@ -192,10 +192,11 @@ export default function Home() {
         valorDoFiltro={valorDoFiltro}
         setValorDoFiltro={setValorDoFiltro}
       />
-      <Container onLoad={() => window.scrollTo(0,0)} style={{overflow: 'hidden'}}>
-        {upcoming.length < 20 && <div className="loading">
-          <img src="https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif" alt="Loading"/>
-        </div>}
+      <Container onLoad={() => window.scrollTo(0, 0)} style={{ overflow: 'hidden' }}>
+        {upcoming.length < 20 &&
+          <div className="loading">
+            <img src="https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif" alt="Loading" />
+          </div>}
         <div className="banner">
           <h2>
             <span>Sem</span> assinatura, <span>sem</span> fins-lucrativos.

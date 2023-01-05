@@ -7,32 +7,51 @@ import { RiArrowLeftLine, RiCloseFill } from "react-icons/ri";
 import { apiKey } from "../../api/api_key";
 
 export const Container = styled.div`
+position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   margin-top: 60px;
   background-color: #000;
-
-    iframe {
-    opacity: 0;
-    display: block;
-    pointer-events: none;
-    z-index: 9;
-    top: 24px;
-    bottom: 0;
+  
+  .loading{
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    bottom: -30px;
     left: 0;
     right: 0;
-    margin: 0 auto;
-    width: 75%;
-    border-left: 40px #000  solid;
-    border-right: 40px #000 solid;
-    border-top: 10px #000 solid;
-    border-bottom: 10px #000 solid;
-    border-radius: 10px;
-    height: 85vh;
-    transition: all ease 500ms;
+    z-index: 90;
+    background-color: #000;
+  }
+
+  .loading img{
+    width: 25%;
+    object-fit: contain;
+  }
+
+  iframe {
+  opacity: 0;
+  display: block;
+  pointer-events: none;
+  z-index: 9;
+  top: 24px;
+  bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 75%;
+  border-left: 40px #000  solid;
+  border-right: 40px #000 solid;
+  border-top: 10px #000 solid;
+  border-bottom: 10px #000 solid;
+  border-radius: 10px;
+  height: 85vh;
+  transition: all ease 500ms;
   }
 
   iframe.active {
@@ -493,7 +512,7 @@ export function Details() {
         const movie = {
           id,
           title: data.title,
-          video: data.video,
+          search: data.title.replaceAll(' ', '+'),
           fullSinopse: data.overview,
           sinopse: data.overview.substring(0, 199) + "...",
           poster: data.poster_path,
@@ -502,7 +521,6 @@ export function Details() {
           genres: data.genres.map(value => value.name).join(' / ').replace('Thriller', 'Suspense'),
           nota: Math.round(data.vote_average),
         };
-        console.log(data)
         setMovie(movie);
       });
   }, [id]);
@@ -514,23 +532,29 @@ export function Details() {
       .then((data) => {
         const trailer = {
           id,
-          key: data.results?[0].key : ''
+          key: data.results.length > 0 ? data.results[0].key : '',
         };
         setTrailer(trailer);
       });
   }, [id]);
+
+
   return (
     <>
       <Header />
       <Container onLoad={onTop}>
-
-        <section><img
-          className="background"
-          src={`${image_path}${movie.background}`}
-          alt=""
-        />
+        {!trailer &&
+          <div className="loading">
+            <img src="https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif" alt="Loading" />
+          </div>}
+        <section>
+          <img
+            className="background"
+            src={movie.poster ? `${image_path}${movie.background}` : '/img/tmdb.jpg'}
+            alt=""
+          />
           <div className="fade"></div>
-          <iframe key={id} title={movie.title} className={player ? "active" : ""} src={`https://www.youtube.com/embed/${trailer.key}`} frameBorder="0" allowFullScreen></iframe>
+          <iframe key={id} title={movie.title} className={player ? "active" : ""} src={trailer.key ? `https://www.youtube.com/embed/${trailer.key}` : `https://www.youtube.com/results?search_query=trailer+${movie.search}`} frameBorder="0" allowFullScreen></iframe>
           <RiCloseFill className={player ? "close-player active" : "close-player"} onClick={togglePlayer} />
 
           <div className="container">
