@@ -49,6 +49,7 @@ export default function Home() {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data.results)
         setFromSearch(data.results)
       });
   }, [serverSearch]);
@@ -95,8 +96,7 @@ export default function Home() {
     if (
       direction === "right" &&
       list === "search" &&
-      slideSearch < handlePages(fromSearch) &&
-      searchNormalized.length < 1
+      slideSearch < handlePages(fromSearch)
     ) {
       setSlideSearch(slideSearch + 1);
       searchList.current.scrollLeft += (searchList.current.scrollWidth / (handlePages(fromSearch) - 1));
@@ -194,6 +194,9 @@ export default function Home() {
         setValorDoFiltro={setValorDoFiltro}
       />
       <Container>
+        {upcoming.length < 15 && <div className="loading" >
+          <img src="https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif" />
+        </div>}
         <div className="banner">
           <h2>
             <span>Sem</span> assinatura, <span>sem</span> fins-lucrativos.
@@ -218,7 +221,7 @@ export default function Home() {
                   <Movie key={movie.id}>
                     <Link to={`/details/${movie.id}`}>
                       <img
-                        src={`https://www.themoviedb.org/t/p/w500${movie.poster_path}`}
+                        src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/movie.jpg'}
                         alt={""}
                         className="moviePoster"
                       />
@@ -230,7 +233,7 @@ export default function Home() {
             </MovieList>
             <RiArrowRightSLine
               className="move-right"
-              onClick={() => { handleDirection("search", "right"); if (slideSearch === 3) { loadMore() } }}
+              onClick={() => { handleDirection("search", "right"); }}
             />
           </div>
         </>

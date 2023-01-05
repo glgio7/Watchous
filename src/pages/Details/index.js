@@ -106,7 +106,6 @@ export const Container = styled.div`
 
   }
   .poster {
-    background-image: url("https://thumbs.gfycat.com/GlaringBossyCrustacean-size_restricted.gif");
     background-position: center;
     object-fit: cover;
     width: 360px;
@@ -534,7 +533,7 @@ export function Details() {
 
           <div className="container">
             <div className="release-date"><h1>Data de Lançamento: </h1>{movie.release}</div>
-            <img className="poster" src={`${image_path}${movie.poster}`} alt="" />
+            <img className="poster" src={movie.poster ? `${image_path}${movie.poster}` : '/img/movie.jpg'} alt="" />
             <button onClick={togglePlayer}>Assistir Trailer</button>
             <RiArrowLeftLine className="back" onClick={goBack} />
           </div>
