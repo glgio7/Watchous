@@ -1,10 +1,15 @@
 import styled from "styled-components";
 
 export const MovieList = styled.ul`
+  overflow-x: scroll;
+  position: relative;
   display: flex;
   width: max-content;
   height: 100%;
-  transform: translateX(0px);
-  transition: all ease 200ms;
-  
+  transition: all ease 250ms;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar{
+    width: 0px;
+  }
 `;

@@ -186,7 +186,6 @@ background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%,
     }
   }
   
- 
   //mobile portrait
   @media screen and (max-width: 768px) {
     margin-top: 114px;
@@ -207,7 +206,6 @@ background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%,
       margin: 1rem 3px;
     }
     .wrapper {
-      overflow-x: scroll;
       margin-inline: 3px;
     }
     .move-left,
@@ -220,7 +218,6 @@ background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%,
     margin-top: 72px;
     .wrapper {
       height: max-content;
-      overflow-x: auto;
     }
   }
 `;

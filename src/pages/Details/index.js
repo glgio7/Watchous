@@ -4,6 +4,7 @@ import Header from "../../components/header";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { RiArrowLeftLine, RiCloseFill } from "react-icons/ri";
+import { apiKey } from "../../api/api_key";
 
 export const Container = styled.div`
   display: flex;
@@ -472,7 +473,6 @@ export const Container = styled.div`
 `;
 
 export function Details() {
-  const apiKey = "bb99b16e239b727a8c150ba6f4aac5cc";
   const { id } = useParams();
   const image_path = "https://themoviedb.org/t/p/original";
   const [movie, setMovie] = useState({});

@@ -63,9 +63,3 @@ export const Movie = styled.li`
     }
   }
 `;
-
-//BREAKPOINTS
-// 768:
-// moviesPerView: 3,
-// 1024:
-// moviesPerView: 5
