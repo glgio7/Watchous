@@ -16,10 +16,15 @@ export const MovieList = styled.ul`
   ::-webkit-scrollbar-thumb{
     background-color: #111;
   }
-
+  
   @media screen and (max-width: 900px){
-    ::-webkit-scrollbar{
-    width: 0px;
-    }
+  ::-webkit-scrollbar{
+      background-color: transparent;
+      width: 0px;
+  }
+    
+  ::-webkit-scrollbar-thumb{
+    background-color: transparent;
+  }
   }
 `;
