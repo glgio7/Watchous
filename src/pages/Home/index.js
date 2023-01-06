@@ -23,27 +23,28 @@ import { PreviousPage } from "../../components/previouspage";
 import { NextPage } from "../../components/nextpage";
 
 export default function Home() {
+  const [disclaimer, setDisclaimer] = useState(false);
   const handleDisclaimer = () => setDisclaimer(!disclaimer);
   const [valorDoFiltro, setValorDoFiltro] = useState("");
   const searchNormalized = valorDoFiltro.toLowerCase();
-  const [disclaimer, setDisclaimer] = useState(false);
+  const [page, setPage] = useState(1)
+  const [slideUpcoming, setSlideUpcoming] = useState(0);
   const [upcoming, setUpcoming] = useState([]);
   const [fromSearch, setFromSearch] = useState([]);
-  const [page, setPage] = useState(1)
   const serverSearch = valorDoFiltro.replaceAll(' ', '+')
-  
-  
-    /////////////////////////////////////////////////// upcoming
-    useEffect(() => {
+
+
+  /////////////////////////////////////////////////// upcoming
+  useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=pt-BR&page=${page}`)
       .then((response) => response.json())
       .then((data) => setUpcoming(data.results))
       .catch((err) => console.log(err));
-    }, [page]);
-    
-    /////////////////////////////////////////////////// search
-    useEffect(() => {
-      fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${serverSearch}&language=pt-BR&page=${page}`)
+  }, [page]);
+
+  /////////////////////////////////////////////////// search
+  useEffect(() => {
+    fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${serverSearch}&language=pt-BR&page=${page}`)
       .then((response) => response.json())
       .then((data) => setFromSearch(data.results))
       .catch((err) => console.log(err));
@@ -57,24 +58,32 @@ export default function Home() {
   const fantasyList = useRef();
   const dramaList = useRef();
   const seriesList = useRef();
-  const handlePages = (list) => {  return list.length <= 20 ? 5 : list.length > 20 ? 6 : 8;  };
-  
-  const loadMore = () => { setPage(page + 1); upcomingList.current.scrollLeft -= upcomingList.current.scrollWidth; }
+
+  const handlePages = (list) => { return list.length <= 20 ? 5 : list.length <= 30 ? 6 : 8; };
+
+  const loadMore = () => {
+    setSlideUpcoming(0)
+    setPage(page + 1);
+    upcomingList.current.scrollLeft -= upcomingList.current.scrollWidth;
+  }
 
   const handleDirection = (list, direction) => {
     //FROM SEARCH/////////////////////////////////////////////////////
     if (direction === "left" && list === "fromSearch") {
-      searchList.current.scrollLeft -= (searchList.current.scrollWidth / handlePages(fromSearch));
+      searchList.current.scrollLeft -= (searchList.current.scrollWidth / handlePages(list));
     }
     if (direction === "right" && list === "fromSearch") {
-      searchList.current.scrollLeft += (searchList.current.scrollWidth / handlePages(fromSearch));
+      searchList.current.scrollLeft += (searchList.current.scrollWidth / handlePages(list));
+
     }
-    //RECENT ADDED/////////////////////////////////////////////////////
-    if (direction === "left" && list === "upcoming") {
+    //UPCOMING/////////////////////////////////////////////////////
+    if (direction === "left" && list === "upcoming" && upcomingList.current.scrollLeft > 0) {
       upcomingList.current.scrollLeft -= (upcomingList.current.scrollWidth / handlePages(list));
+      setSlideUpcoming(slideUpcoming - 1);
     }
     if (direction === "right" && list === "upcoming") {
       upcomingList.current.scrollLeft += (upcomingList.current.scrollWidth / handlePages(list));
+      setSlideUpcoming(slideUpcoming + 1);
     }
     //SUSPENSE/////////////////////////////////////////////////////
     if (direction === "left" && list === "suspense") {
@@ -108,7 +117,7 @@ export default function Home() {
     if (direction === "left" && list === "series") {
       seriesList.current.scrollLeft -= (seriesList.current.scrollWidth / handlePages(list));
     }
-    if (direction === "right" && list === "series" ) {
+    if (direction === "right" && list === "series") {
       seriesList.current.scrollLeft += (seriesList.current.scrollWidth / handlePages(list));
     }
   };
@@ -173,7 +182,7 @@ export default function Home() {
             <div className="wrapper">
               <RiArrowLeftSLine
                 className="move-left"
-                onClick={() => { handleDirection("upcoming", "left"); if (page > 1 && upcomingList.current.scrollLeft === 0) { setPage(page - 1) } }}
+                onClick={() => { handleDirection("upcoming", "left"); if (page > 1 && slideUpcoming < 1) setPage(page - 1) }}
               />
               <MovieList ref={upcomingList}>
                 <PreviousPage backPage={() => { if (page > 1) setPage(page - 1) }} />
@@ -198,7 +207,7 @@ export default function Home() {
               </MovieList>
               <RiArrowRightSLine
                 className="move-right"
-                onClick={() => { handleDirection("upcoming", "right"); if (upcomingList.current.scrollLeft >= (upcomingList.current.scrollLeftMax - 30)) { loadMore() } }}
+                onClick={() => { handleDirection("upcoming", "right"); if (slideUpcoming === 4) loadMore() }}
               />
             </div>
             <h1>Suspense</h1>

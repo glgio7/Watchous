@@ -210,37 +210,46 @@ export const Container = styled.main`
   
   //mobile portrait
   @media screen and (max-width: 768px) {
-    margin-top: 114px;
+  margin-top: 114px;
     
-    .banner {
-      h1 {
-        font-size: 1.25rem;
-      }
-      h2 {
-        font-size: 1rem;
-      }
-      video {
-        width: initial;
-      }
-    }
+  .banner {
     h1 {
       font-size: 1.25rem;
-      color: #fff;
-      margin: 1rem 3px;
     }
-    .wrapper {
-      margin-inline: 3px;
+    h2 {
+      font-size: 1rem;
     }
-    .move-left,
-    .move-right {
-      display: none;
+    video {
+      width: initial;
     }
+  }
+  
+  h1 {
+    font-size: 1.25rem;
+    color: #fff;
+    margin: 1rem 3px;
+  }
+
+  .wrapper {
+    margin-inline: 3px;
+  }
+
+  .move-left,
+  .move-right {
+    display: none;
+  }
   }
   //mobile landscape
   @media screen and (max-width: 900px) and (min-width: 460px) and (orientation: landscape) {
-    margin-top: 72px;
-    .wrapper {
-      height: max-content;
-    }
+  margin-top: 72px;
+
+  .wrapper {
+    height: max-content;
+  }
+
+  .move-left,
+  .move-right {
+    display: none;
+  }
   }
 `;
