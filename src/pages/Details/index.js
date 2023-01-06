@@ -5,11 +5,11 @@ import { RiArrowLeftLine, RiCloseFill } from "react-icons/ri";
 import { MovieList } from "../../components/movielist";
 import { Movie } from "../../components/movieitem";
 import { Container } from "./styles";
+import { apiKey } from "../../api"
 
 
 
 export function Details() {
-  const apiKey = process.env.REACT_APP_API_KEY;
   const [valorDoFiltro, setValorDoFiltro] = useState("");
   const { id } = useParams();
   const image_path = "https://themoviedb.org/t/p/original";

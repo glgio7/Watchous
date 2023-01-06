@@ -16,13 +16,13 @@ import { Container } from "./styles";
 import { Movie } from "../../components/movieitem";
 import { MovieList } from "../../components/movielist";
 import React, { useState, useRef } from "react";
+import { apiKey } from "../../api"
 import Header from "../../components/header";
 import { Link } from "react-router-dom";
 import { PreviousPage } from "../../components/previouspage";
 import { NextPage } from "../../components/nextpage";
 
 export default function Home() {
-  const apiKey = process.env.REACT_APP_API_KEY;
   const [valorDoFiltro, setValorDoFiltro] = useState("");
   const searchNormalized = valorDoFiltro.toLowerCase();
   const [disclaimer, setDisclaimer] = useState(false);
