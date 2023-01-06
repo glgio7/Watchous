@@ -17,7 +17,7 @@ export function Details() {
   const [trailer, setTrailer] = useState({});
   const [fullDescription, setFullDescription] = useState(false);
   const [player, setPlayer] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const goBack = () => window.history.back();
   const showFull = () => setFullDescription(!fullDescription);
   const Load = () => window.scrollTo(0, 0);
@@ -57,7 +57,7 @@ export function Details() {
           };
           setTrailer(trailer);
         })
-        .then(() => setLoading(true));
+        .then(() => setLoaded(true));
   }, [id]);
   /////////////////////////////////////////////////// search
   const [fromSearch, setFromSearch] = useState([]);
@@ -85,7 +85,7 @@ export function Details() {
                     <Movie key={movie.id} onClick={() => setFromSearch()}>
                       <Link to={`/details/${movie.id}`}>
                         <img
-                          src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : 'https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif'}
+                          src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/loading.gif'}
                           alt={""}
                           className="moviePoster"
                         />
@@ -97,9 +97,9 @@ export function Details() {
           </>
         }
         {/* ///////////// */}
-        {loading === false &&
+        {loaded === false &&
           <div className="loading">
-            <img src="https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif" alt="Loading" />
+            <img src="/img/loading.gif" alt="Loading" />
           </div>}
         <section>
           <img
@@ -108,7 +108,7 @@ export function Details() {
             alt=""
           />
           <div className="fade"></div>
-          <iframe key={id} title={movie.title} className={player ? "active" : ""} src={trailer.key ? `https://www.youtube.com/embed/${trailer.key}` : `https://www.youtube.com/results?search_query=trailer+${movie.search}`} frameBorder="0" allowFullScreen></iframe>
+          <iframe key={id} title={movie.title} className={player ? "active" : ""} src={trailer.key ? `https://www.youtube.com/embed/${trailer.key}` : `/img/unavailable.jpg`} frameBorder="0" allowFullScreen></iframe>
           <RiCloseFill className={player ? "close-player active" : "close-player"} onClick={togglePlayer} />
 
           <div className="container">

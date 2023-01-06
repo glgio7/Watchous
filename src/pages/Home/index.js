@@ -195,7 +195,7 @@ export default function Home() {
       <Container onLoad={() => window.scrollTo(0, 0)} style={{ overflow: 'hidden' }}>
         {upcoming.length < 20 &&
           <div className="loading">
-            <img src="https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif" alt="Loading" />
+            <img src="/img/loading.gif" alt="Loading" />
           </div>}
         <div className="banner">
           <h2>
@@ -239,6 +239,8 @@ export default function Home() {
         </>
         }
         {/* ///////////// */}
+        {!fromSearch &&
+        <>
         <h1>Novos no Watchous</h1>
         <div className="wrapper">
           <RiArrowLeftSLine
@@ -421,6 +423,8 @@ export default function Home() {
             onClick={() => handleDirection("series", "right")}
           />
         </div>
+        </>
+        }
         {/* ----------------------- Disclaimer/Advices --------------------------- */}
         <div className={disclaimer ? "disclaimer active" : "disclaimer"}>
           <RiCloseFill className="closeDisclaimer" onClick={handleDisclaimer} />

@@ -43,7 +43,7 @@ export const Container = styled.div`
   border-top: 10px #000 solid;
   border-bottom: 10px #000 solid;
   border-radius: 10px;
-  height: 85vh;
+  height: 78vh;
   transition: all ease 500ms;
   }
 
@@ -245,6 +245,13 @@ export const Container = styled.div`
   .search-results{
     max-width: 100vw;
     overflow-x: scroll;
+  ::-webkit-scrollbar{
+    width: thin;
+    background-color: #000;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: #111;
+  }
   }
 
   //mobile portrait
