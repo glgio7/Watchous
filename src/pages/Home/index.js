@@ -20,10 +20,9 @@ import Header from "../../components/header";
 import { Link } from "react-router-dom";
 import { PreviousPage } from "../../components/previouspage";
 import { NextPage } from "../../components/nextpage";
-import { apiKey } from "../../api/api_key";
 
 export default function Home() {
-
+  const apiKey = process.env.REACT_APP_API_KEY;
   const [valorDoFiltro, setValorDoFiltro] = useState("");
   const searchNormalized = valorDoFiltro.toLowerCase();
   const [disclaimer, setDisclaimer] = useState(false);
