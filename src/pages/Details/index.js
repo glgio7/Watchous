@@ -1,12 +1,9 @@
-// import styled from "styled-components"
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/header";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { RiArrowLeftLine, RiArrowLeftSLine, RiArrowRightSLine, RiCloseFill } from "react-icons/ri";
+import { RiArrowLeftLine, RiCloseFill } from "react-icons/ri";
 import { apiKey } from "../../api/api_key";
-import { NextPage } from "../../components/nextpage";
-import { PreviousPage } from "../../components/previouspage";
 import { MovieList } from "../../components/movielist";
 import { Movie } from "../../components/movieitem";
 
@@ -547,8 +544,8 @@ export function Details() {
             key: data.results.length > 0 ? data.results[0].key : '',
           };
           setTrailer(trailer);
-          setLoading(true)
-      });
+        })
+        .then(() => setLoading(true));
   }, [id]);
   /////////////////////////////////////////////////// search
   const [fromSearch, setFromSearch] = useState([]);
