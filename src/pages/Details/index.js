@@ -44,24 +44,27 @@ export function Details() {
         };
         setMovie(movie);
       });
-    }, [id]);
-    useEffect(() => {
-      fetch(
-        `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
-        )
-        .then((response) => response.json())
-        .then((data) => {
-          const trailer = {
-            id,
-            key: data.results.length > 0 ? data.results[0].key : '',
-          };
-          setTrailer(trailer);
-        })
-        .then(() => setLoaded(true));
   }, [id]);
+
+  useEffect(() => {
+    fetch(
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const trailer = {
+          id,
+          key: data.results.length > 0 ? data.results[0].key : '',
+        };
+        setTrailer(trailer);
+      })
+      .then(() => setLoaded(true));
+  }, [id]);
+  
   /////////////////////////////////////////////////// search
   const [fromSearch, setFromSearch] = useState([]);
-  const serverSearch = valorDoFiltro.replaceAll(' ', '+')
+  const serverSearch = valorDoFiltro.replaceAll(' ', '+');
+
   useEffect(() => {
     fetch(
       `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${serverSearch}&language=pt-BR`
@@ -79,21 +82,21 @@ export function Details() {
       <Container onLoad={Load}>
         {fromSearch &&
           <>
-              <MovieList className="search-results">
-                {fromSearch
-                  .map((movie) => (
-                    <Movie key={movie.id} onClick={() => setFromSearch()}>
-                      <Link to={`/details/${movie.id}`}>
-                        <img
-                          src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/loading.gif'}
-                          alt={""}
-                          className="moviePoster"
-                        />
-                      </Link>
-                      <span>{movie.title}</span>
-                    </Movie>
-                  ))}
-              </MovieList>
+            <MovieList className="search-results">
+              {fromSearch
+                .map((movie) => (
+                  <Movie key={movie.id} onClick={() => setFromSearch()}>
+                    <Link to={`/details/${movie.id}`}>
+                      <img
+                        src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/loading.gif'}
+                        alt={""}
+                        className="moviePoster"
+                      />
+                    </Link>
+                    <span>{movie.title}</span>
+                  </Movie>
+                ))}
+            </MovieList>
           </>
         }
         {/* ///////////// */}
@@ -108,9 +111,18 @@ export function Details() {
             alt=""
           />
           <div className="fade"></div>
-          <iframe key={id} title={movie.title} className={player ? "active" : ""} src={trailer.key ? `https://www.youtube.com/embed/${trailer.key}` : `/img/unavailable.jpg`} frameBorder="0" allowFullScreen></iframe>
-          <RiCloseFill className={player ? "close-player active" : "close-player"} onClick={togglePlayer} />
-
+          {trailer.key &&
+            <>
+              <iframe key={id} title={movie.title} className={player ? "active" : ""} src={`https://www.youtube.com/embed/${trailer.key}`} allowFullScreen></iframe>
+              <RiCloseFill className={player ? "close-player active" : "close-player"} onClick={togglePlayer} />
+            </>
+          }
+          {!trailer.key &&
+            <>
+              <img src="/img/unavailable.jpg" className={player ? "video-unavailable active" : "video-unavailable"} alt="" />
+              <RiCloseFill className={player ? "close-player active" : "close-player"} onClick={togglePlayer} />
+            </>
+          }
           <div className="container">
             <div className="release-date"><h1>Data de Lançamento: </h1>{movie.release}</div>
             <img className="poster" src={movie.poster ? `${image_path}${movie.poster}` : 'https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif'} alt="" />

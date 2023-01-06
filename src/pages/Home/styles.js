@@ -10,7 +10,7 @@ export const Container = styled.main`
     align-items: center;
     justify-content: center;
     top: 0;
-    bottom: -30px;
+    bottom: 0;
     left: 0;
     right: 0;
     z-index: 90;
@@ -34,6 +34,7 @@ export const Container = styled.main`
     background-color: #000;
     animation: sub;
     animation-duration: 1s;
+    
     h1 {
       font-size: 1.75rem;
       max-width: 80%;
@@ -89,7 +90,7 @@ export const Container = styled.main`
 
   .disclaimer.active {
     background: rgb(0,162,211);
-background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%, rgba(0,111,186,.85) 75%, rgba(0,58,147,1) 100%);
+    background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%, rgba(0,111,186,.85) 75%, rgba(0,58,147,1) 100%);
     display: flex;
     opacity: 1;
     pointer-events: all;
@@ -104,6 +105,7 @@ background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%,
     right: 0;
     animation: flash;
     animation-duration: 0.5s;
+    
     h2 {
       color: #fff;
       font-size: 1.25rem;
@@ -111,6 +113,7 @@ background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%,
       text-align: center;
       width: 90%;
     }
+    
     .closeDisclaimer {
       display: flex;
       position: absolute;
@@ -121,6 +124,7 @@ background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%,
       cursor: pointer;
     }
   }
+
   @keyframes flash {
     0% {
       opacity: 0;
@@ -140,6 +144,8 @@ background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%,
       opacity: 1;
     }
   }
+  
+  
   h1 {
     font-size: 1.5rem;
     color: #fff;
@@ -205,6 +211,7 @@ background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%,
   //mobile portrait
   @media screen and (max-width: 768px) {
     margin-top: 114px;
+    
     .banner {
       h1 {
         font-size: 1.25rem;
@@ -230,7 +237,7 @@ background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%,
     }
   }
   //mobile landscape
-  @media screen and (max-width: 900px) and (max-height: 768px) and (orientation: landscape) {
+  @media screen and (max-width: 900px) and (min-width: 460px) and (orientation: landscape) {
     margin-top: 72px;
     .wrapper {
       height: max-content;
