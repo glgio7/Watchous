@@ -7,9 +7,8 @@ import {
   fantasy,
   horror,
   drama,
-  series,
   suspense,
-} from "../../api/movies";
+} from "../../api/local_movies";
 
 import { useEffect } from "react";
 import { Container } from "./styles";
@@ -26,32 +25,52 @@ export default function Home() {
   const [disclaimer, setDisclaimer] = useState(false);
   const handleDisclaimer = () => setDisclaimer(!disclaimer);
   const [valorDoFiltro, setValorDoFiltro] = useState("");
-  const searchNormalized = valorDoFiltro.toLowerCase();
-  const [page, setPage] = useState(1)
+  const [pageUpcoming, setPageUpcoming] = useState(1)
+  const [pageSeries, setPageSeries] = useState(1)
   const [slideUpcoming, setSlideUpcoming] = useState(0);
+  const [slideSeries, setSlideSeries] = useState(0);
   const [upcoming, setUpcoming] = useState([]);
+  const [series, setSeries] = useState([]);
   const [fromSearch, setFromSearch] = useState([]);
+  const [seriesFromSearch, setSeriesFromSearch] = useState([]);
   const serverSearch = valorDoFiltro.replaceAll(' ', '+')
 
 
   /////////////////////////////////////////////////// upcoming
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=pt-BR&page=${page}`)
+    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=pt-BR&page=${pageUpcoming}`)
       .then((response) => response.json())
       .then((data) => setUpcoming(data.results))
       .catch((err) => console.log(err));
-  }, [page]);
-
+  }, [pageUpcoming]);
+  /////////////////////////////////////////////////// series
+  useEffect(() => {
+    fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&language=pt-BR&page=${pageSeries}`)
+      .then((response) => response.json())
+      .then((data) => setSeries(data.results))
+      .catch((err) => console.log(err));
+  }, [pageSeries]);
   /////////////////////////////////////////////////// search
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${serverSearch}&language=pt-BR&page=${page}`)
-      .then((response) => response.json())
-      .then((data) => setFromSearch(data.results))
-      .catch((err) => console.log(err));
-  }, [serverSearch]);
+    const movies = () => {
+      fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${serverSearch}&language=pt-BR`)
+        .then((response) => response.json())
+        .then((data) => setFromSearch(data.results))
+        .catch((err) => console.log(err));
+    }
 
+    const series = () => {
+      fetch(`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${serverSearch}&language=pt-BR`)
+        .then((response => response.json()))
+        .then((data) => setSeriesFromSearch(data.results))
+        .catch((err) => console.log(err));
+    };
+    Promise.all([movies(), series()])
+
+  }, [serverSearch]);
   // HANDLE LISTS DIRECTIONS /////////////////////////////////////
-  const searchList = useRef();
+  const searchMoviesList = useRef();
+  const searchSeriesList = useRef();
   const upcomingList = useRef();
   const suspenseList = useRef();
   const horrorList = useRef();
@@ -61,20 +80,33 @@ export default function Home() {
 
   const handlePages = (list) => { return list.length <= 20 ? 5 : list.length <= 30 ? 6 : 8; };
 
+  const loadMoreSeries = () => {
+    setSlideSeries(0)
+    setPageSeries(pageSeries + 1);
+    seriesList.current.scrollLeft -= seriesList.current.scrollWidth;
+
+  }
   const loadMore = () => {
     setSlideUpcoming(0)
-    setPage(page + 1);
+    setPageUpcoming(pageUpcoming + 1);
     upcomingList.current.scrollLeft -= upcomingList.current.scrollWidth;
   }
 
   const handleDirection = (list, direction) => {
-    //FROM SEARCH/////////////////////////////////////////////////////
-    if (direction === "left" && list === "fromSearch") {
-      searchList.current.scrollLeft -= (searchList.current.scrollWidth / handlePages(list));
+    //MOVIES FROM SEARCH ///////////////////////////////////////////
+    if (direction === "left" && list === "fromSearchMovies") {
+      searchMoviesList.current.scrollLeft -= (searchMoviesList.current.scrollWidth / handlePages(list));
     }
-    if (direction === "right" && list === "fromSearch") {
-      searchList.current.scrollLeft += (searchList.current.scrollWidth / handlePages(list));
+    if (direction === "right" && list === "fromSearchMovies") {
+      searchMoviesList.current.scrollLeft += (searchMoviesList.current.scrollWidth / handlePages(list));
 
+    }
+    //SERIES FROM SEARCH ///////////////////////////////////////////
+    if (direction === "left" && list === "fromSearchSeries") {
+      searchSeriesList.current.scrollLeft -= (searchSeriesList.current.scrollWidth / handlePages(list));
+    }
+    if (direction === "right" && list === "fromSearchSeries") {
+      searchSeriesList.current.scrollLeft += (searchSeriesList.current.scrollWidth / handlePages(list));
     }
     //UPCOMING/////////////////////////////////////////////////////
     if (direction === "left" && list === "upcoming" && upcomingList.current.scrollLeft > 0) {
@@ -84,6 +116,15 @@ export default function Home() {
     if (direction === "right" && list === "upcoming") {
       upcomingList.current.scrollLeft += (upcomingList.current.scrollWidth / handlePages(list));
       setSlideUpcoming(slideUpcoming + 1);
+    }
+    //SERIES/////////////////////////////////////////////////////
+    if (direction === "left" && list === "series" && seriesList.current.scrollLeft > 0) {
+      seriesList.current.scrollLeft -= (seriesList.current.scrollWidth / handlePages(list));
+      setSlideSeries(slideSeries - 1);
+    }
+    if (direction === "right" && list === "series") {
+      seriesList.current.scrollLeft += (seriesList.current.scrollWidth / handlePages(list));
+      setSlideSeries(slideSeries + 1);
     }
     //SUSPENSE/////////////////////////////////////////////////////
     if (direction === "left" && list === "suspense") {
@@ -113,22 +154,14 @@ export default function Home() {
     if (direction === "right" && list === "drama") {
       dramaList.current.scrollLeft += (dramaList.current.scrollWidth / handlePages(list));
     }
-    //SERIES/////////////////////////////////////////////////////////
-    if (direction === "left" && list === "series") {
-      seriesList.current.scrollLeft -= (seriesList.current.scrollWidth / handlePages(list));
-    }
-    if (direction === "right" && list === "series") {
-      seriesList.current.scrollLeft += (seriesList.current.scrollWidth / handlePages(list));
-    }
   };
-
   return (
     <>
       <Header
         valorDoFiltro={valorDoFiltro}
         setValorDoFiltro={setValorDoFiltro}
       />
-      <Container onLoad={() => window.scrollTo(0, 0)} style={{ overflow: 'hidden' }}>
+      <Container>
         {upcoming.length < 20 &&
           <div className="loading">
             <img src="/img/loading.gif" alt="Loading" />
@@ -146,20 +179,17 @@ export default function Home() {
         </div>
         {fromSearch &&
           <>
-            <h1>Da sua pesquisa</h1>
+            <h1>Filmes da sua pesquisa</h1>
             <div className="wrapper">
-              <RiArrowLeftSLine
-                className="move-left"
-                onClick={() => { handleDirection("search", "left"); if (page > 1 && searchList.current.scrollLeft === 0) { setPage(page - 1) } }}
-              />
-              <MovieList ref={searchList}>
-                <PreviousPage backPage={() => { if (page > 1) setPage(page - 1) }} />
+              <RiArrowLeftSLine className="move-left" onClick={() => { handleDirection("fromSearchMovies", "left") }} />
+              <MovieList ref={searchMoviesList}>
+                <PreviousPage />
                 {fromSearch
                   .map((movie) => (
                     <Movie key={movie.id}>
                       <Link to={`/details/${movie.id}`}>
                         <img
-                          src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/movie.jpg'}
+                          src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/movie_placeholder.jpg'}
                           alt={""}
                           className="moviePoster"
                         />
@@ -169,10 +199,33 @@ export default function Home() {
                   ))}
                 <NextPage />
               </MovieList>
-              <RiArrowRightSLine
-                className="move-right"
-                onClick={() => { handleDirection("fromSearch", "right"); }}
-              />
+              <RiArrowRightSLine className="move-right" onClick={() => { handleDirection("fromSearchMovies", "right"); }} />
+            </div>
+          </>
+        }
+        {seriesFromSearch &&
+          <>
+            <h1>Séries da sua pesquisa</h1>
+            <div className="wrapper">
+              <RiArrowLeftSLine className="move-left" onClick={() => { handleDirection("fromSearchSeries", "left") }} />
+              <MovieList ref={searchSeriesList}>
+                <PreviousPage />
+                {seriesFromSearch
+                  .map((movie) => (
+                    <Movie key={movie.id}>
+                      <Link to={`/details/serie/${movie.id}`}>
+                        <img
+                          src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/movie_placeholder.jpg'}
+                          alt={""}
+                          className="moviePoster"
+                        />
+                      </Link>
+                      <span>{movie.name}</span>
+                    </Movie>
+                  ))}
+                <NextPage />
+              </MovieList>
+              <RiArrowRightSLine className="move-right" onClick={() => { handleDirection("fromSearchSeries", "right"); }} />
             </div>
           </>
         }
@@ -180,19 +233,17 @@ export default function Home() {
           <>
             <h1>Novos no Watchous</h1>
             <div className="wrapper">
-              <RiArrowLeftSLine
-                className="move-left"
-                onClick={() => { handleDirection("upcoming", "left"); if (page > 1 && slideUpcoming < 1) setPage(page - 1) }}
+              <RiArrowLeftSLine className="move-left" onClick={() => {
+                handleDirection("upcoming", "left");
+                if (pageUpcoming > 1 && slideUpcoming < 1) setPageUpcoming(pageUpcoming - 1)
+              }}
               />
               <MovieList ref={upcomingList}>
-                <PreviousPage backPage={() => { if (page > 1) setPage(page - 1) }} />
+                <PreviousPage backPage={() => { if (pageUpcoming > 1) setPageUpcoming(pageUpcoming - 1) }} />
                 {upcoming
-                  .filter((movie) => {
-                    const titleNormalized = movie.title.toLowerCase();
-                    return titleNormalized.includes(searchNormalized);
-                  })
                   .map((movie) => (
                     <Movie key={movie.id}>
+                      <div className="vote-average">{movie.vote_average} </div>
                       <Link to={`/details/${movie.id}`}>
                         <img
                           src={`https://www.themoviedb.org/t/p/w500${movie.poster_path}`}
@@ -205,9 +256,10 @@ export default function Home() {
                   ))}
                 <NextPage loadMore={loadMore} />
               </MovieList>
-              <RiArrowRightSLine
-                className="move-right"
-                onClick={() => { handleDirection("upcoming", "right"); if (slideUpcoming === 4) loadMore() }}
+              <RiArrowRightSLine className="move-right" onClick={() => {
+                handleDirection("upcoming", "right");
+                if (slideUpcoming === 4) loadMore()
+              }}
               />
             </div>
             <h1>Suspense</h1>
@@ -218,10 +270,6 @@ export default function Home() {
               />
               <MovieList ref={suspenseList}>
                 {suspense
-                  .filter((movie) => {
-                    const titleNormalized = movie.title.toLowerCase();
-                    return titleNormalized.includes(searchNormalized);
-                  })
                   .map((movie) => (
                     <Movie key={movie.imdb}>
                       <Link to={`/details/${movie.imdb}`}>
@@ -248,10 +296,6 @@ export default function Home() {
               />
               <MovieList ref={horrorList}>
                 {horror
-                  .filter((movie) => {
-                    const titleNormalized = movie.title.toLowerCase();
-                    return titleNormalized.includes(searchNormalized);
-                  })
                   .map((movie) => (
                     <Movie key={movie.imdb}>
                       <Link to={`/details/${movie.imdb}`}>
@@ -278,10 +322,6 @@ export default function Home() {
               />
               <MovieList ref={fantasyList}>
                 {fantasy
-                  .filter((movie) => {
-                    const titleNormalized = movie.title.toLowerCase();
-                    return titleNormalized.includes(searchNormalized);
-                  })
                   .map((movie) => (
                     <Movie key={movie.imdb}>
                       <Link to={`/details/${movie.imdb}`}>
@@ -308,10 +348,6 @@ export default function Home() {
               />
               <MovieList ref={dramaList}>
                 {drama
-                  .filter((movie) => {
-                    const titleNormalized = movie.title.toLowerCase();
-                    return titleNormalized.includes(searchNormalized);
-                  })
                   .map((movie) => (
                     <Movie key={movie.imdb}>
                       <Link to={`/details/${movie.imdb}`}>
@@ -334,30 +370,29 @@ export default function Home() {
             <div className="wrapper">
               <RiArrowLeftSLine
                 className="move-left"
-                onClick={() => handleDirection("series", "left")}
+                onClick={() => { handleDirection("series", "left"); if (pageSeries > 1 && slideSeries < 1) setPageSeries(pageSeries - 1) }}
               />
               <MovieList ref={seriesList}>
+                <PreviousPage backPage={() => { if (pageSeries > 1) setPageSeries(pageSeries - 1) }} />
                 {series
-                  .filter((movie) => {
-                    const titleNormalized = movie.title.toLowerCase();
-                    return titleNormalized.includes(searchNormalized);
-                  })
                   .map((movie) => (
-                    <Movie key={movie.imdb}>
-                      <Link to={`/details/serie/${movie.imdb}`}>
+                    <Movie key={movie.id}>
+                      <Link to={`/details/serie/${movie.id}`}>
+                        <div className="vote-average">{movie.vote_average} </div>
                         <img
-                          src={`https://www.themoviedb.org/t/p/w500${movie.image_path}`}
+                          src={`https://www.themoviedb.org/t/p/w500${movie.poster_path}`}
                           alt={""}
                           className="moviePoster"
                         />
                       </Link>
-                      <span>{movie.title}</span>
+                      <span>{movie.name}</span>
                     </Movie>
                   ))}
+                <NextPage loadMore={loadMoreSeries} />
               </MovieList>
               <RiArrowRightSLine
                 className="move-right"
-                onClick={() => handleDirection("series", "right")}
+                onClick={() => { handleDirection("series", "right"); if (slideSeries === 4) loadMoreSeries() }}
               />
             </div>
           </>

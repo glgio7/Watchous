@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Movie = styled.li`
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -13,6 +14,20 @@ export const Movie = styled.li`
   :last-child {
     margin-right: 0px;
   }
+  .vote-average{
+    position: absolute;
+    top: 0;
+    width: 48px;
+    color: #fff;
+    right: 0;
+    border-radius: 0 0 3px 3px;
+    background-color: #001b80;
+    z-index: 1;
+  }
+  .vote-average::after{
+    content: ' ★';
+  }
+
   img {
     width: 100%;
     height: 100%;

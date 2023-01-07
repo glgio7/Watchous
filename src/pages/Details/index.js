@@ -7,8 +7,6 @@ import { Movie } from "../../components/movieitem";
 import { Container } from "./styles";
 import { apiKey } from "../../api"
 
-
-
 export function Details() {
   const [valorDoFiltro, setValorDoFiltro] = useState("");
   const { id } = useParams();
@@ -23,11 +21,8 @@ export function Details() {
   const Load = () => window.scrollTo(0, 0);
   const togglePlayer = () => { setPlayer(!player); Load() }
 
-
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=videos&language=pt-BR`
-    )
+    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=videos&language=pt-BR`)
       .then((response) => response.json())
       .then((data) => {
         const movie = {
@@ -43,25 +38,25 @@ export function Details() {
           nota: Math.round(data.vote_average),
         };
         setMovie(movie);
-      });
+      }
+      )
+      .then(
+        fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`)
+          .then((response) => response.json())
+          .then((data) => {
+            const trailer = {
+              id,
+              key: data.results.length > 0 ? data.results.filter((value) => value.name = 'Official Trailer')[data.results.length - 1].key : null,
+            };
+            setTrailer(trailer);
+          }
+          )
+          .then(() => { setPlayer(false); setFullDescription(false); setLoaded(true);})
+      )
+      .catch((e) => console.log(e));
   }, [id]);
 
-  useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const trailer = {
-          id,
-          key: data.results.length > 0 ? data.results[0].key : '',
-        };
-        setTrailer(trailer);
-      })
-      .then(() => setLoaded(true));
-  }, [id]);
-  
-  /////////////////////////////////////////////////// search
+  ///////////////////////////////////////////////////////////////////////FROM SEARCH
   const [fromSearch, setFromSearch] = useState([]);
   const serverSearch = valorDoFiltro.replaceAll(' ', '+');
 
@@ -71,7 +66,7 @@ export function Details() {
     )
       .then((response) => response.json())
       .then((data) => {
-        setFromSearch(data.results)
+        setFromSearch(data.results);
       });
   }, [serverSearch]);
   ///////////////////////////////////////////////////////////////////////////////////
@@ -85,10 +80,10 @@ export function Details() {
             <MovieList className="search-results">
               {fromSearch
                 .map((movie) => (
-                  <Movie key={movie.id} onClick={() => setFromSearch()}>
+                  <Movie key={movie.id} onClick={() => { setFromSearch(); setLoaded(false); setValorDoFiltro('') }}>
                     <Link to={`/details/${movie.id}`}>
                       <img
-                        src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/loading.gif'}
+                        src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/c'}
                         alt={""}
                         className="moviePoster"
                       />
@@ -103,7 +98,8 @@ export function Details() {
         {loaded === false &&
           <div className="loading">
             <img src="/img/loading.gif" alt="Loading" />
-          </div>}
+          </div>
+        }
         <section>
           <img
             className="background"
@@ -125,7 +121,7 @@ export function Details() {
           }
           <div className="container">
             <div className="release-date"><h1>Data de Lançamento: </h1>{movie.release}</div>
-            <img className="poster" src={movie.poster ? `${image_path}${movie.poster}` : 'https://media0.giphy.com/media/3osxYzUOBRWEg5S5q0/giphy.gif'} alt="" />
+            <img className="poster" src={movie.poster ? `${image_path}${movie.poster}` : 'img/movie_placeholder.jpg'} alt="" />
             <button onClick={togglePlayer}>Assistir Trailer</button>
             <RiArrowLeftLine className="back" onClick={goBack} />
           </div>

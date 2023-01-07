@@ -157,7 +157,6 @@ export const Container = styled.main`
     display: flex;
     position: relative;
     overflow: hidden;
-    scrollbar-width: none;
     margin-inline: 15px;
     height: 100%;
 

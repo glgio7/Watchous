@@ -283,7 +283,8 @@ export default function Header({ setValorDoFiltro, reset }) {
   const [input, setInput] = useState("")
   const setBusca = setValorDoFiltro;
   const clearLists = reset;
-  const searchOnEnter = props => {if (props.keyCode === 13) setBusca(input);};
+  const searchOnEnter = props => { if (props.keyCode === 13) setBusca(input);};
+  const clear = props => props.keyCode === 13 ? setInput('') : null;
 
   return (
     <>
@@ -291,7 +292,7 @@ export default function Header({ setValorDoFiltro, reset }) {
         <div className="masterHead">
           <a href="/">
             <h1 className="logo-box">
-              <img src={"/img/logo.png"} className="logo" alt="Watchous"/>
+              <img src={"/img/logo.png"} className="logo" alt="Watchous" />
             </h1>
           </a>
           <div className="searchBar">
@@ -301,9 +302,9 @@ export default function Header({ setValorDoFiltro, reset }) {
               onChange={(e) => setInput(e.target.value)}
               value={input}
               onFocus={clearLists}
-              onKeyDown={(e) => {searchOnEnter(e);}}
+              onKeyDown={(props) => { searchOnEnter(props); clear(props) }}
             />
-            <RiSearchLine className="searchIcon" onClick={() => {setBusca(input); setInput('')}}/>
+            <RiSearchLine className="searchIcon" onClick={() => { setBusca(input); setInput('') }} />
           </div>
           <RiMenu3Fill className="menu" onClick={toggleMenu} />
         </div>

@@ -4,15 +4,14 @@ export const MovieList = styled.ul`
   overflow-x: scroll;
   position: relative;
   display: flex;
-  width: max-content;
+  max-width: 100vw;
   height: 100%;
   transition: all ease 250ms;
   scrollbar-width: none;
-
   
   ::-webkit-scrollbar{
-      background-color: transparent;
-      width: 0px;
+    background-color: transparent;
+    width: 0px;
   }
     
 `;

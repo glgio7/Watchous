@@ -84,7 +84,7 @@ export const Container = styled.div`
     height: 36px;
     right: 0;
     left: 0;
-    bottom: -1rem;
+    top: 0;
     margin: 0 auto;
     z-index: 10;
     width: 36px;
@@ -272,13 +272,14 @@ export const Container = styled.div`
   .search-results{
     max-width: 100vw;
     overflow-x: scroll;
-  ::-webkit-scrollbar{
-    width: thin;
-    background-color: #000;
-  }
-  ::-webkit-scrollbar-thumb{
-    background-color: #111;
-  }
+    scrollbar-width: thin;
+    ::-webkit-scrollbar{
+      width: thin;
+      background-color: #000;
+    }
+    ::-webkit-scrollbar-thumb{
+      background-color: #111;
+    }
   }
 
 //mobile portrait
