@@ -51,7 +51,12 @@ export function Details() {
             setTrailer(trailer);
           }
           )
-          .then(() => { setPlayer(false); setFullDescription(false); setLoaded(true);})
+          .then(() => {
+            setPlayer(false);
+            setFullDescription(false);
+            setTimeout(() => { setLoaded(true) }, 500);
+          }
+          )
       )
       .catch((e) => console.log(e));
   }, [id]);

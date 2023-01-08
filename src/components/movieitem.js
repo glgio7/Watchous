@@ -10,7 +10,7 @@ export const Movie = styled.li`
   height: 100%;
   text-align: center;
   aspect-ratio: 9 / 16;
-  width: calc((100vw - 105px) / 5);
+  width: calc((100vw - 105px) / 6);
   :last-child {
     margin-right: 0px;
   }
@@ -37,7 +37,7 @@ export const Movie = styled.li`
 
   .moviePoster {
     background-color: #262626;
-    min-width: calc((100vw - 105px) / 5);
+    min-width: calc((100vw - 105px) / 6);
     aspect-ratio: 9 / 16;
     transition: all ease 200ms;
     &:hover {
@@ -54,11 +54,11 @@ export const Movie = styled.li`
   }
 //mobile portrait
   @media screen and (max-width: 768px) {
-    width: calc((100vw - 30px) / 2);
-    aspect-ratio: 16 / 9;
+    width: calc((100vw - 30px) / 3);
+    aspect-ratio: 9 / 16;
     .moviePoster {
-      aspect-ratio: 16 / 9;
-      min-width: calc((100vw - 30px) / 2);
+      aspect-ratio: 9 / 16;
+      min-width: calc((100vw - 30px) / 3);
     }
     
     span {
@@ -68,10 +68,10 @@ export const Movie = styled.li`
   //mobile landscape
   @media screen and (max-width: 900px) and (max-height: 768px) and (orientation: landscape) {
     width: calc((100vw - 105px) / 4);
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 9 / 16;
     .moviePoster {
       min-width: calc((100vw - 105px) / 4);
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 9 / 16;
     }
     span {
       max-width: calc((100vw - 105px) / 4);

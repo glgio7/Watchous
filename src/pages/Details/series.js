@@ -35,7 +35,7 @@ export function SeriesDetails() {
                     sinopse: data.overview.substring(0, 49) + "...",
                     poster: data.poster_path,
                     background: data.backdrop_path,
-                    lastEpisode: data.last_air_date,
+                    lastEpisode: data.last_air_date.split("-").reverse().join().replaceAll(',', '/'),
                     genres: data.genres.map(value => value.name).join(' / ').replace('Thriller', 'Suspense'),
                     nota: Math.round(data.vote_average),
                 };
@@ -51,12 +51,16 @@ export function SeriesDetails() {
                         };
                         setTrailer(trailer);
                     })
-                    .then(() => { setPlayer(false); setFullDescription(false); setLoaded(true)})
+                    .then(() => {
+                        setPlayer(false);
+                        setFullDescription(false);
+                        setTimeout(() => { setLoaded(true) }, 500);
+                    }
+                    )
             )
             .catch((e) => console.log(e))
             ;
     }, [id]);
-    console.log(movie)
     ///////////////////////////////////////////////////////////////////////FROM SEARCH
     const [fromSearch, setFromSearch] = useState([]);
     const serverSearch = valorDoFiltro.replaceAll(' ', '+');

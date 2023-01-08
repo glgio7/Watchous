@@ -162,7 +162,7 @@ export default function Home() {
         setValorDoFiltro={setValorDoFiltro}
       />
       <Container>
-        {upcoming.length < 20 &&
+        {upcoming.length < 10 &&
           <div className="loading">
             <img src="/img/loading.gif" alt="Loading" />
           </div>

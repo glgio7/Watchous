@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 60px;
+  margin-top: 54px;
   background-color: #000;
   
   .loading{
@@ -110,7 +110,7 @@ export const Container = styled.div`
     z-index: -1;
     width: 100%;
     object-fit: cover;
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 54px);
   }
   .fade {
     position: absolute;
@@ -119,7 +119,7 @@ export const Container = styled.div`
     z-index: -1;
     width: 100%;
     object-fit: cover;
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 54px);
     height: 100%;
     background: rgb(32, 32, 32);
     background: linear-gradient(
@@ -287,7 +287,7 @@ export const Container = styled.div`
 margin-top: 114px;
 align-items: center;
   .container{
-    margin-top: 1rem;
+    margin-top: .5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -430,7 +430,7 @@ align-items: center;
 //mobile landscape
 @media screen and (max-width: 900px) and (min-width: 480px) and (orientation: landscape) {
 margin-top: 72px;
-    
+  
   .fade {
     background: linear-gradient(
     90deg,
