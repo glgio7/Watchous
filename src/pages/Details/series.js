@@ -39,6 +39,7 @@ export function SeriesDetails() {
                     genres: data.genres.map(value => value.name).join(' / ').replace('Thriller', 'Suspense'),
                     nota: Math.round(data.vote_average),
                 };
+                document.title = `Watchous - ${movie.title}`
                 setMovie(movie);
             })
             .then(
