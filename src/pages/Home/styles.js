@@ -149,7 +149,7 @@ export const Container = styled.main`
   h1 {
     font-size: 1.5rem;
     color: #fff;
-    margin-block: 20px;
+    margin-top: 1rem;
     margin-left: 15px;
   }
 
@@ -226,7 +226,7 @@ export const Container = styled.main`
   h1 {
     font-size: 1.25rem;
     color: #fff;
-    margin: 1rem 3px;
+    margin-left: 3px;
   }
 
   .wrapper {

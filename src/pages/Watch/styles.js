@@ -10,7 +10,6 @@ export const Container = styled.main`
   ul{
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
   }
 
   .movie-box{
@@ -49,6 +48,10 @@ export const Container = styled.main`
     margin: 1rem 3px;
   }
   
+  ul{
+    justify-content: space-between;
+  }
+
   .movie-box{
     margin-block: 1rem;
     margin-inline: 1rem;
