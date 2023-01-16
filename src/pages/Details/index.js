@@ -34,7 +34,7 @@ export function Details() {
           poster: data.poster_path,
           background: data.backdrop_path,
           release: data.release_date.split("-").reverse().join().replaceAll(',', '/'),
-          genres: data.genres.map(value => value.name).join(' / ').replace('Thriller', 'Suspense'),
+          genres: data.genres.slice(0,3).map(value => value.name).join(' / ').replace('Thriller', 'Suspense'),
           nota: Math.round(data.vote_average),
         };
         document.title = `Watchous - ${movie.title}`

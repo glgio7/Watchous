@@ -23,7 +23,6 @@ export function SeriesDetails() {
     const Load = () => window.scrollTo(0, 0);;
     const togglePlayer = () => { setPlayer(!player); Load() }
 
-
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=pt-BR`)
             .then((response) => response.json())
@@ -36,7 +35,7 @@ export function SeriesDetails() {
                     poster: data.poster_path,
                     background: data.backdrop_path,
                     lastEpisode: data.last_air_date.split("-").reverse().join().replaceAll(',', '/'),
-                    genres: data.genres.map(value => value.name).join(' / ').replace('Thriller', 'Suspense'),
+                    genres: data.genres.slice(0,3).map(value => value.name).join(' / ').replace('Thriller', 'Suspense'),
                     nota: Math.round(data.vote_average),
                 };
                 document.title = `Watchous - ${movie.title}`
@@ -126,7 +125,7 @@ export function SeriesDetails() {
                         <RiArrowLeftLine className="back" onClick={goBack} />
                     </div>
                     <div className="overview">
-                        <div className="infos" style={{ color: "white" }}>{movie.genres}</div>
+                        <div className="infos">{movie.genres}</div>
                         <h1>{movie.title}</h1>
                         <p>{fullDescription ? movie.fullSinopse : movie.sinopse}</p>
                         <p onClick={showFull} id="expand-overview">{fullDescription ? 'Ver menos' : 'Ver mais'}</p>

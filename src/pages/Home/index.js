@@ -1,25 +1,18 @@
+import React, { useState, useRef, useEffect } from "react";
+import Header from "../../components/header";
+import dataMovies from "../../api/movies_list.json"
+import { Link } from "react-router-dom";
+import { Container } from "./styles";
+import { MovieList } from "../../components/movielist";
+import { Movie } from "../../components/movieitem";
+import { apiKey } from "../../api"
+import { PreviousPage } from "../../components/previouspage";
+import { NextPage } from "../../components/nextpage";
 import {
   RiCloseFill,
   RiArrowLeftSLine,
   RiArrowRightSLine,
 } from "react-icons/ri";
-import {
-  fantasy,
-  horror,
-  drama,
-  suspense,
-} from "../../api/local_movies";
-
-import { useEffect } from "react";
-import { Container } from "./styles";
-import { Movie } from "../../components/movieitem";
-import { MovieList } from "../../components/movielist";
-import React, { useState, useRef } from "react";
-import { apiKey } from "../../api"
-import Header from "../../components/header";
-import { Link } from "react-router-dom";
-import { PreviousPage } from "../../components/previouspage";
-import { NextPage } from "../../components/nextpage";
 
 export default function Home() {
   const [disclaimer, setDisclaimer] = useState(false);
@@ -36,21 +29,21 @@ export default function Home() {
   const serverSearch = valorDoFiltro.replaceAll(' ', '+')
 
 
-  /////////////////////////////////////////////////// upcoming
+  //////////////////// upcoming
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=pt-BR&page=${pageUpcoming}`)
       .then((response) => response.json())
       .then((data) => setUpcoming(data.results))
       .catch((err) => console.log(err));
   }, [pageUpcoming]);
-  /////////////////////////////////////////////////// series
+  //////////////////// series
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&language=pt-BR&page=${pageSeries}`)
       .then((response) => response.json())
       .then((data) => setSeries(data.results))
       .catch((err) => console.log(err));
   }, [pageSeries]);
-  /////////////////////////////////////////////////// search
+  //////////////////// search
   useEffect(() => {
     const movies = () => {
       fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${serverSearch}&language=pt-BR`)
@@ -68,7 +61,8 @@ export default function Home() {
     Promise.all([movies(), series()])
 
   }, [serverSearch]);
-  // HANDLE LISTS DIRECTIONS /////////////////////////////////////
+
+  //////////////////// HANDLE LISTS DIRECTIONS 
   const searchMoviesList = useRef();
   const searchSeriesList = useRef();
   const upcomingList = useRef();
@@ -77,8 +71,6 @@ export default function Home() {
   const fantasyList = useRef();
   const dramaList = useRef();
   const seriesList = useRef();
-
-  const handlePages = (list) => { return list.length <= 20 ? 5 : list.length <= 30 ? 6 : 8; };
 
   const loadMoreSeries = () => {
     setSlideSeries(0)
@@ -91,70 +83,70 @@ export default function Home() {
     setPageUpcoming(pageUpcoming + 1);
     upcomingList.current.scrollLeft -= upcomingList.current.scrollWidth;
   }
-
   const handleDirection = (list, direction) => {
     //MOVIES FROM SEARCH ///////////////////////////////////////////
     if (direction === "left" && list === "fromSearchMovies") {
-      searchMoviesList.current.scrollLeft -= (searchMoviesList.current.scrollWidth / handlePages(list));
+      searchMoviesList.current.scrollLeft -= (searchMoviesList.current.scrollWidth / 6);
     }
     if (direction === "right" && list === "fromSearchMovies") {
-      searchMoviesList.current.scrollLeft += (searchMoviesList.current.scrollWidth / handlePages(list));
+      searchMoviesList.current.scrollLeft += (searchMoviesList.current.scrollWidth / 6);
 
     }
     //SERIES FROM SEARCH ///////////////////////////////////////////
     if (direction === "left" && list === "fromSearchSeries") {
-      searchSeriesList.current.scrollLeft -= (searchSeriesList.current.scrollWidth / handlePages(list));
+      searchSeriesList.current.scrollLeft -= (searchSeriesList.current.scrollWidth / 6);
     }
     if (direction === "right" && list === "fromSearchSeries") {
-      searchSeriesList.current.scrollLeft += (searchSeriesList.current.scrollWidth / handlePages(list));
+      searchSeriesList.current.scrollLeft += (searchSeriesList.current.scrollWidth / 6);
     }
     //UPCOMING/////////////////////////////////////////////////////
     if (direction === "left" && list === "upcoming" && upcomingList.current.scrollLeft > 0) {
-      upcomingList.current.scrollLeft -= (upcomingList.current.scrollWidth / handlePages(list));
+      upcomingList.current.scrollLeft -= (upcomingList.current.scrollWidth / 6);
       setSlideUpcoming(slideUpcoming - 1);
     }
     if (direction === "right" && list === "upcoming") {
-      upcomingList.current.scrollLeft += (upcomingList.current.scrollWidth / handlePages(list));
+      upcomingList.current.scrollLeft += (upcomingList.current.scrollWidth / 6);
       setSlideUpcoming(slideUpcoming + 1);
     }
     //SERIES/////////////////////////////////////////////////////
     if (direction === "left" && list === "series" && seriesList.current.scrollLeft > 0) {
-      seriesList.current.scrollLeft -= (seriesList.current.scrollWidth / handlePages(list));
+      seriesList.current.scrollLeft -= (seriesList.current.scrollWidth / 6);
       setSlideSeries(slideSeries - 1);
     }
     if (direction === "right" && list === "series") {
-      seriesList.current.scrollLeft += (seriesList.current.scrollWidth / handlePages(list));
+      seriesList.current.scrollLeft += (seriesList.current.scrollWidth / 6);
       setSlideSeries(slideSeries + 1);
     }
     //SUSPENSE/////////////////////////////////////////////////////
     if (direction === "left" && list === "suspense") {
-      suspenseList.current.scrollLeft -= (suspenseList.current.scrollWidth / handlePages(list));
+      suspenseList.current.scrollLeft -= (suspenseList.current.scrollWidth / 6);
     }
     if (direction === "right" && list === "suspense") {
-      suspenseList.current.scrollLeft += (suspenseList.current.scrollWidth / handlePages(list));
+      suspenseList.current.scrollLeft += (suspenseList.current.scrollWidth / 6);
     }
     //HORROR///////////////////////////////////////////////////////////
     if (direction === "left" && list === "horror") {
-      horrorList.current.scrollLeft -= (horrorList.current.scrollWidth / handlePages(list));
+      horrorList.current.scrollLeft -= (horrorList.current.scrollWidth / 6);
     }
     if (direction === "right" && list === "horror") {
-      horrorList.current.scrollLeft += (horrorList.current.scrollWidth / handlePages(list));;
+      horrorList.current.scrollLeft += (horrorList.current.scrollWidth / 6);;
     }
     //FANTASY////////////////////////////////////////////////////////////
     if (direction === "left" && list === "fantasy") {
-      fantasyList.current.scrollLeft -= (fantasyList.current.scrollWidth / handlePages(list));
+      fantasyList.current.scrollLeft -= (fantasyList.current.scrollWidth / 6);
     }
     if (direction === "right" && list === "fantasy") {
-      fantasyList.current.scrollLeft += (fantasyList.current.scrollWidth / handlePages(list));
+      fantasyList.current.scrollLeft += (fantasyList.current.scrollWidth / 6);
     }
     //DRAMA//////////////////////////////////////////////////////////
     if (direction === "left" && list === "drama") {
-      dramaList.current.scrollLeft -= (dramaList.current.scrollWidth / handlePages(list));
+      dramaList.current.scrollLeft -= (dramaList.current.scrollWidth / 6);
     }
     if (direction === "right" && list === "drama") {
-      dramaList.current.scrollLeft += (dramaList.current.scrollWidth / handlePages(list));
+      dramaList.current.scrollLeft += (dramaList.current.scrollWidth / 6);
     }
   };
+
   return (
     <>
       <Header
@@ -269,7 +261,7 @@ export default function Home() {
                 onClick={() => handleDirection("suspense", "left")}
               />
               <MovieList ref={suspenseList}>
-                {suspense
+                {dataMovies.suspense
                   .map((movie) => (
                     <Movie key={movie.imdb}>
                       <Link to={`/details/${movie.imdb}`}>
@@ -295,7 +287,7 @@ export default function Home() {
                 onClick={() => handleDirection("horror", "left")}
               />
               <MovieList ref={horrorList}>
-                {horror
+                {dataMovies.terror
                   .map((movie) => (
                     <Movie key={movie.imdb}>
                       <Link to={`/details/${movie.imdb}`}>
@@ -321,7 +313,7 @@ export default function Home() {
                 onClick={() => handleDirection("fantasy", "left")}
               />
               <MovieList ref={fantasyList}>
-                {fantasy
+                {dataMovies.fantasy
                   .map((movie) => (
                     <Movie key={movie.imdb}>
                       <Link to={`/details/${movie.imdb}`}>
@@ -347,7 +339,7 @@ export default function Home() {
                 onClick={() => handleDirection("drama", "left")}
               />
               <MovieList ref={dramaList}>
-                {drama
+                {dataMovies.drama
                   .map((movie) => (
                     <Movie key={movie.imdb}>
                       <Link to={`/details/${movie.imdb}`}>

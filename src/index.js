@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import { GlobalCSS } from "./components/globalstyle";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Details } from "./pages/Details";
 import { SeriesDetails } from "./pages/Details/series";
 

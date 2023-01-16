@@ -134,8 +134,7 @@ export const Container = styled.div`
     width: 100vw;
     z-index: 5;
     display: flex;
-    justify-content: space-between;
-    padding: 0 3rem;
+    justify-content: space-around;
 }
 
   .container{
@@ -202,9 +201,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: calc(480px + 5rem);
-    height: 100%;
-    overflow-y: auto;
+    height: calc(480px + 5rem);
     justify-content: space-between;
     
     h1 {
@@ -219,6 +216,9 @@ export const Container = styled.div`
       line-height: 2.5rem;
       padding: 0 2rem;
       text-align: center;
+      &:nth-child(3){
+        overflow-y: auto;
+      }
     }
   }
   .release-date{
@@ -237,12 +237,13 @@ export const Container = styled.div`
 
     h1{
       color: #fff;
-    font-size: 1.25rem;
+      font-size: 1.25rem;
     }
   }
   .infos{
     width: 100%;
     height: 2.5rem;
+    min-height: 2.5rem;
     font-size: 1.25rem;
     font-weight: bold;
     font-family: 'Saira Condensed', sans-serif;
@@ -453,16 +454,16 @@ margin-top: 72px;
     overflow-y: auto;
     text-align: center;
     justify-content: space-between;
-    height: 100%;
-    min-height: 298px;
+    height: calc(60vh + 5rem);
+    margin-top: 1rem;
   } 
-
+  
   .container{
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 40vw;
-    min-height: 82vh;
     height: 100%;
   }
 
