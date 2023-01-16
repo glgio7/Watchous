@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Movie = styled.li`
-  display: flex;
   position: relative;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -14,24 +14,24 @@ export const Movie = styled.li`
   transition: all ease 200ms;
   &:hover {
     scale: 1.05;
+    .vote-average{
+      top: .75rem
+    }
   }
   :last-child {
     margin-right: 0px;
   }
   .vote-average{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    height: 1rem;
     position: absolute;
     top: 0;
+    right: 1rem;
     margin: 0 auto;
-    width: 75%;
+    width: 48px;
     color: #fff;
     border-radius: 0 0 3px 3px;
     background-color: #001b80;
-    z-index: 1;
-    
+    transition: all ease 200ms;
+
     p{
       font-size: .7rem;
     }
@@ -62,9 +62,31 @@ export const Movie = styled.li`
   @media screen and (max-width: 768px) {
     width: calc((100vw - 30px) / 3);
     aspect-ratio: 9 / 16;
+      &:hover {
+      scale: 1.05;
+      .vote-average{
+        top: .45rem
+      }
+      }
+
     .moviePoster {
       aspect-ratio: 9 / 16;
       min-width: calc((100vw - 30px) / 3);
+    }
+
+    .vote-average{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 1rem;
+    position: absolute;
+    top: 0;
+    margin: 0 auto;
+    width: 75%;
+    color: #fff;
+    border-radius: 0 0 3px 3px;
+    background-color: #001b80;
+    z-index: 1;
     }
     
     span {
@@ -79,6 +101,7 @@ export const Movie = styled.li`
       min-width: calc((100vw - 105px) / 4);
       aspect-ratio: 9 / 16;
     }
+
     span {
       max-width: calc((100vw - 105px) / 4);
     }
