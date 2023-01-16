@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../components/header";
+import Header from "../../components/Header";
 import { Link, useParams } from "react-router-dom";
 import { RiArrowLeftLine, RiCloseFill } from "react-icons/ri";
 import { MovieList } from "../../components/movielist";
@@ -9,7 +9,7 @@ import { apiKey } from "../../api"
 
 
 
-export function SeriesDetails() {
+export default function SeriesDetails() {
     const [valorDoFiltro, setValorDoFiltro] = useState("");
     const { id } = useParams();
     const image_path = "https://themoviedb.org/t/p/original";

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import Header from "../../components/header";
+import Header from "../../components/Header";
 import dataMovies from "../../api/movies_list.json"
 import { Link } from "react-router-dom";
 import { Container } from "./styles";
@@ -101,11 +101,11 @@ export default function Home() {
     }
     //UPCOMING/////////////////////////////////////////////////////
     if (direction === "left" && list === "upcoming" && upcomingList.current.scrollLeft > 0) {
-      upcomingList.current.scrollLeft -= (upcomingList.current.scrollWidth / 6);
+      upcomingList.current.scrollLeft -= (upcomingList.current.scrollWidth / 5);
       setSlideUpcoming(slideUpcoming - 1);
     }
     if (direction === "right" && list === "upcoming") {
-      upcomingList.current.scrollLeft += (upcomingList.current.scrollWidth / 6);
+      upcomingList.current.scrollLeft += (upcomingList.current.scrollWidth / 5);
       setSlideUpcoming(slideUpcoming + 1);
     }
     //SERIES/////////////////////////////////////////////////////
@@ -146,6 +146,14 @@ export default function Home() {
       dramaList.current.scrollLeft += (dramaList.current.scrollWidth / 6);
     }
   };
+
+  const checkStars = value =>
+    value.vote_average > 8 ? '★★★★★' :
+    value.vote_average > 6 ? '★★★★' :
+    value.vote_average > 4 ? '★★★' :
+    value.vote_average > 2 ? '★★' : '★';
+  
+  
 
   return (
     <>
@@ -235,10 +243,10 @@ export default function Home() {
                 {upcoming
                   .map((movie) => (
                     <Movie key={movie.id}>
-                      <div className="vote-average">{movie.vote_average} </div>
+                      <div className="vote-average"><span>{movie.vote_average}</span><p>{checkStars(movie)}</p></div>
                       <Link to={`/details/${movie.id}`}>
                         <img
-                          src={`https://www.themoviedb.org/t/p/w500${movie.poster_path}`}
+                          src={movie.poster_path ? `https://www.themoviedb.org/t/p/w500${movie.poster_path}` : '/img/movie_placeholder.jpg'}
                           alt={""}
                           className="moviePoster"
                         />
@@ -370,7 +378,7 @@ export default function Home() {
                   .map((movie) => (
                     <Movie key={movie.id}>
                       <Link to={`/details/serie/${movie.id}`}>
-                        <div className="vote-average">{movie.vote_average} </div>
+                        <div className="vote-average"><span>{movie.vote_average}</span><p>{checkStars(movie)}</p></div>
                         <img
                           src={`https://www.themoviedb.org/t/p/w500${movie.poster_path}`}
                           alt={""}
@@ -393,10 +401,10 @@ export default function Home() {
         <div className={disclaimer ? "disclaimer active" : "disclaimer"}>
           <RiCloseFill className="closeDisclaimer" onClick={handleDisclaimer} />
           <h2>
-            Cadastros em 2023.
+            Novidade: lista de filmes gratuitos do Youtube.
           </h2>
           <h2>
-            Em breve: lista de filmes gratuitos do Youtube.
+            Em breve: cadastro e lista de interesse.
           </h2>
         </div>
         <button className="buttonDisclaimer" onClick={handleDisclaimer}>

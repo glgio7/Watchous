@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../components/header";
+import Header from "../../components/Header";
 import { Link, useParams } from "react-router-dom";
 import { RiArrowLeftLine, RiCloseFill } from "react-icons/ri";
 import { MovieList } from "../../components/movielist";
@@ -7,7 +7,7 @@ import { Movie } from "../../components/movieitem";
 import { Container } from "./styles";
 import { apiKey } from "../../api"
 
-export function Details() {
+export default function Details() {
   const [valorDoFiltro, setValorDoFiltro] = useState("");
   const { id } = useParams();
   const image_path = "https://themoviedb.org/t/p/original";

@@ -90,7 +90,7 @@ export const Container = styled.main`
 
   .disclaimer.active {
     background: rgb(0,162,211);
-    background: linear-gradient(0deg, rgba(0,162,211,1) 0%, rgba(0,174,255,.85) 25%, rgba(0,111,186,.85) 75%, rgba(0,58,147,1) 100%);
+    background: linear-gradient(0deg, rgba(0,120,200,1) 0%, rgba(0,60,150,.95) 25%, rgba(0,60,150,.9) 75%, rgba(0,80,160,.95) 100%);
     display: flex;
     opacity: 1;
     pointer-events: all;

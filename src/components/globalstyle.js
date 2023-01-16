@@ -6,6 +6,7 @@ export const GlobalCSS = createGlobalStyle`
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  font-family: 'Saira Condensed', sans-serif;
 }
 img {
   width: 100%;
@@ -16,7 +17,6 @@ body {
   flex-direction: column;
   background-color: #000;
   height: 100%;
-  font-family: 'Saira Condensed', sans-serif;
   width: 100%;
   overflow-x: hidden;
 }

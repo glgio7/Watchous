@@ -11,21 +11,30 @@ export const Movie = styled.li`
   text-align: center;
   aspect-ratio: 9 / 16;
   width: calc((100vw - 105px) / 6);
+  transition: all ease 200ms;
+  &:hover {
+    scale: 1.05;
+  }
   :last-child {
     margin-right: 0px;
   }
   .vote-average{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 1rem;
     position: absolute;
     top: 0;
-    width: 48px;
+    margin: 0 auto;
+    width: 75%;
     color: #fff;
-    right: 0;
     border-radius: 0 0 3px 3px;
     background-color: #001b80;
     z-index: 1;
-  }
-  .vote-average::after{
-    content: ' ★';
+    
+    p{
+      font-size: .7rem;
+    }
   }
 
   img {
@@ -39,14 +48,11 @@ export const Movie = styled.li`
     background-color: #262626;
     min-width: calc((100vw - 105px) / 6);
     aspect-ratio: 9 / 16;
-    transition: all ease 200ms;
-    &:hover {
-      scale: 1.05;
-    }
   }
 
   span {
     font-size: 1.25rem;
+    line-height: 1.25rem;
     color: #fff;
     font-weight: bold;
     vertical-align: top;

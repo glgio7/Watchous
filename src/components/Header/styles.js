@@ -1,10 +1,6 @@
-import React, { useState } from "react";
 import styled from "styled-components";
-import { RiMenu3Fill } from "react-icons/ri";
-import { RiSearchLine } from "react-icons/ri";
-import { RiCloseFill } from "react-icons/ri";
 
-const StyledHeader = styled.header`
+export const StyledHeader = styled.header`
   width: 100%;
   height: 60px;
   display: flex;
@@ -29,6 +25,15 @@ const StyledHeader = styled.header`
     font-weight: bold;
     font-size: 2rem;
     cursor: pointer;
+  }
+  
+  .notification {
+    color: #0070ff;
+    font-weight: bold;
+    font-size: .75rem;
+    position: absolute;
+    right: .75rem;
+    bottom: 2.25rem;
   }
   
   img{
@@ -109,6 +114,7 @@ const StyledHeader = styled.header`
     transition: all 0.5s;
     a,
     li {
+      position: relative;
       color: #fff;
       font-size: 1.2rem;
       font-weight: bold;
@@ -128,6 +134,16 @@ const StyledHeader = styled.header`
     .closeMenu {
       display: none;
     }
+  }
+
+  #new::after{
+    content: "New";
+    font-weight: bold;
+    font-size: .75rem;
+    color: #0070ff;
+    top: -.5rem;
+    right: -1.5rem;
+    position: absolute;
   }
 
   @media screen and (max-width: 768px) {
@@ -177,6 +193,12 @@ const StyledHeader = styled.header`
       bottom: .75rem;
       display: flex;
     }
+
+    .notification{
+      right: .25rem;
+      bottom: 2rem;
+    }
+    
     nav {
       position: fixed;
       width: 100vw;
@@ -273,57 +295,10 @@ const StyledHeader = styled.header`
       font-weight: bold;
       position: static;
     }
+
+    .notification{
+      right: -0.25rem;
+      bottom: 2.5rem;
+    }
     }
 `;
-
-export default function Header({ setValorDoFiltro, reset }) {
-  const [navOpen, setNavOpen] = useState(false);
-  const toggleMenu = () => setNavOpen(!navOpen);
-  const hideNav = () => setNavOpen(false);
-  const [input, setInput] = useState("")
-  const setBusca = setValorDoFiltro;
-  const clearLists = reset;
-  const searchOnEnter = props => { if (props.keyCode === 13) setBusca(input);};
-  const clear = props => props.keyCode === 13 ? setInput('') : null;
-
-  return (
-    <>
-      <StyledHeader>
-        <div className="masterHead">
-          <a href="/">
-            <h1 className="logo-box">
-              <img src={"/img/logo.png"} className="logo" alt="Watchous" />
-            </h1>
-          </a>
-          <div className="searchBar">
-            <input
-              type="text"
-              placeholder="Pesquisar"
-              onChange={(e) => setInput(e.target.value)}
-              value={input}
-              onFocus={clearLists}
-              onKeyDown={(props) => { searchOnEnter(props); clear(props) }}
-            />
-            <RiSearchLine className="searchIcon" onClick={() => { setBusca(input); setInput('') }} />
-          </div>
-          <RiMenu3Fill className="menu" onClick={toggleMenu} />
-        </div>
-        <nav className={navOpen ? "active" : "null"} onMouseLeave={hideNav}>
-          <RiCloseFill className="closeMenu" onClick={toggleMenu} />
-          <a href="/">
-            <li>Página Inicial</li>
-          </a>
-          <a href="/">
-            <li>Minha conta</li>
-          </a>
-          <a href="/">
-            <li>Grátis para Assistir</li>
-          </a>
-          <a href="/">
-            <li>Créditos</li>
-          </a>
-        </nav>
-      </StyledHeader>
-    </>
-  );
-}
