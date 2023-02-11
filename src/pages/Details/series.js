@@ -76,10 +76,10 @@ export default function SeriesDetails() {
             <Header valorDoFiltro={valorDoFiltro}
                 setValorDoFiltro={setValorDoFiltro} />
             <Container onLoad={Load}>
-                {fromSearch &&
+                {fromSearch.length > 0 &&
                     <>
                         <MovieList className="search-results">
-                            {fromSearch && fromSearch
+                            {fromSearch
                                 .map((movie) => (
                                     <Movie key={movie.id} onClick={() => { setFromSearch(); setLoaded(false); setValorDoFiltro('') }}>
                                         <Link to={`/details/serie/${movie.id}`}>

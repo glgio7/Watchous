@@ -81,7 +81,7 @@ export default function Details() {
       <Header valorDoFiltro={valorDoFiltro}
         setValorDoFiltro={setValorDoFiltro} />
       <Container onLoad={Load}>
-        {fromSearch &&
+        {fromSearch.length > 0 &&
           <>
             <MovieList className="search-results">
               {fromSearch
