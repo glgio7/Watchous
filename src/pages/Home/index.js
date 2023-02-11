@@ -177,7 +177,7 @@ export default function Home() {
             <source src="/img/aurora.mp4" type="video/mp4" />
           </video>
         </div>
-        {fromSearch &&
+        {fromSearch.length > 0 &&
           <>
             <h1>Filmes da sua pesquisa</h1>
             <div className="wrapper">
@@ -203,7 +203,7 @@ export default function Home() {
             </div>
           </>
         }
-        {seriesFromSearch &&
+        {seriesFromSearch.length > 0 &&
           <>
             <h1>Séries da sua pesquisa</h1>
             <div className="wrapper">
@@ -229,7 +229,7 @@ export default function Home() {
             </div>
           </>
         }
-        {!fromSearch &&
+        {fromSearch.length < 1 &&
           <>
             <h1>Novos no Watchous</h1>
             <div className="wrapper">
