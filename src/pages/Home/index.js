@@ -20,8 +20,6 @@ export default function Home() {
   const [valorDoFiltro, setValorDoFiltro] = useState("");
   const [pageUpcoming, setPageUpcoming] = useState(1)
   const [pageSeries, setPageSeries] = useState(1)
-  const [slideUpcoming, setSlideUpcoming] = useState(0);
-  const [slideSeries, setSlideSeries] = useState(0);
   const [upcoming, setUpcoming] = useState([]);
   const [series, setSeries] = useState([]);
   const [fromSearch, setFromSearch] = useState([]);
@@ -63,97 +61,57 @@ export default function Home() {
   }, [serverSearch]);
 
   //////////////////// HANDLE LISTS DIRECTIONS 
-  const searchMoviesList = useRef();
-  const searchSeriesList = useRef();
-  const upcomingList = useRef();
-  const suspenseList = useRef();
-  const horrorList = useRef();
-  const fantasyList = useRef();
-  const dramaList = useRef();
-  const seriesList = useRef();
 
-  const loadMoreSeries = () => {
-    setSlideSeries(0)
-    setPageSeries(pageSeries + 1);
-    seriesList.current.scrollLeft -= seriesList.current.scrollWidth;
 
+  const loadMoreSeries = (mobile) => {
+    listRefs.series.scrollLeft -= listRefs.series.scrollWidth;
+    if (listRefs.series.current.scrollLeft >= (listRefs.series.current.scrollLeftMax - 60) || mobile === true) {
+      setPageSeries(pageSeries + 1);
+      listRefs.series.current.scrollLeft = 0;
+    }
   }
-  const loadMore = () => {
-    setSlideUpcoming(0)
-    setPageUpcoming(pageUpcoming + 1);
-    upcomingList.current.scrollLeft -= upcomingList.current.scrollWidth;
-  }
-  const handleDirection = (list, direction) => {
-    //MOVIES FROM SEARCH ///////////////////////////////////////////
-    if (direction === "left" && list === "fromSearchMovies") {
-      searchMoviesList.current.scrollLeft -= (searchMoviesList.current.scrollWidth / 6);
-    }
-    if (direction === "right" && list === "fromSearchMovies") {
-      searchMoviesList.current.scrollLeft += (searchMoviesList.current.scrollWidth / 6);
 
+  const loadMore = (mobile) => {
+    listRefs.upcoming.scrollLeft -= listRefs.upcoming.scrollWidth;
+    if (listRefs.upcoming.current.scrollLeft >= (listRefs.upcoming.current.scrollLeftMax - 60) || mobile === true) {
+      setPageUpcoming(pageUpcoming + 1);
+      listRefs.upcoming.current.scrollLeft = 0;
     }
-    //SERIES FROM SEARCH ///////////////////////////////////////////
-    if (direction === "left" && list === "fromSearchSeries") {
-      searchSeriesList.current.scrollLeft -= (searchSeriesList.current.scrollWidth / 6);
-    }
-    if (direction === "right" && list === "fromSearchSeries") {
-      searchSeriesList.current.scrollLeft += (searchSeriesList.current.scrollWidth / 6);
-    }
-    //UPCOMING/////////////////////////////////////////////////////
-    if (direction === "left" && list === "upcoming" && upcomingList.current.scrollLeft > 0) {
-      upcomingList.current.scrollLeft -= (upcomingList.current.scrollWidth / 5);
-      setSlideUpcoming(slideUpcoming - 1);
-    }
-    if (direction === "right" && list === "upcoming") {
-      upcomingList.current.scrollLeft += (upcomingList.current.scrollWidth / 5);
-      setSlideUpcoming(slideUpcoming + 1);
-    }
-    //SERIES/////////////////////////////////////////////////////
-    if (direction === "left" && list === "series" && seriesList.current.scrollLeft > 0) {
-      seriesList.current.scrollLeft -= (seriesList.current.scrollWidth / 6);
-      setSlideSeries(slideSeries - 1);
-    }
-    if (direction === "right" && list === "series") {
-      seriesList.current.scrollLeft += (seriesList.current.scrollWidth / 6);
-      setSlideSeries(slideSeries + 1);
-    }
-    //SUSPENSE/////////////////////////////////////////////////////
-    if (direction === "left" && list === "suspense") {
-      suspenseList.current.scrollLeft -= (suspenseList.current.scrollWidth / 6);
-    }
-    if (direction === "right" && list === "suspense") {
-      suspenseList.current.scrollLeft += (suspenseList.current.scrollWidth / 6);
-    }
-    //HORROR///////////////////////////////////////////////////////////
-    if (direction === "left" && list === "horror") {
-      horrorList.current.scrollLeft -= (horrorList.current.scrollWidth / 6);
-    }
-    if (direction === "right" && list === "horror") {
-      horrorList.current.scrollLeft += (horrorList.current.scrollWidth / 6);;
-    }
-    //FANTASY////////////////////////////////////////////////////////////
-    if (direction === "left" && list === "fantasy") {
-      fantasyList.current.scrollLeft -= (fantasyList.current.scrollWidth / 6);
-    }
-    if (direction === "right" && list === "fantasy") {
-      fantasyList.current.scrollLeft += (fantasyList.current.scrollWidth / 6);
-    }
-    //DRAMA//////////////////////////////////////////////////////////
-    if (direction === "left" && list === "drama") {
-      dramaList.current.scrollLeft -= (dramaList.current.scrollWidth / 6);
-    }
-    if (direction === "right" && list === "drama") {
-      dramaList.current.scrollLeft += (dramaList.current.scrollWidth / 6);
-    }
-  };
+  }
 
   const checkStars = value =>
     value.vote_average > 8 ? '★★★★★' :
-    value.vote_average > 6 ? '★★★★' :
-    value.vote_average > 4 ? '★★★' :
-    value.vote_average > 2 ? '★★' : '★';
-  
-  
+      value.vote_average > 6 ? '★★★★' :
+        value.vote_average > 4 ? '★★★' :
+          value.vote_average > 2 ? '★★' : '★';
+
+  const listRefs = {
+    searchMovies: useRef(),
+    searchSeries: useRef(),
+    upcoming: useRef(),
+    suspense: useRef(),
+    horror: useRef(),
+    fantasy: useRef(),
+    drama: useRef(),
+    series: useRef(),
+  };
+
+  const handleDirection = (list, direction) => {
+    const listRef = listRefs[list];
+
+    if (!listRef.current) {
+      return;
+    }
+
+    const { scrollLeft, scrollWidth } = listRef.current;
+    const distance = scrollWidth / 6;
+
+    if (direction === "left") {
+      listRef.current.scrollLeft = Math.max(scrollLeft - distance, 0);
+    } else if (direction === "right") {
+      listRef.current.scrollLeft = Math.min(scrollLeft + distance, scrollWidth - listRef.current.clientWidth);
+    }
+  };
 
   return (
     <>
@@ -181,8 +139,8 @@ export default function Home() {
           <>
             <h1>Filmes da sua pesquisa</h1>
             <div className="wrapper">
-              <RiArrowLeftSLine className="move-left" onClick={() => { handleDirection("fromSearchMovies", "left") }} />
-              <MovieList ref={searchMoviesList}>
+              <RiArrowLeftSLine className="move-left" onClick={() => { handleDirection("searchMovies", "left") }} />
+              <MovieList ref={listRefs.searchMovies}>
                 <PreviousPage />
                 {fromSearch
                   .map((movie) => (
@@ -199,7 +157,7 @@ export default function Home() {
                   ))}
                 <NextPage />
               </MovieList>
-              <RiArrowRightSLine className="move-right" onClick={() => { handleDirection("fromSearchMovies", "right"); }} />
+              <RiArrowRightSLine className="move-right" onClick={() => { handleDirection("searchMovies", "right"); }} />
             </div>
           </>
         }
@@ -207,8 +165,8 @@ export default function Home() {
           <>
             <h1>Séries da sua pesquisa</h1>
             <div className="wrapper">
-              <RiArrowLeftSLine className="move-left" onClick={() => { handleDirection("fromSearchSeries", "left") }} />
-              <MovieList ref={searchSeriesList}>
+              <RiArrowLeftSLine className="move-left" onClick={() => { handleDirection("searchSeries", "left") }} />
+              <MovieList ref={listRefs.searchSeries}>
                 <PreviousPage />
                 {seriesFromSearch
                   .map((movie) => (
@@ -225,7 +183,7 @@ export default function Home() {
                   ))}
                 <NextPage />
               </MovieList>
-              <RiArrowRightSLine className="move-right" onClick={() => { handleDirection("fromSearchSeries", "right"); }} />
+              <RiArrowRightSLine className="move-right" onClick={() => { handleDirection("searchSeries", "right"); }} />
             </div>
           </>
         }
@@ -235,10 +193,10 @@ export default function Home() {
             <div className="wrapper">
               <RiArrowLeftSLine className="move-left" onClick={() => {
                 handleDirection("upcoming", "left");
-                if (pageUpcoming > 1 && slideUpcoming < 1) setPageUpcoming(pageUpcoming - 1)
+                if (pageUpcoming > 1) setPageUpcoming(pageUpcoming - 1)
               }}
               />
-              <MovieList ref={upcomingList}>
+              <MovieList ref={listRefs.upcoming}>
                 <PreviousPage backPage={() => { if (pageUpcoming > 1) setPageUpcoming(pageUpcoming - 1) }} />
                 {upcoming
                   .map((movie) => (
@@ -254,11 +212,10 @@ export default function Home() {
                       <span>{movie.title}</span>
                     </Movie>
                   ))}
-                <NextPage loadMore={loadMore} />
+                <NextPage loadMore={() => loadMore(true)} />
               </MovieList>
               <RiArrowRightSLine className="move-right" onClick={() => {
-                handleDirection("upcoming", "right");
-                if (slideUpcoming === 4) loadMore()
+                handleDirection("upcoming", "right"); loadMore()
               }}
               />
             </div>
@@ -268,7 +225,7 @@ export default function Home() {
                 className="move-left"
                 onClick={() => handleDirection("suspense", "left")}
               />
-              <MovieList ref={suspenseList}>
+              <MovieList ref={listRefs.suspense}>
                 {dataMovies.suspense
                   .map((movie) => (
                     <Movie key={movie.imdb}>
@@ -294,7 +251,7 @@ export default function Home() {
                 className="move-left"
                 onClick={() => handleDirection("horror", "left")}
               />
-              <MovieList ref={horrorList}>
+              <MovieList ref={listRefs.horror}>
                 {dataMovies.terror
                   .map((movie) => (
                     <Movie key={movie.imdb}>
@@ -320,7 +277,7 @@ export default function Home() {
                 className="move-left"
                 onClick={() => handleDirection("fantasy", "left")}
               />
-              <MovieList ref={fantasyList}>
+              <MovieList ref={listRefs.fantasy}>
                 {dataMovies.fantasy
                   .map((movie) => (
                     <Movie key={movie.imdb}>
@@ -346,7 +303,7 @@ export default function Home() {
                 className="move-left"
                 onClick={() => handleDirection("drama", "left")}
               />
-              <MovieList ref={dramaList}>
+              <MovieList ref={listRefs.drama}>
                 {dataMovies.drama
                   .map((movie) => (
                     <Movie key={movie.imdb}>
@@ -370,9 +327,9 @@ export default function Home() {
             <div className="wrapper">
               <RiArrowLeftSLine
                 className="move-left"
-                onClick={() => { handleDirection("series", "left"); if (pageSeries > 1 && slideSeries < 1) setPageSeries(pageSeries - 1) }}
+                onClick={() => { handleDirection("series", "left"); if (pageSeries > 1 ) setPageSeries(pageSeries - 1) }}
               />
-              <MovieList ref={seriesList}>
+              <MovieList ref={listRefs.series}>
                 <PreviousPage backPage={() => { if (pageSeries > 1) setPageSeries(pageSeries - 1) }} />
                 {series
                   .map((movie) => (
@@ -388,11 +345,11 @@ export default function Home() {
                       <span>{movie.name}</span>
                     </Movie>
                   ))}
-                <NextPage loadMore={loadMoreSeries} />
+                <NextPage loadMore={() => loadMoreSeries(true)} />
               </MovieList>
               <RiArrowRightSLine
                 className="move-right"
-                onClick={() => { handleDirection("series", "right"); if (slideSeries === 4) loadMoreSeries() }}
+                onClick={() => { handleDirection("series", "right"); loadMoreSeries() }}
               />
             </div>
           </>
