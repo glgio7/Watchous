@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { Link, useParams } from "react-router-dom";
 import { RiArrowLeftLine, RiCloseFill } from "react-icons/ri";
-import * as S from "../Home/styles";
 import { Movie } from "../../components/movieitem";
-import { Container } from "./styles";
+import * as S from "./styles";
 
 interface ICurrentMovie {
 	id?: string;
@@ -27,15 +26,10 @@ export default function Details() {
 	const image_path = "https://themoviedb.org/t/p/original";
 	const [movie, setMovie] = useState<ICurrentMovie>({} as ICurrentMovie);
 	const [fullDescription, setFullDescription] = useState<boolean>(false);
-	const [player, setPlayer] = useState(false);
+	const [player, setPlayer] = useState<boolean>(false);
 	const [loaded, setLoaded] = useState(false);
 	const goBack = () => window.history.back();
-	const showFull = () => setFullDescription(!fullDescription);
 	const Load = () => window.scrollTo(0, 0);
-	const togglePlayer = () => {
-		setPlayer(!player);
-		Load();
-	};
 
 	useEffect(() => {
 		fetch(
@@ -62,7 +56,6 @@ export default function Details() {
 						.join(" - "),
 					nota: Math.round(data.vote_average),
 				};
-				console.log(data);
 				document.title = `Watchous - ${movie.title}`;
 				setMovie(movie);
 			})
@@ -89,7 +82,10 @@ export default function Details() {
 				// valorDoFiltro={valorDoFiltro}
 				setSearchValue={setValorDoFiltro}
 			/>
-			<Container background={`${image_path}/${movie.background}`} onLoad={Load}>
+			<S.Container
+				background={`${image_path}/${movie.background}`}
+				onLoad={Load}
+			>
 				<div className="fade"></div>
 				<section className="card-container">
 					<div className="container-info__top">
@@ -100,12 +96,19 @@ export default function Details() {
 						src={`${image_path}/${movie.poster_path}`}
 						alt={`Capa do filme ${movie.title}`}
 					/>
-					<div className="container-info__bottom">
-						<span>Ver trailer</span>
+					<div
+						className="container-info__bottom"
+						onClick={() => setPlayer(true)}
+					>
+						<button>
+							<span>Ver trailer</span>
+						</button>
 					</div>
 				</section>
 				<section className="overview-container">
-					<div className="container-info__top">{movie.genres}</div>
+					<div className="container-info__top">
+						<span>{movie.genres}</span>
+					</div>
 					<p>
 						{fullDescription ? movie.fullSinopse : movie.sinopse}
 						<button
@@ -119,7 +122,18 @@ export default function Details() {
 						<span>Nota da audiencia:</span> {movie.nota}
 					</div>
 				</section>
-			</Container>
+
+				{/* Trailer visualizer */}
+				<S.IframeContainer active={player}>
+					<button className="close-btn" onClick={() => setPlayer(false)}>
+						Fechar
+					</button>
+					<iframe
+						src={`https://www.youtube.com/embed/${movie.trailer}`}
+						title="YouTube video player"
+					/>
+				</S.IframeContainer>
+			</S.Container>
 		</>
 	);
 }

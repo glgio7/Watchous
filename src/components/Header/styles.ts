@@ -201,7 +201,7 @@ export const Header = styled.header`
 
 		nav {
 			position: fixed;
-			width: 100vw;
+			width: 100%;
 			pointer-events: none;
 			opacity: 0;
 			height: 100vh;
@@ -268,8 +268,8 @@ export const Header = styled.header`
 		}
 		nav {
 			position: fixed;
-			width: 100vw;
-			height: 100vh;
+			width: 100%;
+			height: 100%;
 			margin-top: 0;
 			backdrop-filter: blur(6px);
 			background: rgb(32, 32, 32);
