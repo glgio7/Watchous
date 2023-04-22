@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Header from "../../components/Header";
 import { Link } from "react-router-dom";
 import { Movie } from "../../components/movieitem";
-
+import db from "../../api/movies_list.json";
 import { RiCloseFill } from "react-icons/ri";
 import ListButton from "../../components/ListButton";
 
@@ -36,11 +36,11 @@ export default function Home() {
 		upcoming: useRef<HTMLUListElement>(null),
 		searchMovies: useRef<HTMLUListElement>(null),
 		searchSeries: useRef<HTMLUListElement>(null),
-		suspense: useRef<HTMLUListElement>(null),
+		thriller: useRef<HTMLUListElement>(null),
 		horror: useRef<HTMLUListElement>(null),
 		fantasy: useRef<HTMLUListElement>(null),
 		drama: useRef<HTMLUListElement>(null),
-		series: useRef<HTMLUListElement>(null),
+		// series: useRef<HTMLUListElement>(null),
 	};
 
 	//////////////////// upcoming
@@ -102,19 +102,21 @@ export default function Home() {
 		let maxScroll =
 			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
 
-		if (maxScroll - currentScroll < 50 && direction === "right") {
+		if (
+			maxScroll - currentScroll < 50 &&
+			direction === "right" &&
+			list === "upcoming"
+		) {
 			setPageUpcoming(pageUpcoming + 1);
 			listRefs[list].current!.scrollLeft = 0;
 		} else if (direction === "right") {
-			listRefs[list].current!.scrollLeft += maxScroll / 7;
+			listRefs[list].current!.scrollLeft += maxScroll / 3;
 		} else if (direction === "left") {
-			listRefs[list].current!.scrollLeft -= maxScroll / 7;
-			if (pageUpcoming > 1 && currentScroll === 0) {
+			listRefs[list].current!.scrollLeft -= maxScroll / 3;
+			if (pageUpcoming > 1 && currentScroll === 0 && list === "upcoming") {
 				setPageUpcoming(pageUpcoming - 1);
 			}
 		}
-
-		console.log(currentScroll, maxScroll);
 	};
 
 	return (
@@ -169,151 +171,39 @@ export default function Home() {
 						/>
 					</S.MovieList>
 				</S.Wrapper>
-
-				{/* Testing here above */}
-
-				{/* 
-						<h1>Suspense</h1>
-						<div className="wrapper">
-						<RiArrowLeftSLine
-						className="move-left"
-						onClick={() => handleDirection("suspense", "left")}
-							/>
-							<MovieList ref={listRefs.suspense}>
-								{dataMovies.suspense.map((movie) => (
-									<Movie key={movie.imdb}>
-										<Link to={`/details/${movie.imdb}`}>
-											<img
-												src={`https://www.themoviedb.org/t/p/w500${movie.image_path}`}
-												alt={""}
-												className="moviePoster"
-											/>
-										</Link>
-										<span>{movie.title}</span>
-									</Movie>
-								))}
-							</MovieList>
-							<RiArrowRightSLine
-								className="move-right"
-								onClick={() => handleDirection("suspense", "right")}
-							/>
-						</div>
-						<h1>Terror</h1>
-						<div className="wrapper">
-							<RiArrowLeftSLine
-								className="move-left"
-								onClick={() => handleDirection("horror", "left")}
-							/>
-							<MovieList ref={listRefs.horror}>
-								{dataMovies.terror.map((movie) => (
-									<Movie key={movie.imdb}>
-										<Link to={`/details/${movie.imdb}`}>
-											<img
-												src={`https://www.themoviedb.org/t/p/w500${movie.image_path}`}
-												alt={""}
-												className="moviePoster"
-											/>
-										</Link>
-										<span>{movie.title}</span>
-									</Movie>
-								))}
-							</MovieList>
-							<RiArrowRightSLine
-								className="move-right"
-								onClick={() => handleDirection("horror", "right")}
-							/>
-						</div>
-						<h1>Ficção / Fantasia</h1>
-						<div className="wrapper">
-							<RiArrowLeftSLine
-								className="move-left"
-								onClick={() => handleDirection("fantasy", "left")}
-							/>
-							<MovieList ref={listRefs.fantasy}>
-								{dataMovies.fantasy.map((movie) => (
-									<Movie key={movie.imdb}>
-										<Link to={`/details/${movie.imdb}`}>
-											<img
-												src={`https://www.themoviedb.org/t/p/w500${movie.image_path}`}
-												alt={""}
-												className="moviePoster"
-											/>
-										</Link>
-										<span>{movie.title}</span>
-									</Movie>
-								))}
-							</MovieList>
-							<RiArrowRightSLine
-								className="move-right"
-								onClick={() => handleDirection("fantasy", "right")}
-							/>
-						</div>
-						<h1>Drama</h1>
-						<div className="wrapper">
-							<RiArrowLeftSLine
-								className="move-left"
-								onClick={() => handleDirection("drama", "left")}
-							/>
-							<MovieList ref={listRefs.drama}>
-								{dataMovies.drama.map((movie) => (
-									<Movie key={movie.imdb}>
-										<Link to={`/details/${movie.imdb}`}>
-											<img
-												src={`https://www.themoviedb.org/t/p/w500${movie.image_path}`}
-												alt={""}
-												className="moviePoster"
-											/>
-										</Link>
-										<span>{movie.title}</span>
-									</Movie>
-								))}
-							</MovieList>
-							<RiArrowRightSLine
-								className="move-right"
-								onClick={() => handleDirection("drama", "right")}
-							/>
-						</div>
-						<h1>Séries</h1>
-						<div className="wrapper">
-							<RiArrowLeftSLine
-								className="move-left"
-								onClick={() => {
-									handleDirection("series", "left");
-									if (pageSeries > 1) setPageSeries(pageSeries - 1);
-								}}
-							/>
-							<MovieList ref={listRefs.series}>
-								<PreviousPage
-									backPage={() => {
-										if (pageSeries > 1) setPageSeries(pageSeries - 1);
-									}}
+				{Object.entries(db).map((item) => (
+					<div key={item[0]}>
+						<h1>{item[0]}</h1>
+						<S.Wrapper>
+							<S.MovieList ref={listRefs[item[0]]}>
+								<ListButton
+									direction={"left"}
+									onClick={() => handleScrollList("left", item[0])}
 								/>
-								{series.map((movie) => (
+								{item[1].map((movie) => (
 									<Movie key={movie.id}>
-										<Link to={`/details/serie/${movie.id}`}>
-											<div className="vote-average">
-												<span>{movie.vote_average}</span>
-												<p>{checkStars(movie)}</p>
-											</div>
+										<Link to={`/details/${movie.id}`}>
 											<img
-												src={`https://www.themoviedb.org/t/p/w500${movie.poster_path}`}
+												src={
+													movie.poster_path
+														? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+														: "/img/movie_placeholder.jpg"
+												}
 												alt={""}
 												className="moviePoster"
 											/>
 										</Link>
-										<span>{movie.name}</span>
+										<span>{movie.title}</span>
 									</Movie>
 								))}
-								<NextPage loadMore={() => loadMoreSeries(true)} />
-							</MovieList>
-							<RiArrowRightSLine
-								className="move-right"
-								onClick={() => {
-									handleDirection("series", "right");
-									loadMoreSeries();
-								}}
-							/>
-						</div> */}
+								<ListButton
+									direction={"right"}
+									onClick={() => handleScrollList("right", item[0])}
+								/>
+							</S.MovieList>
+						</S.Wrapper>
+					</div>
+				))}
 				{/* ----------------------- Disclaimer/Advices --------------------------- */}
 				<div className={disclaimer ? "disclaimer active" : "disclaimer"}>
 					<RiCloseFill className="closeDisclaimer" onClick={handleDisclaimer} />

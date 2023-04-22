@@ -110,6 +110,10 @@ export const Container = styled.main`
 	h1 {
 		font-size: 1.5rem;
 		color: #fff;
+
+		&::first-letter {
+			text-transform: uppercase;
+		}
 	}
 `;
 
@@ -166,7 +170,7 @@ export const Banner = styled.div`
 		left: 0;
 		right: 0;
 
-		width: 100vw;
+		width: 100%;
 	}
 `;
 
@@ -190,6 +194,6 @@ export const MovieList = styled.ul`
 	}
 
 	@media screen and (max-width: 768px) {
-		background-color: red;
+		background-color: transparent;
 	}
 `;
