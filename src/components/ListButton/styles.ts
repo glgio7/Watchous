@@ -1,9 +1,16 @@
 import styled from "styled-components";
-import React from "react";
-import { RiArrowRightSLine } from "react-icons/ri";
 
-const HandleButton = styled.button`
-	display: none;
+export const ListButton = styled.button`
+	width: 72px;
+
+	cursor: pointer;
+
+	border: none;
+	font-size: 2rem;
+
+	color: #0070ff;
+	background-color: rgba(0, 0, 0, 0);
+	/* display: none;
 
 	@media screen and (max-width: 900px) {
 		cursor: pointer;
@@ -18,15 +25,5 @@ const HandleButton = styled.button`
 		align-items: center;
 		color: #fff;
 		pointer-events: all;
-	}
+	} */
 `;
-
-export function NextPage({ loadMore }) {
-	return (
-		<>
-			<HandleButton onClick={loadMore}>
-				<RiArrowRightSLine />
-			</HandleButton>
-		</>
-	);
-}

@@ -1,30 +1,47 @@
+import * as S from "./styles";
 import React, { useState, useRef, useEffect } from "react";
 import Header from "../../components/Header";
-import dataMovies from "../../api/movies_list.json";
 import { Link } from "react-router-dom";
-import { Container } from "./styles";
-import { MovieList } from "../../components/movielist";
 import { Movie } from "../../components/movieitem";
-import { apiKey } from "../../api";
-import { PreviousPage } from "../../components/previouspage";
-import { NextPage } from "../../components/nextpage";
-import {
-	RiCloseFill,
-	RiArrowLeftSLine,
-	RiArrowRightSLine,
-} from "react-icons/ri";
+
+import { RiCloseFill } from "react-icons/ri";
+import ListButton from "../../components/ListButton";
+
+interface IListRefs {
+	[key: string]: React.RefObject<HTMLUListElement>;
+}
+
+interface IMovie {
+	id: string;
+	vote_average: number;
+	poster_path: string;
+	title: string;
+}
 
 export default function Home() {
+	const apiKey = process.env.REACT_APP_API_KEY;
 	const [disclaimer, setDisclaimer] = useState(false);
 	const handleDisclaimer = () => setDisclaimer(!disclaimer);
-	const [valorDoFiltro, setValorDoFiltro] = useState("");
+
+	const [searchValue, setSearchValue] = useState<string>("");
 	const [pageUpcoming, setPageUpcoming] = useState(1);
 	const [pageSeries, setPageSeries] = useState(1);
-	const [upcoming, setUpcoming] = useState([]);
+	const [upcoming, setUpcoming] = useState<IMovie[]>();
 	const [series, setSeries] = useState([]);
-	const [fromSearch, setFromSearch] = useState([]);
-	const [seriesFromSearch, setSeriesFromSearch] = useState([]);
-	const serverSearch = valorDoFiltro.replaceAll(" ", "+");
+	const [fromSearch, setFromSearch] = useState(null);
+	const [seriesFromSearch, setSeriesFromSearch] = useState(null);
+	const search = searchValue.replaceAll(" ", "+");
+
+	const listRefs: IListRefs = {
+		upcoming: useRef<HTMLUListElement>(null),
+		searchMovies: useRef<HTMLUListElement>(null),
+		searchSeries: useRef<HTMLUListElement>(null),
+		suspense: useRef<HTMLUListElement>(null),
+		horror: useRef<HTMLUListElement>(null),
+		fantasy: useRef<HTMLUListElement>(null),
+		drama: useRef<HTMLUListElement>(null),
+		series: useRef<HTMLUListElement>(null),
+	};
 
 	//////////////////// upcoming
 	useEffect(() => {
@@ -32,7 +49,9 @@ export default function Home() {
 			`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=pt-BR&page=${pageUpcoming}`
 		)
 			.then((response) => response.json())
-			.then((data) => setUpcoming(data.results))
+			.then((data) => {
+				setUpcoming(data.results);
+			})
 			.catch((err) => console.log(err));
 	}, [pageUpcoming]);
 	//////////////////// series
@@ -49,7 +68,7 @@ export default function Home() {
 	useEffect(() => {
 		const movies = () => {
 			fetch(
-				`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${serverSearch}&language=pt-BR`
+				`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${search}&language=pt-BR`
 			)
 				.then((response) => response.json())
 				.then((data) => setFromSearch(data.results))
@@ -58,42 +77,16 @@ export default function Home() {
 
 		const series = () => {
 			fetch(
-				`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${serverSearch}&language=pt-BR`
+				`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${search}&language=pt-BR`
 			)
 				.then((response) => response.json())
 				.then((data) => setSeriesFromSearch(data.results))
 				.catch((err) => console.log(err));
 		};
 		Promise.all([movies(), series()]);
-	}, [serverSearch]);
+	}, [search]);
 
-	//////////////////// HANDLE LISTS DIRECTIONS
-
-	const loadMoreSeries = (mobile) => {
-		listRefs.series.scrollLeft -= listRefs.series.scrollWidth;
-		if (
-			listRefs.series.current.scrollLeft >=
-				listRefs.series.current.scrollLeftMax - 60 ||
-			mobile === true
-		) {
-			setPageSeries(pageSeries + 1);
-			listRefs.series.current.scrollLeft = 0;
-		}
-	};
-
-	const loadMore = (mobile) => {
-		listRefs.upcoming.scrollLeft -= listRefs.upcoming.scrollWidth;
-		if (
-			listRefs.upcoming.current.scrollLeft >=
-				listRefs.upcoming.current.scrollLeftMax - 60 ||
-			mobile === true
-		) {
-			setPageUpcoming(pageUpcoming + 1);
-			listRefs.upcoming.current.scrollLeft = 0;
-		}
-	};
-
-	const checkStars = (value) =>
+	const checkStars = (value: IMovie) =>
 		value.vote_average > 8
 			? "★★★★★"
 			: value.vote_average > 6
@@ -104,49 +97,10 @@ export default function Home() {
 			? "★★"
 			: "★";
 
-	const listRefs = {
-		searchMovies: useRef(),
-		searchSeries: useRef(),
-		upcoming: useRef(),
-		suspense: useRef(),
-		horror: useRef(),
-		fantasy: useRef(),
-		drama: useRef(),
-		series: useRef(),
-	};
-
-	const handleDirection = (list, direction) => {
-		const listRef = listRefs[list];
-
-		if (!listRef.current) {
-			return;
-		}
-
-		const { scrollLeft, scrollWidth } = listRef.current;
-		const distance = scrollWidth / 6;
-
-		if (direction === "left") {
-			listRef.current.scrollLeft = Math.max(scrollLeft - distance, 0);
-		} else if (direction === "right") {
-			listRef.current.scrollLeft = Math.min(
-				scrollLeft + distance,
-				scrollWidth - listRef.current.clientWidth
-			);
-		}
-	};
-
 	return (
 		<>
-			<Header
-				valorDoFiltro={valorDoFiltro}
-				setValorDoFiltro={setValorDoFiltro}
-			/>
-			<Container>
-				{upcoming.length < 10 && (
-					<div className="loading">
-						<img src="/img/loading.gif" alt="Loading" />
-					</div>
-				)}
+			<Header setSearchValue={setSearchValue} />
+			<S.Container>
 				<div className="banner">
 					<h2>
 						<span>Sem</span> assinatura, <span>sem</span> fins-lucrativos.
@@ -159,136 +113,45 @@ export default function Home() {
 						<source src="/img/aurora.mp4" type="video/mp4" />
 					</video>
 				</div>
-				{fromSearch.length > 0 && (
-					<>
-						<h1>Filmes da sua pesquisa</h1>
-						<div className="wrapper">
-							<RiArrowLeftSLine
-								className="move-left"
-								onClick={() => {
-									handleDirection("searchMovies", "left");
-								}}
-							/>
-							<MovieList ref={listRefs.searchMovies}>
-								<PreviousPage />
-								{fromSearch.map((movie) => (
-									<Movie key={movie.id}>
-										<Link to={`/details/${movie.id}`}>
-											<img
-												src={
-													movie.poster_path
-														? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
-														: "/img/movie_placeholder.jpg"
-												}
-												alt={""}
-												className="moviePoster"
-											/>
-										</Link>
-										<span>{movie.title}</span>
-									</Movie>
-								))}
-								<NextPage />
-							</MovieList>
-							<RiArrowRightSLine
-								className="move-right"
-								onClick={() => {
-									handleDirection("searchMovies", "right");
-								}}
-							/>
-						</div>
-					</>
-				)}
-				{seriesFromSearch.length > 0 && (
-					<>
-						<h1>Séries da sua pesquisa</h1>
-						<div className="wrapper">
-							<RiArrowLeftSLine
-								className="move-left"
-								onClick={() => {
-									handleDirection("searchSeries", "left");
-								}}
-							/>
-							<MovieList ref={listRefs.searchSeries}>
-								<PreviousPage />
-								{seriesFromSearch.map((movie) => (
-									<Movie key={movie.id}>
-										<Link to={`/details/serie/${movie.id}`}>
-											<img
-												src={
-													movie.poster_path
-														? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
-														: "/img/movie_placeholder.jpg"
-												}
-												alt={""}
-												className="moviePoster"
-											/>
-										</Link>
-										<span>{movie.name}</span>
-									</Movie>
-								))}
-								<NextPage />
-							</MovieList>
-							<RiArrowRightSLine
-								className="move-right"
-								onClick={() => {
-									handleDirection("searchSeries", "right");
-								}}
-							/>
-						</div>
-					</>
-				)}
-				{fromSearch.length < 1 && (
-					<>
-						<h1>Novos no Watchous</h1>
-						<div className="wrapper">
-							<RiArrowLeftSLine
-								className="move-left"
-								onClick={() => {
-									handleDirection("upcoming", "left");
-									if (pageUpcoming > 1) setPageUpcoming(pageUpcoming - 1);
-								}}
-							/>
-							<MovieList ref={listRefs.upcoming}>
-								<PreviousPage
-									backPage={() => {
-										if (pageUpcoming > 1) setPageUpcoming(pageUpcoming - 1);
-									}}
-								/>
-								{upcoming.map((movie) => (
-									<Movie key={movie.id}>
-										<div className="vote-average">
-											<span>{movie.vote_average}</span>
-											<p>{checkStars(movie)}</p>
-										</div>
-										<Link to={`/details/${movie.id}`}>
-											<img
-												src={
-													movie.poster_path
-														? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
-														: "/img/movie_placeholder.jpg"
-												}
-												alt={""}
-												className="moviePoster"
-											/>
-										</Link>
-										<span>{movie.title}</span>
-									</Movie>
-								))}
-								<NextPage loadMore={() => loadMore(true)} />
-							</MovieList>
-							<RiArrowRightSLine
-								className="move-right"
-								onClick={() => {
-									handleDirection("upcoming", "right");
-									loadMore();
-								}}
-							/>
-						</div>
+				<h1 onClick={() => console.log(listRefs["upcoming"].current)}>
+					Novos no Watchous
+				</h1>
+				<div className="wrapper">
+					<ListButton direction={"left"} />
+					<S.MovieList ref={listRefs.upcoming}>
+						{upcoming &&
+							upcoming.map((movie) => (
+								<Movie key={movie.id}>
+									<div className="vote-average">
+										<span>{movie.vote_average}</span>
+										<p>{checkStars(movie)}</p>
+									</div>
+									<Link to={`/details/${movie.id}`}>
+										<img
+											src={
+												movie.poster_path
+													? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+													: "/img/movie_placeholder.jpg"
+											}
+											alt={""}
+											className="moviePoster"
+										/>
+									</Link>
+									<span>{movie.title}</span>
+								</Movie>
+							))}
+					</S.MovieList>
+					<ListButton direction={"right"} />
+				</div>
+
+				{/* Testing here above */}
+
+				{/* 
 						<h1>Suspense</h1>
 						<div className="wrapper">
-							<RiArrowLeftSLine
-								className="move-left"
-								onClick={() => handleDirection("suspense", "left")}
+						<RiArrowLeftSLine
+						className="move-left"
+						onClick={() => handleDirection("suspense", "left")}
 							/>
 							<MovieList ref={listRefs.suspense}>
 								{dataMovies.suspense.map((movie) => (
@@ -424,9 +287,7 @@ export default function Home() {
 									loadMoreSeries();
 								}}
 							/>
-						</div>
-					</>
-				)}
+						</div> */}
 				{/* ----------------------- Disclaimer/Advices --------------------------- */}
 				<div className={disclaimer ? "disclaimer active" : "disclaimer"}>
 					<RiCloseFill className="closeDisclaimer" onClick={handleDisclaimer} />
@@ -436,7 +297,7 @@ export default function Home() {
 				<button className="buttonDisclaimer" onClick={handleDisclaimer}>
 					?
 				</button>
-			</Container>
+			</S.Container>
 		</>
 	);
 }

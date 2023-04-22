@@ -1,4 +1,4 @@
-import React, { FocusEventHandler, useState } from "react";
+import React, { useState } from "react";
 import { RiCheckboxBlankCircleFill, RiMenu3Fill } from "react-icons/ri";
 import { RiSearchLine } from "react-icons/ri";
 import { RiCloseFill } from "react-icons/ri";
@@ -6,17 +6,16 @@ import { Link } from "react-router-dom";
 import * as S from "./styles";
 
 type HeaderProps = {
-	setValorDoFiltro: React.Dispatch<React.SetStateAction<string>>;
-	reset: FocusEventHandler<HTMLInputElement>;
+	setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function Header({ setValorDoFiltro, reset }: HeaderProps) {
+export default function Header({ setSearchValue }: HeaderProps) {
 	const [navOpen, setNavOpen] = useState(false);
 	const toggleMenu = () => setNavOpen(!navOpen);
 	const hideNav = () => setNavOpen(false);
 	const [input, setInput] = useState("");
-	const setBusca = setValorDoFiltro;
-	const clearLists = reset;
+	const setBusca = setSearchValue;
+	// const clearLists = reset;
 	const searchOnEnter = async (props: React.KeyboardEvent) => {
 		if (props.key === "Enter") {
 			setBusca(input);
@@ -38,7 +37,7 @@ export default function Header({ setValorDoFiltro, reset }: HeaderProps) {
 							placeholder="Pesquisar"
 							onChange={(e) => setInput(e.target.value)}
 							value={input}
-							onFocus={clearLists}
+							// onFocus={clearLists}
 							onKeyDown={(props) => {
 								searchOnEnter(props);
 							}}
