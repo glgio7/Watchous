@@ -26,7 +26,6 @@ export const Container = styled.div<{
 
 		z-index: 5;
 
-		width: 45%;
 		height: 480px;
 	}
 
@@ -61,7 +60,6 @@ export const Container = styled.div<{
 	}
 
 	.card-container {
-		width: 25%;
 		aspect-ratio: 9/16;
 	}
 
@@ -104,6 +102,23 @@ export const Container = styled.div<{
 			rgba(0, 0, 0, 0) 0%,
 			rgba(0, 0, 0, 1) 70%
 		);
+	}
+
+	@media screen and (max-width: 768px) {
+		flex-direction: column;
+		padding: 2rem;
+
+		section {
+			margin-block: 1rem;
+		}
+
+		.card-container {
+			min-width: 60%;
+		}
+
+		.overview-container {
+			width: 100%;
+		}
 	}
 `;
 /* 

@@ -135,42 +135,46 @@ export default function Home() {
 				</video>
 			</S.Banner>
 			<S.Container>
-				<h1 onClick={() => console.log(listRefs["upcoming"].current)}>
-					Novos no Watchous
-				</h1>
-				<S.Wrapper>
-					<S.MovieList ref={listRefs.upcoming}>
-						<ListButton
-							direction={"left"}
-							onClick={() => handleScrollList("left", "upcoming")}
-						/>
-						{upcoming &&
-							upcoming.map((movie) => (
-								<Movie key={movie.id}>
-									<div className="vote-average">
-										<span>{movie.vote_average}</span>
-										<p>{checkStars(movie)}</p>
-									</div>
-									<Link to={`/details/${movie.id}`}>
-										<img
-											src={
-												movie.poster_path
-													? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
-													: "/img/movie_placeholder.jpg"
-											}
-											alt={""}
-											className="moviePoster"
-										/>
-									</Link>
-									<span>{movie.title}</span>
-								</Movie>
-							))}
-						<ListButton
-							direction={"right"}
-							onClick={() => handleScrollList("right", "upcoming")}
-						/>
-					</S.MovieList>
-				</S.Wrapper>
+				{upcoming && upcoming.length > 5 && (
+					<>
+						<h1 onClick={() => console.log(listRefs["upcoming"].current)}>
+							Novos no Watchous
+						</h1>
+						<S.Wrapper>
+							<S.MovieList ref={listRefs.upcoming}>
+								<ListButton
+									direction={"left"}
+									onClick={() => handleScrollList("left", "upcoming")}
+								/>
+								{upcoming &&
+									upcoming.map((movie) => (
+										<Movie key={movie.id}>
+											<div className="vote-average">
+												<span>{movie.vote_average}</span>
+												<p>{checkStars(movie)}</p>
+											</div>
+											<Link to={`/details/${movie.id}`}>
+												<img
+													src={
+														movie.poster_path
+															? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+															: "/img/movie_placeholder.jpg"
+													}
+													alt={""}
+													className="moviePoster"
+												/>
+											</Link>
+											<span>{movie.title}</span>
+										</Movie>
+									))}
+								<ListButton
+									direction={"right"}
+									onClick={() => handleScrollList("right", "upcoming")}
+								/>
+							</S.MovieList>
+						</S.Wrapper>
+					</>
+				)}
 				{Object.entries(db).map((item) => (
 					<div key={item[0]}>
 						<h1>{item[0]}</h1>
