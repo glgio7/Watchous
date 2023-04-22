@@ -110,7 +110,7 @@ export default function Home() {
 		} else if (direction === "left") {
 			listRefs[list].current!.scrollLeft -= maxScroll / 7;
 			if (pageUpcoming > 1 && currentScroll === 0) {
-				setPageUpcoming(pageUpcoming + 1);
+				setPageUpcoming(pageUpcoming - 1);
 			}
 		}
 
@@ -120,19 +120,19 @@ export default function Home() {
 	return (
 		<>
 			<Header setSearchValue={setSearchValue} />
+			<S.Banner>
+				<h2>
+					<span>Sem</span> assinatura, <span>sem</span> fins-lucrativos.
+				</h2>
+				<h1>Atualizações semanais</h1>
+				<h2>
+					<span>Confira</span> antes de assistir.
+				</h2>
+				<video autoPlay loop muted>
+					<source src="/img/aurora.mp4" type="video/mp4" />
+				</video>
+			</S.Banner>
 			<S.Container>
-				<div className="banner">
-					<h2>
-						<span>Sem</span> assinatura, <span>sem</span> fins-lucrativos.
-					</h2>
-					<h1>Atualizações semanais</h1>
-					<h2>
-						<span>Confira</span> antes de assistir.
-					</h2>
-					<video autoPlay loop muted>
-						<source src="/img/aurora.mp4" type="video/mp4" />
-					</video>
-				</div>
 				<h1 onClick={() => console.log(listRefs["upcoming"].current)}>
 					Novos no Watchous
 				</h1>

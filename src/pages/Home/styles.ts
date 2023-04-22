@@ -23,51 +23,6 @@ export const Container = styled.main`
 		object-fit: contain;
 	}
 
-	.banner {
-		position: relative;
-		height: 224px;
-		overflow: hidden;
-		z-index: 5;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		background-color: #000;
-		animation: sub;
-		animation-duration: 1s;
-
-		h1 {
-			font-size: 1.75rem;
-			max-width: 80%;
-			margin-left: 0;
-			text-align: center;
-			margin-block: 0.25rem;
-			font-weight: bold;
-			animation: sub;
-			animation-duration: 4s;
-		}
-		h2 {
-			color: #fff;
-			font-size: 1.25rem;
-			text-align: center;
-			font-weight: bold;
-			animation: sub;
-			animation-duration: 6.5s;
-		}
-		span {
-			color: #00aeff;
-		}
-		video {
-			position: absolute;
-			z-index: -1;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			width: 100vw;
-		}
-	}
-
 	.buttonDisclaimer {
 		background-color: rgba(0, 174, 255, 0.65);
 		font-weight: bold;
@@ -155,88 +110,64 @@ export const Container = styled.main`
 	h1 {
 		font-size: 1.5rem;
 		color: #fff;
-		margin-top: 1rem;
-		margin-left: 15px;
+	}
+`;
+
+export const Banner = styled.div`
+	position: relative;
+	z-index: 5;
+
+	height: 224px;
+
+	overflow: hidden;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	background-color: #000;
+
+	animation: sub;
+	animation-duration: 1s;
+
+	h1 {
+		color: #fff;
+
+		font-size: 1.75rem;
+		font-weight: bold;
+		text-align: center;
+
+		max-width: 80%;
+
+		animation: sub;
+		animation-duration: 4s;
+	}
+	h2 {
+		color: #fff;
+
+		font-size: 1.25rem;
+		font-weight: bold;
+		text-align: center;
+
+		animation: sub;
+		animation-duration: 6.5s;
+	}
+	span {
+		color: #00aeff;
 	}
 
-	/* 
-		&:hover .move-left {
-			pointer-events: all;
-			opacity: 1;
-		}
-		&:hover .move-right {
-			pointer-events: all;
-			opacity: 1;
-		}
+	video {
+		z-index: -1;
 
-		::-webkit-scrollbar {
-			height: 0rem;
-		}
-		.move-left {
-			left: 0;
-		}
-		.move-right {
-			right: 0;
-		}
-	}
-
-	.move-left,
-	.move-right {
-		width: 30px;
-		background-color: rgba(0, 0, 0, 0.75);
-		cursor: pointer;
 		position: absolute;
-		height: 100%;
 		top: 0;
 		bottom: 0;
-		z-index: 9;
-		pointer-events: none;
-		opacity: 0;
-		display: flex;
-		transition: all ease 200ms;
-		justify-content: center;
-		align-items: center;
-		color: #fff;
-		&:hover {
-			width: 42px;
-			pointer-events: all;
-			opacity: 1;
-		}
-		&:active {
-			width: 36px;
-		} */
+		left: 0;
+		right: 0;
 
-	/* 
-	//mobile portrait
-	@media screen and (max-width: 768px) {
-		margin-top: 114px;
-
-		.banner {
-			h1 {
-				font-size: 1.25rem;
-			}
-			h2 {
-				font-size: 1rem;
-			}
-			video {
-				width: initial;
-			}
-		}
-
-		h1 {
-			font-size: 1.25rem;
-			color: #fff;
-			margin-left: 3px;
-		}
-
-		.wrapper {
-			margin-inline: 3px;
-		}
-		/* 
-		.move-left,
-		.move-right {
-			display: none;
-		} }*/
+		width: 100vw;
+	}
 `;
 
 export const Wrapper = styled.div`
