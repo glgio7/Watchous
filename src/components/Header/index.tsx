@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import * as S from "./styles";
 
 type HeaderProps = {
-	setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+	setSearchValue?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function Header({ setSearchValue }: HeaderProps) {
@@ -18,7 +18,7 @@ export default function Header({ setSearchValue }: HeaderProps) {
 	// const clearLists = reset;
 	const searchOnEnter = async (props: React.KeyboardEvent) => {
 		if (props.key === "Enter") {
-			setBusca(input);
+			if (setBusca) setBusca(input);
 			setInput("");
 		}
 	};
@@ -45,7 +45,7 @@ export default function Header({ setSearchValue }: HeaderProps) {
 						<RiSearchLine
 							className="searchIcon"
 							onClick={() => {
-								setBusca(input);
+								if (setBusca) setBusca(input);
 								setInput("");
 							}}
 						/>

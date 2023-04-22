@@ -11,7 +11,7 @@ interface IListRefs {
 	[key: string]: React.RefObject<HTMLUListElement>;
 }
 
-interface IMovie {
+export interface IMovie {
 	id: string;
 	vote_average: number;
 	poster_path: string;

@@ -7,6 +7,7 @@ export const GlobalCSS = createGlobalStyle`
   box-sizing: border-box;
   scroll-behavior: smooth;
   font-family: 'Saira Condensed', sans-serif;
+  border: none;
 }
 img {
   width: 100%;
@@ -16,7 +17,6 @@ body {
   background-color: #000;
   height: 100%;
   width: 100%;
-  background-image: url('/img/manutencao.png');
 }
 
 a, li{
