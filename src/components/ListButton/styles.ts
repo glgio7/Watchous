@@ -1,19 +1,34 @@
 import styled from "styled-components";
 
-export const ListButton = styled.button`
-	width: 72px;
+export const ListButton = styled.button<{ direction: string }>`
+	width: 48px;
 
 	cursor: pointer;
 
 	border: none;
 	font-size: 2rem;
 
-	color: #0070ff;
-	background-color: rgba(0, 0, 0, 0);
-	/* display: none;
+	z-index: 90;
 
-	@media screen and (max-width: 900px) {
-		cursor: pointer;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: ${({ direction }) => (direction === "left" ? "0" : "")};
+	right: ${({ direction }) => (direction === "right" ? "0" : "")};
+
+	background-color: rgba(0, 0, 0, 0.85);
+	color: #0070ff;
+
+	transition: all 250ms;
+
+	&:hover {
+		color: #fff;
+	}
+
+	@media screen and (max-width: 768px) {
+		position: static;
+	}
+	/*		cursor: pointer;
 		border: none;
 		display: flex;
 		background-color: rgba(0, 0, 0, 0.75);

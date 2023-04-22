@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.main`
 	width: 100%;
 	margin-top: 60px;
+	padding: 0 2rem;
 
 	.loading {
 		position: absolute;
@@ -158,13 +159,7 @@ export const Container = styled.main`
 		margin-left: 15px;
 	}
 
-	.wrapper {
-		display: flex;
-		position: relative;
-		overflow: hidden;
-		margin-inline: 15px;
-		height: 100%;
-		/* 
+	/* 
 		&:hover .move-left {
 			pointer-events: all;
 			opacity: 1;
@@ -210,8 +205,8 @@ export const Container = styled.main`
 		&:active {
 			width: 36px;
 		} */
-	}
 
+	/* 
 	//mobile portrait
 	@media screen and (max-width: 768px) {
 		margin-top: 114px;
@@ -241,36 +236,29 @@ export const Container = styled.main`
 		.move-left,
 		.move-right {
 			display: none;
-		} */
-	}
-	//mobile landscape
-	@media screen and (max-width: 900px) and (min-width: 460px) and (orientation: landscape) {
-		margin-top: 72px;
+		} }*/
+`;
 
-		.wrapper {
-			height: max-content;
-		}
-		/* 
-		.move-left,
-		.move-right {
-			display: none;
-		} */
-	}
+export const Wrapper = styled.div`
+	position: relative;
+	width: 100%;
+	padding: 1rem 0;
 `;
 
 export const MovieList = styled.ul`
 	overflow-x: scroll;
 	overflow-y: hidden;
-	position: relative;
 	display: flex;
-	max-width: 100vw;
 	height: 100%;
 	transition: all ease 250ms;
 	scrollbar-width: none;
-	padding: 1rem 0;
 
 	::-webkit-scrollbar {
 		background-color: transparent;
 		width: 0px;
+	}
+
+	@media screen and (max-width: 768px) {
+		background-color: red;
 	}
 `;

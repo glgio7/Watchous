@@ -13,12 +13,9 @@ img {
   height: 100%;
 }
 body {
-  display: flex;
-  flex-direction: column;
   background-color: #000;
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
   background-image: url('/img/manutencao.png');
 }
 

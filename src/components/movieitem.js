@@ -12,8 +12,8 @@ export const Movie = styled.li`
 	aspect-ratio: 9 / 16;
 	width: calc((100vw - 105px) / 7);
 	transition: all ease 200ms;
-	&:hover {
-		scale: 1.05;
+	&:hover img {
+		scale: 1.025;
 	}
 	:last-child {
 		margin-right: 0px;
@@ -21,6 +21,7 @@ export const Movie = styled.li`
 	.vote-average {
 		position: absolute;
 		top: 0;
+		z-index: 9;
 		right: 1rem;
 		margin: 0 auto;
 		width: 48px;
@@ -39,6 +40,7 @@ export const Movie = styled.li`
 		height: 100%;
 		object-fit: cover;
 		object-position: center;
+		transition: all 250ms;
 	}
 
 	.moviePoster {
@@ -59,9 +61,6 @@ export const Movie = styled.li`
 	@media screen and (max-width: 768px) {
 		width: calc((100vw - 30px) / 3);
 		aspect-ratio: 9 / 16;
-		&:hover {
-			scale: 1.05;
-		}
 
 		.moviePoster {
 			aspect-ratio: 9 / 16;

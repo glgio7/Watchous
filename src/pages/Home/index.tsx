@@ -97,6 +97,26 @@ export default function Home() {
 			? "★★"
 			: "★";
 
+	const handleScrollList = (direction: string, list: string) => {
+		let currentScroll = listRefs[list].current!.scrollLeft;
+		let maxScroll =
+			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
+
+		if (maxScroll - currentScroll < 50 && direction === "right") {
+			setPageUpcoming(pageUpcoming + 1);
+			listRefs[list].current!.scrollLeft = 0;
+		} else if (direction === "right") {
+			listRefs[list].current!.scrollLeft += maxScroll / 7;
+		} else if (direction === "left") {
+			listRefs[list].current!.scrollLeft -= maxScroll / 7;
+			if (pageUpcoming > 1 && currentScroll === 0) {
+				setPageUpcoming(pageUpcoming + 1);
+			}
+		}
+
+		console.log(currentScroll, maxScroll);
+	};
+
 	return (
 		<>
 			<Header setSearchValue={setSearchValue} />
@@ -116,9 +136,12 @@ export default function Home() {
 				<h1 onClick={() => console.log(listRefs["upcoming"].current)}>
 					Novos no Watchous
 				</h1>
-				<div className="wrapper">
-					<ListButton direction={"left"} />
+				<S.Wrapper>
 					<S.MovieList ref={listRefs.upcoming}>
+						<ListButton
+							direction={"left"}
+							onClick={() => handleScrollList("left", "upcoming")}
+						/>
 						{upcoming &&
 							upcoming.map((movie) => (
 								<Movie key={movie.id}>
@@ -140,9 +163,12 @@ export default function Home() {
 									<span>{movie.title}</span>
 								</Movie>
 							))}
+						<ListButton
+							direction={"right"}
+							onClick={() => handleScrollList("right", "upcoming")}
+						/>
 					</S.MovieList>
-					<ListButton direction={"right"} />
-				</div>
+				</S.Wrapper>
 
 				{/* Testing here above */}
 

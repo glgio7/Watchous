@@ -4,11 +4,12 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
 type ListButtonProps = {
 	direction: string;
+	onClick?: () => void;
 };
 
-const ListButton: React.FC<ListButtonProps> = ({ direction }) => {
+const ListButton: React.FC<ListButtonProps> = ({ direction, onClick }) => {
 	return (
-		<S.ListButton>
+		<S.ListButton direction={direction} onClick={onClick}>
 			{direction === "left" ? <RiArrowLeftSLine /> : <RiArrowRightSLine />}
 		</S.ListButton>
 	);
