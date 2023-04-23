@@ -23,6 +23,12 @@ export default function Header({ searchValue, setSearchValue }: HeaderProps) {
 		}
 	};
 
+	if (navOpen) {
+		document.body.style.overflow = "hidden";
+	} else if (!navOpen) {
+		document.body.style.overflow = "auto";
+	}
+
 	useEffect(() => {
 		setInput("");
 	}, [searchValue]);
@@ -30,49 +36,48 @@ export default function Header({ searchValue, setSearchValue }: HeaderProps) {
 	return (
 		<>
 			<S.Header>
-				<div className="masterHead">
-					<a href="/">
-						<h1 className="logo-box">
-							<img src={"/img/logo.png"} className="logo" alt="Watchous" />
-						</h1>
-					</a>
-					<div className="searchBar">
-						<input
-							type="text"
-							placeholder="Pesquisar"
-							onChange={(e) => setInput(e.target.value)}
-							value={input}
-							onFocus={() => window.history.back()}
-							onKeyDown={(props) => {
-								search(props);
-							}}
-						/>
-						<RiSearchLine
-							className="searchIcon"
-							onClick={() => {
-								setSearchValue(input);
-							}}
-						/>
-					</div>
-					<RiMenu3Fill className="menu" onClick={toggleMenu} />
-					<RiCheckboxBlankCircleFill className="notification" />
+				<Link to={"/"} className="logo-container">
+					<h1 className="logo">
+						<img src={"/img/logo.png"} alt="Watchous" />
+					</h1>
+				</Link>
+				<div className="search-container">
+					<input
+						type="text"
+						placeholder="Pesquisar"
+						onChange={(e) => setInput(e.target.value)}
+						value={input}
+						onKeyDown={(props) => {
+							search(props);
+						}}
+					/>
+					<RiSearchLine
+						className="search-container__icon"
+						onClick={() => {
+							setSearchValue(input);
+						}}
+					/>
 				</div>
-				<nav className={navOpen ? "active" : "null"} onMouseLeave={hideNav}>
-					<RiCloseFill className="closeMenu" onClick={toggleMenu} />
-					<a href="/">
-						<li>Página Inicial</li>
-					</a>
-					<a href="/">
-						<li>Minha conta</li>
-					</a>
-					<Link to={"/freetowatch"}>
-						<li id="new">Grátis para Assistir</li>
-					</Link>
-					<Link to={"/credits"}>
-						<li id="new">Créditos</li>
-					</Link>
-				</nav>
+				<div className="menu-container">
+					<RiMenu3Fill className="menu" onClick={toggleMenu} />
+				</div>
+				{/* <RiCheckboxBlankCircleFill className="notification" /> */}
 			</S.Header>
+			<S.Navigation active={navOpen} onMouseLeave={hideNav}>
+				<RiCloseFill className="closeMenu" onClick={toggleMenu} />
+				<a href="/">
+					<li>Página Inicial</li>
+				</a>
+				<a href="/">
+					<li>Minha conta</li>
+				</a>
+				<Link to={"/freetowatch"}>
+					<li id="new">Grátis para Assistir</li>
+				</Link>
+				<Link to={"/credits"}>
+					<li id="new">Créditos</li>
+				</Link>
+			</S.Navigation>
 		</>
 	);
 }

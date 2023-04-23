@@ -19,6 +19,9 @@ html, body {
   width: 100%;
 }
 
+body{
+}
+
 a, li{
   text-decoration: none;
   list-style: none;

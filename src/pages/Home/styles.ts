@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.main`
 	width: 100%;
-	margin-top: 60px;
-	padding: 0 2rem;
+	/* margin-top: 60px; */
+	padding: 2rem;
 
 	.loading {
 		position: absolute;
@@ -114,6 +114,10 @@ export const Container = styled.main`
 		&::first-letter {
 			text-transform: uppercase;
 		}
+	}
+
+	@media screen and (max-width: 768px) {
+		padding: 1rem;
 	}
 `;
 

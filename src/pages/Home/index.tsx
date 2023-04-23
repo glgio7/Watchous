@@ -1,24 +1,13 @@
 import * as S from "./styles";
 import db from "../../api/movies_list.json";
 import React, { useState, useRef, useEffect, useContext } from "react";
+import { IListRefs, IMovie } from "./types";
 import { SearchContext } from "../../contexts/SearchContext";
 import { Link } from "react-router-dom";
 import ListButton from "../../components/ListButton";
 import { MovieList } from "../../components/MovieList";
 import { Movie } from "../../components/MovieItem";
 import { RiCloseFill } from "react-icons/ri";
-
-interface IListRefs {
-	[key: string]: React.RefObject<HTMLUListElement>;
-}
-
-interface IMovie {
-	id: string;
-	vote_average: number;
-	poster_path: string;
-	title: string;
-	name?: string;
-}
 
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
@@ -30,8 +19,8 @@ export default function Home() {
 
 	const [upcomingPage, setUpcomingPage] = useState(1);
 	const [seriesPage, setSeriesPage] = useState(1);
-	const [upcoming, setUpcoming] = useState<IMovie[]>();
-	const [series, setSeries] = useState<IMovie[]>();
+	const [upcoming, setUpcoming] = useState<IMovie[]>([]);
+	const [series, setSeries] = useState<IMovie[]>([]);
 
 	const listRefs: IListRefs = {
 		upcoming: useRef<HTMLUListElement>(null),
@@ -67,19 +56,6 @@ export default function Home() {
 			.catch((err) => console.log(err));
 	}, [seriesPage]);
 
-	const checkStars = (value: IMovie): string =>
-		value.vote_average > 8
-			? "★★★★★"
-			: value.vote_average > 6
-			? "★★★★"
-			: value.vote_average > 4
-			? "★★★"
-			: value.vote_average > 2
-			? "★★"
-			: value.vote_average === 0
-			? "?"
-			: "★";
-
 	const handleScrollList = (direction: string, list: string) => {
 		let maxScroll =
 			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
@@ -93,6 +69,8 @@ export default function Home() {
 				break;
 		}
 	};
+
+	console.log(upcoming);
 
 	return (
 		<>
@@ -122,8 +100,22 @@ export default function Home() {
 								{moviesFromSearch.map((movie) => (
 									<Movie key={movie.id}>
 										<div className="vote-average">
-											<span>{Math.round(movie.vote_average)}</span>
-											<p>{checkStars(movie)}</p>
+											<span>
+												{Math.round(movie.vote_average) !== 0
+													? Math.round(movie.vote_average)
+													: "?"}
+											</span>
+											<p>
+												{movie.vote_average > 8
+													? "★★★★★"
+													: movie.vote_average > 6
+													? "★★★★"
+													: movie.vote_average > 4
+													? "★★★"
+													: movie.vote_average > 2
+													? "★★"
+													: "★"}
+											</p>
 										</div>
 										<Link to={`/details/${movie.id}`}>
 											<img
@@ -162,8 +154,22 @@ export default function Home() {
 								{seriesFromSearch.map((movie) => (
 									<Movie key={movie.id}>
 										<div className="vote-average">
-											<span>{Math.round(movie.vote_average)}</span>
-											<p>{checkStars(movie)}</p>
+											<span>
+												{Math.round(movie.vote_average) !== 0
+													? Math.round(movie.vote_average)
+													: "?"}
+											</span>
+											<p>
+												{movie.vote_average > 8
+													? "★★★★★"
+													: movie.vote_average > 6
+													? "★★★★"
+													: movie.vote_average > 4
+													? "★★★"
+													: movie.vote_average > 2
+													? "★★"
+													: "★"}
+											</p>
 										</div>
 										<Link to={`/details/series/${movie.id}`}>
 											<img
@@ -176,7 +182,7 @@ export default function Home() {
 												className="moviePoster"
 											/>
 										</Link>
-										<span>{movie.title}</span>
+										<span>{movie.name}</span>
 									</Movie>
 								))}
 								<ListButton
@@ -192,7 +198,7 @@ export default function Home() {
 
 				{moviesFromSearch.length < 1 && seriesFromSearch.length < 1 && (
 					<>
-						{upcoming && upcoming.length > 5 && (
+						{upcoming.length > 5 && (
 							<>
 								<h1>Novos no Watchous</h1>
 								<S.Wrapper>
@@ -204,8 +210,22 @@ export default function Home() {
 										{upcoming.map((movie) => (
 											<Movie key={movie.id}>
 												<div className="vote-average">
-													<span>{movie.vote_average}</span>
-													<p>{checkStars(movie)}</p>
+													<span>
+														{Math.round(movie.vote_average) !== 0
+															? Math.round(movie.vote_average)
+															: "?"}
+													</span>
+													<p>
+														{movie.vote_average > 8
+															? "★★★★★"
+															: movie.vote_average > 6
+															? "★★★★"
+															: movie.vote_average > 4
+															? "★★★"
+															: movie.vote_average > 2
+															? "★★"
+															: "★"}
+													</p>
 												</div>
 												<Link to={`/details/${movie.id}`}>
 													<img
@@ -229,7 +249,7 @@ export default function Home() {
 								</S.Wrapper>
 							</>
 						)}
-						{series && series.length > 5 && (
+						{series.length > 5 && (
 							<>
 								<h1>Series em alta</h1>
 								<S.Wrapper>
@@ -241,8 +261,22 @@ export default function Home() {
 										{series.map((movie) => (
 											<Movie key={movie.id}>
 												<div className="vote-average">
-													<span>{movie.vote_average}</span>
-													<p>{checkStars(movie)}</p>
+													<span>
+														{Math.round(movie.vote_average) !== 0
+															? Math.round(movie.vote_average)
+															: "?"}
+													</span>
+													<p>
+														{movie.vote_average > 8
+															? "★★★★★"
+															: movie.vote_average > 6
+															? "★★★★"
+															: movie.vote_average > 4
+															? "★★★"
+															: movie.vote_average > 2
+															? "★★"
+															: "★"}
+													</p>
 												</div>
 												<Link to={`/details/series/${movie.id}`}>
 													<img

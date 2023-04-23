@@ -85,6 +85,7 @@ export const Container = styled.div<{
 
 	p {
 		height: 100%;
+		overflow-y: auto;
 		padding: 1rem 2rem;
 		font-size: 1.2rem;
 		text-align: center;
@@ -117,6 +118,8 @@ export const Container = styled.div<{
 
 		section {
 			margin-block: 1rem;
+			min-height: 240px;
+			height: auto;
 		}
 
 		.card-container {
