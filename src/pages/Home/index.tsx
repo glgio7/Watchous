@@ -23,7 +23,7 @@ interface IMovie {
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
 
-	const { searchValue } = useContext(SearchContext);
+	const { seriesFromSearch, moviesFromSearch } = useContext(SearchContext);
 
 	const [disclaimer, setDisclaimer] = useState(false);
 	const handleDisclaimer = () => setDisclaimer(!disclaimer);
@@ -32,8 +32,6 @@ export default function Home() {
 	const [seriesPage, setSeriesPage] = useState(1);
 	const [upcoming, setUpcoming] = useState<IMovie[]>();
 	const [series, setSeries] = useState<IMovie[]>();
-	const [fromSearch, setFromSearch] = useState<IMovie[]>([]);
-	const [seriesFromSearch, setSeriesFromSearch] = useState<IMovie[]>([]);
 
 	const listRefs: IListRefs = {
 		upcoming: useRef<HTMLUListElement>(null),
@@ -63,31 +61,11 @@ export default function Home() {
 			`https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}&language=pt-BR&page=${seriesPage}`
 		)
 			.then((response) => response.json())
-			.then((data) => setSeries(data.results))
+			.then((data) => {
+				setSeries(data.results);
+			})
 			.catch((err) => console.log(err));
 	}, [seriesPage]);
-
-	//////////////////// search
-	useEffect(() => {
-		const movies = () => {
-			fetch(
-				`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchValue}&language=pt-BR`
-			)
-				.then((response) => response.json())
-				.then((data) => setFromSearch(data.results))
-				.catch((err) => console.log(err));
-		};
-
-		const series = () => {
-			fetch(
-				`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${searchValue}&language=pt-BR`
-			)
-				.then((response) => response.json())
-				.then((data) => setSeriesFromSearch(data.results))
-				.catch((err) => console.log(err));
-		};
-		Promise.all([movies(), series()]);
-	}, [searchValue]);
 
 	const checkStars = (value: IMovie): string =>
 		value.vote_average > 8
@@ -103,7 +81,6 @@ export default function Home() {
 			: "★";
 
 	const handleScrollList = (direction: string, list: string) => {
-		let currentScroll = listRefs[list].current!.scrollLeft;
 		let maxScroll =
 			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
 
@@ -114,28 +91,6 @@ export default function Home() {
 			case "right":
 				listRefs[list].current!.scrollLeft += maxScroll / 3;
 				break;
-		}
-
-		if (upcomingPage > 1 && currentScroll === 0 && list === "upcoming") {
-			setUpcomingPage(upcomingPage - 1);
-		} else if (
-			maxScroll - currentScroll < 50 &&
-			direction === "right" &&
-			list === "upcoming"
-		) {
-			setUpcomingPage(upcomingPage + 1);
-			listRefs[list].current!.scrollLeft = 0;
-		}
-
-		if (seriesPage > 1 && currentScroll === 0 && list === "series") {
-			setSeriesPage(seriesPage - 1);
-		} else if (
-			maxScroll - currentScroll < 50 &&
-			direction === "right" &&
-			list === "series"
-		) {
-			setSeriesPage(seriesPage + 1);
-			listRefs[list].current!.scrollLeft = 0;
 		}
 	};
 
@@ -155,7 +110,7 @@ export default function Home() {
 			</S.Banner>
 			<S.Container>
 				{/* ----------------------- Movies from search / Results --------------------------- */}
-				{fromSearch.length >= 1 && (
+				{moviesFromSearch.length >= 1 && (
 					<>
 						<h1>Filmes da sua pesquisa</h1>
 						<S.Wrapper>
@@ -164,7 +119,7 @@ export default function Home() {
 									direction={"left"}
 									onClick={() => handleScrollList("left", "searchMovies")}
 								/>
-								{fromSearch.map((movie) => (
+								{moviesFromSearch.map((movie) => (
 									<Movie key={movie.id}>
 										<div className="vote-average">
 											<span>{Math.round(movie.vote_average)}</span>
@@ -235,7 +190,7 @@ export default function Home() {
 
 				{/* ----------------------- Movies & Series / Recommended --------------------------- */}
 
-				{fromSearch.length < 1 && seriesFromSearch.length < 1 && (
+				{moviesFromSearch.length < 1 && seriesFromSearch.length < 1 && (
 					<>
 						{upcoming && upcoming.length > 5 && (
 							<>
