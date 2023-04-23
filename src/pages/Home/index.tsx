@@ -1,74 +1,77 @@
 import * as S from "./styles";
-import React, { useState, useRef, useEffect } from "react";
-import Header from "../../components/Header";
-import { Link } from "react-router-dom";
-import { Movie } from "../../components/movieitem";
 import db from "../../api/movies_list.json";
-import { RiCloseFill } from "react-icons/ri";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { SearchContext } from "../../contexts/SearchContext";
+import { Link } from "react-router-dom";
 import ListButton from "../../components/ListButton";
+import { MovieList } from "../../components/MovieList";
+import { Movie } from "../../components/MovieItem";
+import { RiCloseFill } from "react-icons/ri";
 
 interface IListRefs {
 	[key: string]: React.RefObject<HTMLUListElement>;
 }
 
-export interface IMovie {
+interface IMovie {
 	id: string;
 	vote_average: number;
 	poster_path: string;
 	title: string;
+	name?: string;
 }
 
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
+
+	const { searchValue } = useContext(SearchContext);
+
 	const [disclaimer, setDisclaimer] = useState(false);
 	const handleDisclaimer = () => setDisclaimer(!disclaimer);
 
-	const [searchValue, setSearchValue] = useState<string>("");
-	const [pageUpcoming, setPageUpcoming] = useState(1);
-	const [pageSeries, setPageSeries] = useState(1);
+	const [upcomingPage, setUpcomingPage] = useState(1);
+	const [seriesPage, setSeriesPage] = useState(1);
 	const [upcoming, setUpcoming] = useState<IMovie[]>();
-	const [series, setSeries] = useState([]);
-	const [fromSearch, setFromSearch] = useState(null);
-	const [seriesFromSearch, setSeriesFromSearch] = useState(null);
-	const search = searchValue.replaceAll(" ", "+");
+	const [series, setSeries] = useState<IMovie[]>();
+	const [fromSearch, setFromSearch] = useState<IMovie[]>([]);
+	const [seriesFromSearch, setSeriesFromSearch] = useState<IMovie[]>([]);
 
 	const listRefs: IListRefs = {
 		upcoming: useRef<HTMLUListElement>(null),
+		series: useRef<HTMLUListElement>(null),
 		searchMovies: useRef<HTMLUListElement>(null),
 		searchSeries: useRef<HTMLUListElement>(null),
 		thriller: useRef<HTMLUListElement>(null),
 		horror: useRef<HTMLUListElement>(null),
 		fantasy: useRef<HTMLUListElement>(null),
 		drama: useRef<HTMLUListElement>(null),
-		// series: useRef<HTMLUListElement>(null),
 	};
 
 	//////////////////// upcoming
 	useEffect(() => {
 		fetch(
-			`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=pt-BR&page=${pageUpcoming}`
+			`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=pt-BR&page=${upcomingPage}`
 		)
 			.then((response) => response.json())
 			.then((data) => {
 				setUpcoming(data.results);
 			})
 			.catch((err) => console.log(err));
-	}, [pageUpcoming]);
+	}, [upcomingPage]);
 	//////////////////// series
 	useEffect(() => {
 		fetch(
-			`https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&language=pt-BR&page=${pageSeries}`
+			`https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}&language=pt-BR&page=${seriesPage}`
 		)
 			.then((response) => response.json())
 			.then((data) => setSeries(data.results))
 			.catch((err) => console.log(err));
-	}, [pageSeries]);
+	}, [seriesPage]);
 
 	//////////////////// search
 	useEffect(() => {
 		const movies = () => {
 			fetch(
-				`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${search}&language=pt-BR`
+				`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchValue}&language=pt-BR`
 			)
 				.then((response) => response.json())
 				.then((data) => setFromSearch(data.results))
@@ -77,16 +80,16 @@ export default function Home() {
 
 		const series = () => {
 			fetch(
-				`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${search}&language=pt-BR`
+				`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${searchValue}&language=pt-BR`
 			)
 				.then((response) => response.json())
 				.then((data) => setSeriesFromSearch(data.results))
 				.catch((err) => console.log(err));
 		};
 		Promise.all([movies(), series()]);
-	}, [search]);
+	}, [searchValue]);
 
-	const checkStars = (value: IMovie) =>
+	const checkStars = (value: IMovie): string =>
 		value.vote_average > 8
 			? "★★★★★"
 			: value.vote_average > 6
@@ -95,6 +98,8 @@ export default function Home() {
 			? "★★★"
 			: value.vote_average > 2
 			? "★★"
+			: value.vote_average === 0
+			? "?"
 			: "★";
 
 	const handleScrollList = (direction: string, list: string) => {
@@ -102,26 +107,40 @@ export default function Home() {
 		let maxScroll =
 			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
 
-		if (
+		switch (direction) {
+			case "left":
+				listRefs[list].current!.scrollLeft -= maxScroll / 3;
+				break;
+			case "right":
+				listRefs[list].current!.scrollLeft += maxScroll / 3;
+				break;
+		}
+
+		if (upcomingPage > 1 && currentScroll === 0 && list === "upcoming") {
+			setUpcomingPage(upcomingPage - 1);
+		} else if (
 			maxScroll - currentScroll < 50 &&
 			direction === "right" &&
 			list === "upcoming"
 		) {
-			setPageUpcoming(pageUpcoming + 1);
+			setUpcomingPage(upcomingPage + 1);
 			listRefs[list].current!.scrollLeft = 0;
-		} else if (direction === "right") {
-			listRefs[list].current!.scrollLeft += maxScroll / 3;
-		} else if (direction === "left") {
-			listRefs[list].current!.scrollLeft -= maxScroll / 3;
-			if (pageUpcoming > 1 && currentScroll === 0 && list === "upcoming") {
-				setPageUpcoming(pageUpcoming - 1);
-			}
+		}
+
+		if (seriesPage > 1 && currentScroll === 0 && list === "series") {
+			setSeriesPage(seriesPage - 1);
+		} else if (
+			maxScroll - currentScroll < 50 &&
+			direction === "right" &&
+			list === "series"
+		) {
+			setSeriesPage(seriesPage + 1);
+			listRefs[list].current!.scrollLeft = 0;
 		}
 	};
 
 	return (
 		<>
-			<Header setSearchValue={setSearchValue} />
 			<S.Banner>
 				<h2>
 					<span>Sem</span> assinatura, <span>sem</span> fins-lucrativos.
@@ -135,57 +154,22 @@ export default function Home() {
 				</video>
 			</S.Banner>
 			<S.Container>
-				{upcoming && upcoming.length > 5 && (
+				{/* ----------------------- Movies from search / Results --------------------------- */}
+				{fromSearch.length >= 1 && (
 					<>
-						<h1 onClick={() => console.log(listRefs["upcoming"].current)}>
-							Novos no Watchous
-						</h1>
+						<h1>Filmes da sua pesquisa</h1>
 						<S.Wrapper>
-							<S.MovieList ref={listRefs.upcoming}>
+							<MovieList ref={listRefs.searchMovies}>
 								<ListButton
 									direction={"left"}
-									onClick={() => handleScrollList("left", "upcoming")}
+									onClick={() => handleScrollList("left", "searchMovies")}
 								/>
-								{upcoming &&
-									upcoming.map((movie) => (
-										<Movie key={movie.id}>
-											<div className="vote-average">
-												<span>{movie.vote_average}</span>
-												<p>{checkStars(movie)}</p>
-											</div>
-											<Link to={`/details/${movie.id}`}>
-												<img
-													src={
-														movie.poster_path
-															? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
-															: "/img/movie_placeholder.jpg"
-													}
-													alt={""}
-													className="moviePoster"
-												/>
-											</Link>
-											<span>{movie.title}</span>
-										</Movie>
-									))}
-								<ListButton
-									direction={"right"}
-									onClick={() => handleScrollList("right", "upcoming")}
-								/>
-							</S.MovieList>
-						</S.Wrapper>
-					</>
-				)}
-				{Object.entries(db).map((item) => (
-					<div key={item[0]}>
-						<h1>{item[0]}</h1>
-						<S.Wrapper>
-							<S.MovieList ref={listRefs[item[0]]}>
-								<ListButton
-									direction={"left"}
-									onClick={() => handleScrollList("left", item[0])}
-								/>
-								{item[1].map((movie) => (
+								{fromSearch.map((movie) => (
 									<Movie key={movie.id}>
+										<div className="vote-average">
+											<span>{Math.round(movie.vote_average)}</span>
+											<p>{checkStars(movie)}</p>
+										</div>
 										<Link to={`/details/${movie.id}`}>
 											<img
 												src={
@@ -202,12 +186,170 @@ export default function Home() {
 								))}
 								<ListButton
 									direction={"right"}
-									onClick={() => handleScrollList("right", item[0])}
+									onClick={() => handleScrollList("right", "searchMovies")}
 								/>
-							</S.MovieList>
+							</MovieList>
 						</S.Wrapper>
-					</div>
-				))}
+					</>
+				)}
+
+				{/* ----------------------- Series from search / Results --------------------------- */}
+
+				{seriesFromSearch.length >= 1 && (
+					<>
+						<h1>Séries da sua pesquisa</h1>
+						<S.Wrapper>
+							<MovieList ref={listRefs.searchSeries}>
+								<ListButton
+									direction={"left"}
+									onClick={() => handleScrollList("left", "searchSeries")}
+								/>
+								{seriesFromSearch.map((movie) => (
+									<Movie key={movie.id}>
+										<div className="vote-average">
+											<span>{Math.round(movie.vote_average)}</span>
+											<p>{checkStars(movie)}</p>
+										</div>
+										<Link to={`/details/series/${movie.id}`}>
+											<img
+												src={
+													movie.poster_path
+														? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+														: "/img/movie_placeholder.jpg"
+												}
+												alt={""}
+												className="moviePoster"
+											/>
+										</Link>
+										<span>{movie.title}</span>
+									</Movie>
+								))}
+								<ListButton
+									direction={"right"}
+									onClick={() => handleScrollList("right", "searchSeries")}
+								/>
+							</MovieList>
+						</S.Wrapper>
+					</>
+				)}
+
+				{/* ----------------------- Movies & Series / Recommended --------------------------- */}
+
+				{fromSearch.length < 1 && seriesFromSearch.length < 1 && (
+					<>
+						{upcoming && upcoming.length > 5 && (
+							<>
+								<h1>Novos no Watchous</h1>
+								<S.Wrapper>
+									<MovieList ref={listRefs.upcoming}>
+										<ListButton
+											direction={"left"}
+											onClick={() => handleScrollList("left", "upcoming")}
+										/>
+										{upcoming.map((movie) => (
+											<Movie key={movie.id}>
+												<div className="vote-average">
+													<span>{movie.vote_average}</span>
+													<p>{checkStars(movie)}</p>
+												</div>
+												<Link to={`/details/${movie.id}`}>
+													<img
+														src={
+															movie.poster_path
+																? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+																: "/img/movie_placeholder.jpg"
+														}
+														alt={""}
+														className="moviePoster"
+													/>
+												</Link>
+												<span>{movie.title}</span>
+											</Movie>
+										))}
+										<ListButton
+											direction={"right"}
+											onClick={() => handleScrollList("right", "upcoming")}
+										/>
+									</MovieList>
+								</S.Wrapper>
+							</>
+						)}
+						{series && series.length > 5 && (
+							<>
+								<h1>Series em alta</h1>
+								<S.Wrapper>
+									<MovieList ref={listRefs.series}>
+										<ListButton
+											direction={"left"}
+											onClick={() => handleScrollList("left", "series")}
+										/>
+										{series.map((movie) => (
+											<Movie key={movie.id}>
+												<div className="vote-average">
+													<span>{movie.vote_average}</span>
+													<p>{checkStars(movie)}</p>
+												</div>
+												<Link to={`/details/series/${movie.id}`}>
+													<img
+														src={
+															movie.poster_path
+																? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+																: "/img/movie_placeholder.jpg"
+														}
+														alt={""}
+														className="moviePoster"
+													/>
+												</Link>
+												<span>{movie.name}</span>
+											</Movie>
+										))}
+										<ListButton
+											direction={"right"}
+											onClick={() => handleScrollList("right", "series")}
+										/>
+									</MovieList>
+								</S.Wrapper>
+							</>
+						)}
+
+						{/* ----------------------- Movies & Series / from our DB --------------------------- */}
+
+						{Object.entries(db).map((item) => (
+							<div key={item[0]}>
+								<h1>{item[0]}</h1>
+								<S.Wrapper>
+									<MovieList ref={listRefs[item[0]]}>
+										<ListButton
+											direction={"left"}
+											onClick={() => handleScrollList("left", item[0])}
+										/>
+										{item[1].map((movie) => (
+											<Movie key={movie.id}>
+												<Link to={`/details/${movie.id}`}>
+													<img
+														src={
+															movie.poster_path
+																? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+																: "/img/movie_placeholder.jpg"
+														}
+														alt={""}
+														className="moviePoster"
+													/>
+												</Link>
+												<span>{movie.title}</span>
+											</Movie>
+										))}
+										<ListButton
+											direction={"right"}
+											onClick={() => handleScrollList("right", item[0])}
+										/>
+									</MovieList>
+								</S.Wrapper>
+							</div>
+						))}
+					</>
+				)}
+
 				{/* ----------------------- Disclaimer/Advices --------------------------- */}
 				<div className={disclaimer ? "disclaimer active" : "disclaimer"}>
 					<RiCloseFill className="closeDisclaimer" onClick={handleDisclaimer} />

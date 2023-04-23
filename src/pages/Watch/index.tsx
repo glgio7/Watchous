@@ -2,12 +2,11 @@ import React from "react";
 import Header from "../../components/Header";
 import dataMovies from "../../api/freemovies_list.json";
 import { Container } from "./styles";
-import { Movie } from "../../components/movieitem";
+import { Movie } from "../../components/MovieItem";
 
 export default function FreeToWatch() {
 	return (
 		<>
-			<Header />
 			<Container>
 				<ul>
 					{dataMovies.freemovies.map((movie) => (

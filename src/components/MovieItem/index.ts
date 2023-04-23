@@ -86,17 +86,4 @@ export const Movie = styled.li`
 			font-size: 1rem;
 		}
 	}
-	//mobile landscape
-	@media screen and (max-width: 900px) and (max-height: 768px) and (orientation: landscape) {
-		width: calc((100vw - 105px) / 4);
-		aspect-ratio: 9 / 16;
-		.moviePoster {
-			min-width: calc((100vw - 105px) / 4);
-			aspect-ratio: 9 / 16;
-		}
-
-		span {
-			max-width: calc((100vw - 105px) / 4);
-		}
-	}
 `;

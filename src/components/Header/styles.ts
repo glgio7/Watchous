@@ -6,7 +6,7 @@ export const Header = styled.header`
 	display: flex;
 	justify-content: center;
 	background-color: #101010;
-	position: sticky;
+	/* position: sticky; */
 	top: 0;
 	z-index: 99;
 	padding: 0 15px;
@@ -28,6 +28,7 @@ export const Header = styled.header`
 	}
 
 	.notification {
+		display: none;
 		color: #0070ff;
 		font-weight: bold;
 		font-size: 0.75rem;
@@ -137,6 +138,7 @@ export const Header = styled.header`
 	}
 
 	#new::after {
+		display: none;
 		content: "New";
 		font-weight: bold;
 		font-size: 0.75rem;
@@ -234,8 +236,8 @@ export const Header = styled.header`
 		}
 	}
 	@media screen and (max-width: 900px) and (min-width: 480px) and (orientation: landscape) {
-		width: 100%;
-		height: 72px;
+		/* width: 100%; */
+		/* height: 72px; */
 		display: flex;
 		justify-content: center;
 		background-color: #101010;

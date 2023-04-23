@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RiCheckboxBlankCircleFill, RiMenu3Fill } from "react-icons/ri";
 import { RiSearchLine } from "react-icons/ri";
 import { RiCloseFill } from "react-icons/ri";
@@ -6,22 +6,27 @@ import { Link } from "react-router-dom";
 import * as S from "./styles";
 
 type HeaderProps = {
-	setSearchValue?: React.Dispatch<React.SetStateAction<string>>;
+	searchValue: string;
+	setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function Header({ setSearchValue }: HeaderProps) {
+export default function Header({ searchValue, setSearchValue }: HeaderProps) {
 	const [navOpen, setNavOpen] = useState(false);
 	const toggleMenu = () => setNavOpen(!navOpen);
 	const hideNav = () => setNavOpen(false);
+
 	const [input, setInput] = useState("");
-	const setBusca = setSearchValue;
-	// const clearLists = reset;
-	const searchOnEnter = async (props: React.KeyboardEvent) => {
+
+	const search = (props: React.KeyboardEvent) => {
 		if (props.key === "Enter") {
-			if (setBusca) setBusca(input);
-			setInput("");
+			setSearchValue(input.replaceAll(" ", "+"));
 		}
 	};
+
+	useEffect(() => {
+		setInput("");
+	}, [searchValue]);
+
 	return (
 		<>
 			<S.Header>
@@ -37,16 +42,15 @@ export default function Header({ setSearchValue }: HeaderProps) {
 							placeholder="Pesquisar"
 							onChange={(e) => setInput(e.target.value)}
 							value={input}
-							// onFocus={clearLists}
+							onFocus={() => window.history.back()}
 							onKeyDown={(props) => {
-								searchOnEnter(props);
+								search(props);
 							}}
 						/>
 						<RiSearchLine
 							className="searchIcon"
 							onClick={() => {
-								if (setBusca) setBusca(input);
-								setInput("");
+								setSearchValue(input);
 							}}
 						/>
 					</div>
