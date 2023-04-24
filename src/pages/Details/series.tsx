@@ -86,8 +86,14 @@ export default function SeriesDetails() {
 							.join(" - "),
 						vote_average: Math.round(data.vote_average),
 						trailer: data.videos.results[0] ? data.videos.results[0].key : "",
-						related: data.similar.results.slice(0, 3),
+						related: data.similar.results.slice(0, 4),
+						release: data.first_air_date
+							.split("-")
+							.reverse()
+							.join()
+							.replaceAll(",", "/"),
 					};
+					console.log(data);
 					document.title = `Watchous - ${movie.title}`;
 					setMovie(movie);
 				})
@@ -132,7 +138,11 @@ export default function SeriesDetails() {
 							</p>
 							<ul className="overview-list">
 								<li>
-									<h3>Ultimo episódio lançado:</h3>
+									<h3>Estréia</h3>
+									{movie.release}
+								</li>
+								<li>
+									<h3>Ultimo episódio lançado</h3>
 									{movie.lastEpisode}
 								</li>
 								<li>
@@ -141,15 +151,27 @@ export default function SeriesDetails() {
 								</li>
 								<li>
 									<h3>Nota da audiencia</h3>
-									{movie.vote_average}
+									{movie.vote_average !== 0
+										? movie.vote_average
+										: "Não avaliado."}
 								</li>
 								<li>
 									<h3>Séries relacionadas</h3>
 									{movie.related &&
 										movie.related.map((movie) => (
-											<Link to={`/details/series/${movie.id}`} key={movie.id}>
-												{movie.name}
-												{" , "}
+											<Link
+												to={`/details/series/${movie.id}`}
+												key={movie.id}
+												className="related-movie"
+											>
+												<img
+													src={
+														movie.poster_path
+															? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
+															: "/img/movie_placeholder.jpg"
+													}
+												/>
+												{movie.name && movie.name.substring(0, 9) + "..."}
 											</Link>
 										))}
 								</li>

@@ -57,7 +57,7 @@ export default function Details() {
 		setMoviesFromSearch([]);
 		setSeriesFromSearch([]);
 		fetch(
-			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=videos,similar,images&language=pt-BR`
+			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=videos,similar,images,reviews&language=pt-BR`
 		)
 			.then((response) => response.json())
 			.then((data) => {
@@ -79,7 +79,7 @@ export default function Details() {
 						.map((value: { id: number; name: string }) => value.name)
 						.join(" - "),
 					vote_average: Math.round(data.vote_average),
-					related: data.similar.results.slice(0, 3),
+					related: data.similar.results.slice(0, 4),
 				};
 				document.title = `Watchous - ${movie.title}`;
 				setMovie(movie);
@@ -131,15 +131,27 @@ export default function Details() {
 								</li>
 								<li>
 									<h3>Nota da audiencia</h3>
-									{movie.vote_average}
+									{movie.vote_average !== 0
+										? movie.vote_average
+										: "Não avaliado."}
 								</li>
 								<li>
 									<h3>Filmes relacionados</h3>
 									{movie.related &&
 										movie.related.map((movie) => (
-											<Link to={`/details/${movie.id}`} key={movie.id}>
-												{movie.title}
-												{" , "}
+											<Link
+												to={`/details/${movie.id}`}
+												key={movie.id}
+												className="related-movie"
+											>
+												<img
+													src={
+														movie.poster_path
+															? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
+															: "/img/movie_placeholder.jpg"
+													}
+												/>
+												{movie.title.substring(0, 9) + "..."}
 											</Link>
 										))}
 								</li>
