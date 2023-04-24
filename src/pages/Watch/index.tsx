@@ -8,6 +8,7 @@ export default function FreeToWatch() {
 	return (
 		<>
 			<Container>
+				<div className="fade"></div>
 				<ul>
 					{dataMovies.freemovies.map((movie) => (
 						<a

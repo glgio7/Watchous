@@ -75,9 +75,17 @@ export const Header = styled.header`
 
 	.menu {
 		display: block;
-		color: #fff;
-		font-weight: bold;
+
+		background-color: #fff;
+		color: #0070ff;
+
+		padding: 0.25rem;
+
+		border-radius: 10px;
+
 		font-size: 2rem;
+		font-weight: bold;
+
 		cursor: pointer;
 	}
 
@@ -103,7 +111,7 @@ export const Header = styled.header`
 			width: auto;
 			position: absolute;
 			top: 1.5rem;
-			right: 1rem;
+			left: 1rem;
 		}
 	}
 `;
@@ -168,11 +176,20 @@ export const Navigation = styled.nav<{ active: boolean }>`
 
 		.closeMenu {
 			display: flex;
+
 			position: absolute;
 			top: 1rem;
 			right: 1rem;
-			color: #fff;
+
+			background-color: #fff;
+			color: #0070ff;
+
+			padding: 0.25rem;
+
+			border-radius: 10px;
+
 			font-size: 2rem;
+
 			cursor: pointer;
 		}
 	}

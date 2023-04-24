@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { RiCheckboxBlankCircleFill, RiMenu3Fill } from "react-icons/ri";
+import { RiCheckboxBlankCircleFill, RiMenuFill } from "react-icons/ri";
 import { RiSearchLine } from "react-icons/ri";
 import { RiCloseFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -59,7 +59,7 @@ export default function Header({ searchValue, setSearchValue }: HeaderProps) {
 					/>
 				</div>
 				<div className="menu-container">
-					<RiMenu3Fill className="menu" onClick={toggleMenu} />
+					<RiMenuFill className="menu" onClick={toggleMenu} />
 				</div>
 				{/* <RiCheckboxBlankCircleFill className="notification" /> */}
 			</S.Header>

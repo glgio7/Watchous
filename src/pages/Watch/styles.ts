@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.main`
 	width: 100%;
 	min-height: calc(100vh - 54px);
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -11,6 +12,17 @@ export const Container = styled.main`
 	background-size: cover;
 
 	padding: 2rem;
+
+	.fade {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+
+		background: rgb(32, 32, 32);
+		background: radial-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 80%);
+	}
 
 	ul {
 		display: flex;
@@ -23,6 +35,7 @@ export const Container = styled.main`
 	}
 
 	.movie-box {
+		aspect-ratio: 3/4;
 		&:hover img {
 			scale: 1;
 		}

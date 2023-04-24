@@ -32,6 +32,26 @@ export const Container = styled.div<{
 		);
 	}
 
+	button {
+		background-color: transparent;
+
+		font-size: 1.25rem;
+		font-weight: bold;
+
+		cursor: pointer;
+		color: rgb(255, 164, 0);
+	}
+
+	a {
+		color: #fff;
+
+		transition: all 300ms;
+
+		&:hover {
+			color: rgb(255, 164, 0);
+		}
+	}
+
 	section {
 		display: flex;
 		flex-direction: column;
@@ -131,16 +151,6 @@ export const Container = styled.div<{
 		color: rgb(255, 164, 0);
 	}
 
-	button {
-		background-color: transparent;
-
-		font-size: 1.25rem;
-		font-weight: bold;
-
-		cursor: pointer;
-		color: rgb(255, 164, 0);
-	}
-
 	.sinopse-btn {
 		width: 100%;
 		height: 4rem;
@@ -150,16 +160,6 @@ export const Container = styled.div<{
 
 		background-color: transparent;
 		color: rgb(255, 164, 0);
-	}
-
-	a {
-		color: #fff;
-
-		transition: all 300ms;
-
-		&:hover {
-			color: rgb(255, 164, 0);
-		}
 	}
 
 	.related-movie {
