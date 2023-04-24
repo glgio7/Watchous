@@ -57,7 +57,7 @@ export default function Details() {
 		setMoviesFromSearch([]);
 		setSeriesFromSearch([]);
 		fetch(
-			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=videos&language=pt-BR`
+			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=videos,similar,images&language=pt-BR`
 		)
 			.then((response) => response.json())
 			.then((data) => {
@@ -80,6 +80,7 @@ export default function Details() {
 						.join(" - "),
 					vote_average: Math.round(data.vote_average),
 				};
+				console.log(data);
 				document.title = `Watchous - ${movie.title}`;
 				setMovie(movie);
 			})

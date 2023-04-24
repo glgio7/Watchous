@@ -143,6 +143,7 @@ export const Container = styled.div<{
 
 		.overview-container {
 			width: 75%;
+			height: 360px;
 		}
 	}
 `;

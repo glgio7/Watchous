@@ -64,7 +64,7 @@ export default function SeriesDetails() {
 
 		const infos = () => {
 			fetch(
-				`https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=pt-BR`
+				`https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&append_to_response=videos&language=pt-BR`
 			)
 				.then((response) => response.json())
 				.then((data) => {
@@ -85,6 +85,7 @@ export default function SeriesDetails() {
 							.map((value: { id: number; name: string }) => value.name)
 							.join(" - "),
 						vote_average: Math.round(data.vote_average),
+						trailer: data.videos.results[0] ? data.videos.results[0].key : "",
 					};
 					document.title = `Watchous - ${movie.title}`;
 					setMovie(movie);
@@ -92,21 +93,7 @@ export default function SeriesDetails() {
 				.catch((e) => console.log(e));
 		};
 
-		const trailer = () => {
-			fetch(
-				`https://api.themoviedb.org/3/tv/${id}/videos?api_key=${apiKey}&language=en-US`
-			)
-				.then((response) => response.json())
-				.then((data) => {
-					setMovie((prevState) => ({
-						...prevState,
-						trailer: data.results[0].key,
-					}));
-				})
-				.catch((e) => console.log(e));
-		};
-
-		Promise.all([infos(), trailer()]);
+		Promise.all([infos()]);
 	}, [id]);
 
 	return (
