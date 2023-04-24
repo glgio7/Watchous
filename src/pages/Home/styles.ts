@@ -178,6 +178,18 @@ export const Banner = styled.div`
 
 		width: 100%;
 	}
+
+	@media screen and (max-width: 768px) {
+		height: 144px;
+
+		h1 {
+			line-height: 1.75rem;
+		}
+
+		h2 {
+			font-size: 1rem;
+		}
+	}
 `;
 
 export const Wrapper = styled.div`

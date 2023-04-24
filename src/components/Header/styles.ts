@@ -43,16 +43,13 @@ export const Header = styled.header`
 		color: #fff;
 		border: none;
 		font-size: 1rem;
+		padding-inline: 15px;
 		height: 2rem;
-		text-align: center;
 		::placeholder {
 			font-size: 0.9rem;
 		}
 		&:focus {
-			outline: cornflowerblue solid thin;
-			::placeholder {
-				opacity: 0;
-			}
+			outline: #0030ff solid thin;
 		}
 	}
 	.search-container__icon {
