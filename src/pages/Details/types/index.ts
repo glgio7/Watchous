@@ -1,4 +1,4 @@
-export interface IMovie {
+export interface IMovieDetails {
 	name?: string;
 	id?: string;
 	release?: string;

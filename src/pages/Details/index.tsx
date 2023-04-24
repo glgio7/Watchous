@@ -1,13 +1,12 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
-import { useParams } from "react-router-dom";
 import * as S from "./styles";
+import React, { useEffect, useState, useContext, useRef } from "react";
+import { useParams, Link } from "react-router-dom";
 import { SearchContext } from "../../contexts/SearchContext";
 import { Wrapper } from "../Home/styles";
 import { MovieList } from "../../components/MovieList";
 import { Movie } from "../../components/MovieItem";
-import { Link } from "react-router-dom";
+import { IListRefs, IMovieDetails } from "./types";
 import ListButton from "../../components/ListButton";
-import { IListRefs, IMovie } from "./types";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -20,7 +19,7 @@ export default function Details() {
 	} = useContext(SearchContext);
 	const { id } = useParams();
 	const image_path = "https://themoviedb.org/t/p/original";
-	const [movie, setMovie] = useState<IMovie>({} as IMovie);
+	const [movie, setMovie] = useState<IMovieDetails>({} as IMovieDetails);
 	const [fullDescription, setFullDescription] = useState<boolean>(false);
 	const [player, setPlayer] = useState<boolean>(false);
 
@@ -62,7 +61,7 @@ export default function Details() {
 		)
 			.then((response) => response.json())
 			.then((data) => {
-				const movie: IMovie = {
+				const movie: IMovieDetails = {
 					id,
 					title: data.title,
 					background: data.backdrop_path,

@@ -7,7 +7,7 @@ import { MovieList } from "../../components/MovieList";
 import ListButton from "../../components/ListButton";
 import { Movie } from "../../components/MovieItem";
 import { Link } from "react-router-dom";
-import { IMovie } from "./types";
+import { IMovieDetails } from "./types";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -24,7 +24,7 @@ export default function SeriesDetails() {
 	} = useContext(SearchContext);
 	const { id } = useParams<string>();
 	const image_path = "https://themoviedb.org/t/p/original";
-	const [movie, setMovie] = useState<IMovie>({} as IMovie);
+	const [movie, setMovie] = useState<IMovieDetails>({} as IMovieDetails);
 	const [fullDescription, setFullDescription] = useState(false);
 	const [player, setPlayer] = useState(false);
 
@@ -68,7 +68,7 @@ export default function SeriesDetails() {
 			)
 				.then((response) => response.json())
 				.then((data) => {
-					const movie: IMovie = {
+					const movie: IMovieDetails = {
 						id,
 						title: data.name,
 						fullSinopse: data.overview,

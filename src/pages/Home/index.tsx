@@ -70,8 +70,6 @@ export default function Home() {
 		}
 	};
 
-	console.log(upcoming);
-
 	return (
 		<>
 			<S.Banner>

@@ -4,15 +4,8 @@ export interface IListRefs {
 
 export interface IMovie {
 	name?: string;
-	id?: string;
-	release?: string;
-	trailer?: string;
-	lastEpisode?: string;
+	id: string;
 	title: string;
 	vote_average: number;
-	fullSinopse: string;
-	sinopse: string;
 	poster_path: string;
-	background: string;
-	genres: string;
 }

@@ -1,16 +1,9 @@
 export interface IMovie {
 	name?: string;
-	release?: string;
-	trailer?: string;
-	lastEpisode?: string;
 	id: string;
 	title: string;
 	vote_average: number;
-	fullSinopse: string;
-	sinopse: string;
 	poster_path: string;
-	background: string;
-	genres: string;
 }
 
 export interface ISearchContext {
