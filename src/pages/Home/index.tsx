@@ -56,6 +56,34 @@ export default function Home() {
 			.catch((err) => console.log(err));
 	}, [seriesPage]);
 
+	const handlePageList = async (direction: string, list: string) => {
+		const maxScroll =
+			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
+
+		let scrollRemaining = maxScroll - listRefs[list].current!.scrollLeft;
+
+		if (scrollRemaining < 50 && direction === "right") {
+			switch (list) {
+				case "upcoming":
+					setUpcomingPage((prevState) => prevState + 1);
+					break;
+				case "series":
+					setSeriesPage((prevState) => prevState + 1);
+					break;
+			}
+			listRefs[list].current!.scrollLeft = 0;
+		} else if (scrollRemaining === maxScroll && direction === "left") {
+			switch (list) {
+				case "upcoming":
+					setUpcomingPage((prevState) => prevState - 1);
+					break;
+				case "series":
+					setSeriesPage((prevState) => prevState - 1);
+					break;
+			}
+		}
+	};
+
 	const handleScrollList = (direction: string, list: string) => {
 		let maxScroll =
 			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
@@ -203,7 +231,10 @@ export default function Home() {
 									<MovieList ref={listRefs.upcoming}>
 										<ListButton
 											direction={"left"}
-											onClick={() => handleScrollList("left", "upcoming")}
+											onClick={() => {
+												handleScrollList("left", "upcoming");
+												handlePageList("left", "upcoming");
+											}}
 										/>
 										{upcoming.map((movie) => (
 											<Movie key={movie.id}>
@@ -241,7 +272,10 @@ export default function Home() {
 										))}
 										<ListButton
 											direction={"right"}
-											onClick={() => handleScrollList("right", "upcoming")}
+											onClick={() => {
+												handleScrollList("right", "upcoming");
+												handlePageList("right", "upcoming");
+											}}
 										/>
 									</MovieList>
 								</S.Wrapper>
@@ -254,7 +288,10 @@ export default function Home() {
 									<MovieList ref={listRefs.series}>
 										<ListButton
 											direction={"left"}
-											onClick={() => handleScrollList("left", "series")}
+											onClick={() => {
+												handleScrollList("left", "series");
+												handlePageList("left", "series");
+											}}
 										/>
 										{series.map((movie) => (
 											<Movie key={movie.id}>
@@ -292,7 +329,10 @@ export default function Home() {
 										))}
 										<ListButton
 											direction={"right"}
-											onClick={() => handleScrollList("right", "series")}
+											onClick={() => {
+												handleScrollList("right", "series");
+												handlePageList("right", "series");
+											}}
 										/>
 									</MovieList>
 								</S.Wrapper>
