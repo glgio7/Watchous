@@ -95,6 +95,7 @@ export const Container = styled.div<{
 	.overview-body {
 		display: flex;
 		height: 100%;
+		overflow-y: auto;
 		width: 100%;
 		padding: 1rem 0;
 	}

@@ -107,7 +107,11 @@ export default function SeriesDetails() {
 							<span>{movie.title}</span>
 						</div>
 						<img
-							src={`${image_path}/${movie.poster_path}`}
+							src={
+								movie.poster_path
+									? `${image_path}/${movie.poster_path}`
+									: "/img/movie_placeholder.jpg"
+							}
 							alt={`Capa do filme ${movie.title}`}
 						/>
 						<div className="container-info__bottom">Série</div>
