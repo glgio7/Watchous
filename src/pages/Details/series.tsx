@@ -47,6 +47,16 @@ export default function SeriesDetails() {
 		}
 	};
 
+	if (player) {
+		document.body.style.overflow = "hidden";
+	} else if (!player) {
+		document.body.style.overflow = "auto";
+	}
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [player]);
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
 		setMoviesFromSearch([]);

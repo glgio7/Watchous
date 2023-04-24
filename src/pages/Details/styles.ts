@@ -14,7 +14,7 @@ export const Container = styled.div<{
 	background-image: ${({ background }) => `url('${background}')`};
 	background-size: cover;
 	background-position: center;
-	padding: 0 2rem;
+	padding: 2rem;
 
 	.fade {
 		position: absolute;
@@ -114,7 +114,7 @@ export const Container = styled.div<{
 
 	@media screen and (max-width: 768px) {
 		flex-direction: column;
-		padding: 2rem;
+		padding: 1rem;
 
 		section {
 			margin-block: 1rem;
@@ -133,9 +133,10 @@ export const Container = styled.div<{
 `;
 
 export const IframeContainer = styled.div<{ active: boolean }>`
-	position: absolute;
+	position: fixed;
 	top: 0;
-	bottom: 0;
+	margin-top: 54px;
+	height: calc(100vh - 54px);
 	left: 0;
 	right: 0;
 
@@ -160,5 +161,10 @@ export const IframeContainer = styled.div<{ active: boolean }>`
 	iframe {
 		width: 100%;
 		height: 100%;
+	}
+
+	@media screen and (max-width: 768px) {
+		margin-top: 114px;
+		height: calc(100vh - 114px);
 	}
 `;

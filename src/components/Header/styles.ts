@@ -4,6 +4,11 @@ export const Header = styled.header`
 	width: 100%;
 	height: 54px;
 
+	position: sticky;
+	top: 0;
+
+	z-index: 99;
+
 	background-color: #101010;
 
 	display: flex;
@@ -22,7 +27,6 @@ export const Header = styled.header`
 	.logo {
 		height: 42px;
 		width: 210px;
-		/* object-fit: cover; */
 	}
 
 	.search-container {
@@ -84,8 +88,6 @@ export const Header = styled.header`
 		height: 114px;
 		padding: 0 1rem;
 
-		position: relative;
-
 		flex-direction: column;
 		justify-content: center;
 
@@ -94,6 +96,10 @@ export const Header = styled.header`
 			align-items: center;
 			justify-content: center;
 			width: 100%;
+		}
+
+		.logo-container {
+			width: 80%;
 		}
 
 		.menu-container {
@@ -109,7 +115,8 @@ export const Navigation = styled.nav<{ active: boolean }>`
 	pointer-events: ${({ active }) => (active ? "all" : "none")};
 	opacity: ${({ active }) => (active ? "1" : "0")};
 
-	position: absolute;
+	position: fixed;
+	top: 54px;
 	right: 0;
 
 	z-index: 99;
@@ -152,8 +159,7 @@ export const Navigation = styled.nav<{ active: boolean }>`
 	@media screen and (max-width: 768px) {
 		position: fixed;
 		width: 100%;
-		height: calc(100vh - 114px);
-		margin-top: 0;
+		height: 100%;
 		backdrop-filter: blur(6px);
 		background: rgb(32, 32, 32);
 		background: linear-gradient(
@@ -166,8 +172,8 @@ export const Navigation = styled.nav<{ active: boolean }>`
 		.closeMenu {
 			display: flex;
 			position: absolute;
-			top: 20px;
-			right: 20px;
+			top: 1rem;
+			right: 1rem;
 			color: #fff;
 			font-size: 2rem;
 			cursor: pointer;

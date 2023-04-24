@@ -10,26 +10,24 @@ export default function FreeToWatch() {
 			<Container>
 				<ul>
 					{dataMovies.freemovies.map((movie) => (
-						<div className="movie-box">
-							<a
-								href={`https://youtube.com/watch?v=${movie.key}`}
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<Movie key={movie.imdb}>
-									<img
-										src={
-											movie.image_path
-												? `https://www.themoviedb.org/t/p/w500${movie.image_path}`
-												: "/img/movie_placeholder.jpg"
-										}
-										alt={""}
-										className="moviePoster"
-									/>
-									<button>Assistir agora</button>
-								</Movie>
-							</a>
-						</div>
+						<a
+							href={`https://youtube.com/watch?v=${movie.key}`}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<Movie key={movie.imdb} className="movie-box">
+								<img
+									src={
+										movie.image_path
+											? `https://www.themoviedb.org/t/p/w500${movie.image_path}`
+											: "/img/movie_placeholder.jpg"
+									}
+									alt={""}
+									className="moviePoster"
+								/>
+								<button>Assistir agora</button>
+							</Movie>
+						</a>
 					))}
 				</ul>
 			</Container>

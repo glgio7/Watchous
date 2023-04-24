@@ -1,59 +1,43 @@
 import styled from "styled-components";
 
 export const Container = styled.main`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 60px;
-  min-height: calc(100vh - 60px);
-  padding: 0 1rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-height: calc(100vh - 60px);
+	padding: 2rem;
 
-  img{
-    width: 300px;
-    margin-block: 1rem;
-  }
-  
-  a:first-of-type img{
-    border-radius: 9px;
-    box-shadow: 0px 0px 20px #404040;
-  }
+	.image-container {
+		width: 240px;
+		margin-block: 2rem;
+	}
 
-  h1 {
-    width: 100%;
-    text-align: center;
-    font-size: 3rem;
-    color: #fff;
-    margin-block: 2rem;
-  }
+	h1 {
+		width: 100%;
+		text-align: center;
+		font-size: 3rem;
+		color: #fff;
 
-  p{
-    width: 100%;
-    text-align: center;
-    color: #fff;
-    font-size: 1.25rem;
-  }
+		text-shadow: #0070ff 0px 9px 30px;
+	}
 
-  a{
-    text-decoration: none;
-    color: #0070ff;
-    font-weight: bold;
-  }
-  
-  //mobile portrait
-  @media screen and (max-width: 768px) {
-  margin-top: 114px;
- 
-  /* h1 {
-    font-size: 1.25rem;
-    color: #fff;
-    margin: 1rem 3px;
-  } */
+	p {
+		width: 100%;
+		margin-block: 1rem;
+		text-align: center;
+		color: #fff;
+		font-size: 1.25rem;
+	}
 
-  }
-  //mobile landscape
-  @media screen and (max-width: 900px) and (min-width: 460px) and (orientation: landscape) {
-  margin-top: 72px;
+	a {
+		text-decoration: none;
+		color: #0070ff;
+		font-weight: bold;
+	}
 
-  }
+	//mobile portrait
+	@media screen and (max-width: 768px) {
+		padding: 1rem;
+	}
 `;

@@ -5,14 +5,13 @@ export default function Credits() {
 	return (
 		<S.Container>
 			<h1>Desenvolvedor</h1>
-			<a href="https://github.com/glgio7">
+			<a href="https://github.com/glgio7" className="image-container">
 				<img src="/img/github-logo.png" alt="" />
 			</a>
 			<p>
 				O Watchous foi desenvolvido com React.js por Giovane Lucas -
 				Desenvolvedor Full Stack com foco em Front-End
-			</p>
-			<p>
+				<br />
 				Você pode conferir os arquivos desse e de outros projetos clicando{" "}
 				<a href="https://github.com/glgio7">aqui</a>.
 			</p>
@@ -25,7 +24,7 @@ export default function Credits() {
 				Acesse a API do TMDB clicando na imagem abaixo caso tenha interesse em
 				desenvolver seu aplicativo também.
 			</p>
-			<a href="https://developers.themoviedb.org">
+			<a href="https://developers.themoviedb.org" className="image-container">
 				<img src="/img/tmdb.svg" alt="" />
 			</a>
 		</S.Container>
