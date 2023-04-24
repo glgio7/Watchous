@@ -56,7 +56,7 @@ export default function Home() {
 			.catch((err) => console.log(err));
 	}, [seriesPage]);
 
-	const handlePageList = async (direction: string, list: string) => {
+	const handlePageList = (direction: string, list: string) => {
 		const maxScroll =
 			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
 
@@ -147,7 +147,7 @@ export default function Home() {
 											<img
 												src={
 													movie.poster_path
-														? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+														? `https://www.themoviedb.org/t/p/w342${movie.poster_path}`
 														: "/img/movie_placeholder.jpg"
 												}
 												alt={""}
@@ -201,7 +201,7 @@ export default function Home() {
 											<img
 												src={
 													movie.poster_path
-														? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+														? `https://www.themoviedb.org/t/p/w342${movie.poster_path}`
 														: "/img/movie_placeholder.jpg"
 												}
 												alt={""}
@@ -260,7 +260,7 @@ export default function Home() {
 													<img
 														src={
 															movie.poster_path
-																? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+																? `https://www.themoviedb.org/t/p/w342${movie.poster_path}`
 																: "/img/movie_placeholder.jpg"
 														}
 														alt={""}
@@ -317,7 +317,7 @@ export default function Home() {
 													<img
 														src={
 															movie.poster_path
-																? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+																? `https://www.themoviedb.org/t/p/w342${movie.poster_path}`
 																: "/img/movie_placeholder.jpg"
 														}
 														alt={""}
@@ -356,7 +356,7 @@ export default function Home() {
 													<img
 														src={
 															movie.poster_path
-																? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
+																? `https://www.themoviedb.org/t/p/w342${movie.poster_path}`
 																: "/img/movie_placeholder.jpg"
 														}
 														alt={""}
