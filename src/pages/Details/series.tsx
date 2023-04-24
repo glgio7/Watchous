@@ -64,7 +64,7 @@ export default function SeriesDetails() {
 
 		const infos = () => {
 			fetch(
-				`https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&append_to_response=videos&language=pt-BR`
+				`https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&append_to_response=videos,images,similar&language=pt-BR`
 			)
 				.then((response) => response.json())
 				.then((data) => {
@@ -86,6 +86,7 @@ export default function SeriesDetails() {
 							.join(" - "),
 						vote_average: Math.round(data.vote_average),
 						trailer: data.videos.results[0] ? data.videos.results[0].key : "",
+						related: data.similar.results.slice(0, 3),
 					};
 					document.title = `Watchous - ${movie.title}`;
 					setMovie(movie);
@@ -103,37 +104,58 @@ export default function SeriesDetails() {
 					<div className="fade"></div>
 					<section className="card-container">
 						<div className="container-info__top">
-							<strong>Ultimo episódio:</strong>
-							{movie.lastEpisode}
+							<span>{movie.title}</span>
 						</div>
 						<img
 							src={`${image_path}/${movie.poster_path}`}
 							alt={`Capa do filme ${movie.title}`}
 						/>
+						<div className="container-info__bottom">Série</div>
+					</section>
+					<section className="overview-container">
+						<div className="container-info__top">
+							<span>Descrição</span>
+						</div>
+						<div className="overview-body">
+							<p>
+								{fullDescription ? movie.fullSinopse : movie.sinopse}
+								<button
+									className="sinopse-btn"
+									onClick={() => setFullDescription(!fullDescription)}
+								>
+									<span>{fullDescription ? "Ver menos" : "Ver mais"}</span>
+								</button>
+							</p>
+							<ul className="overview-list">
+								<li>
+									<h3>Ultimo episódio lançado:</h3>
+									{movie.lastEpisode}
+								</li>
+								<li>
+									<h3>Gênero</h3>
+									{movie.genres}
+								</li>
+								<li>
+									<h3>Nota da audiencia</h3>
+									{movie.vote_average}
+								</li>
+								<li>
+									<h3>Séries relacionadas</h3>
+									{movie.related &&
+										movie.related.map((movie) => (
+											<Link to={`/details/series/${movie.id}`} key={movie.id}>
+												{movie.name}
+												{" , "}
+											</Link>
+										))}
+								</li>
+							</ul>
+						</div>
 						<div
 							className="container-info__bottom"
 							onClick={() => setPlayer(true)}
 						>
-							<button>
-								<span>Ver trailer</span>
-							</button>
-						</div>
-					</section>
-					<section className="overview-container">
-						<div className="container-info__top">
-							<span>{movie.genres}</span>
-						</div>
-						<p>
-							{fullDescription ? movie.fullSinopse : movie.sinopse}
-							<button
-								className="sinopse-btn"
-								onClick={() => setFullDescription(!fullDescription)}
-							>
-								<span>{fullDescription ? "Ver menos" : "Ver mais"}</span>
-							</button>
-						</p>
-						<div className="container-info__bottom">
-							<span>Nota da audiencia:</span> {movie.vote_average}
+							<button>Ver trailer</button>
 						</div>
 					</section>
 

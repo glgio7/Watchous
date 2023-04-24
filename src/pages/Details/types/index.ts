@@ -11,6 +11,7 @@ export interface IMovieDetails {
 	poster_path: string;
 	background: string;
 	genres: string;
+	related?: IMovieDetails[];
 }
 
 export interface IListRefs {

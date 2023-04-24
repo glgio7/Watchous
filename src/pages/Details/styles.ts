@@ -4,8 +4,9 @@ export const Container = styled.div<{
 	background: string;
 }>`
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-around;
 	position: relative;
 
 	width: 100%;
@@ -43,6 +44,8 @@ export const Container = styled.div<{
 		z-index: 5;
 
 		height: 480px;
+
+		margin-block: 1rem;
 	}
 
 	.container-info__top,
@@ -53,7 +56,7 @@ export const Container = styled.div<{
 		font-size: 1.25rem;
 		text-align: center;
 
-		background-color: #0040ff;
+		background-color: #0010ff;
 		color: rgb(255, 164, 0);
 
 		font-weight: bold;
@@ -76,20 +79,52 @@ export const Container = styled.div<{
 	}
 
 	.card-container {
-		aspect-ratio: 9/16;
+		aspect-ratio: 3/4;
+		margin-right: 2rem;
+	}
+
+	.card-container img {
+		aspect-ratio: 3/4;
+		object-fit: cover;
 	}
 
 	.overview-container {
 		width: 60%;
 	}
 
+	.overview-body {
+		display: flex;
+		height: 100%;
+		width: 100%;
+		padding: 1rem 0;
+	}
+
 	p {
 		height: 100%;
+		width: 50%;
+		padding: 0 1rem;
 		overflow-y: auto;
-		padding: 1rem 2rem;
 		font-size: 1.2rem;
 		text-align: center;
 		color: #fff;
+	}
+
+	.overview-list {
+		width: 50%;
+		overflow-y: auto;
+	}
+
+	.overview-list li {
+		width: 100%;
+		padding: 1rem;
+		background-color: #111;
+		color: #fff;
+
+		margin-bottom: 0.5rem;
+	}
+
+	.overview-list h3 {
+		color: rgb(255, 164, 0);
 	}
 
 	button {
@@ -99,6 +134,7 @@ export const Container = styled.div<{
 		font-weight: bold;
 
 		cursor: pointer;
+		color: rgb(255, 164, 0);
 	}
 
 	.sinopse-btn {
@@ -112,11 +148,20 @@ export const Container = styled.div<{
 		color: rgb(255, 164, 0);
 	}
 
-	@media screen and (max-width: 768px) {
-		flex-direction: column;
-		justify-content: flex-start;
-		padding: 1rem;
-		min-height: calc(100vh - 114px);
+	a {
+		color: #fff;
+
+		transition: all 300ms;
+
+		&:hover {
+			color: rgb(255, 164, 0);
+		}
+	}
+
+	@media screen and (max-width: 900px) {
+		.card-container {
+			margin-right: 0rem;
+		}
 
 		.fade {
 			background: linear-gradient(
@@ -125,25 +170,42 @@ export const Container = styled.div<{
 				rgba(0, 0, 0, 1) 90%
 			);
 		}
+	}
+
+	@media screen and (max-width: 768px) {
+		flex-direction: column;
+		justify-content: flex-start;
+		padding: 1rem;
+		min-height: calc(100vh - 114px);
 
 		section {
-			margin-block: 1rem;
 			height: auto;
 		}
 
 		.card-container {
-			width: 75%;
-			aspect-ratio: 3/4;
-		}
-
-		.card-container img {
-			aspect-ratio: 3/4;
-			object-fit: cover;
+			width: 90%;
 		}
 
 		.overview-container {
-			width: 75%;
-			height: 360px;
+			width: 90%;
+			min-height: 360px;
+		}
+
+		.overview-body {
+			height: 100%;
+			flex-direction: column;
+			align-items: center;
+			padding: 1rem;
+		}
+
+		.overview-list,
+		p {
+			width: 100%;
+		}
+
+		.overview-list li {
+			border-radius: 10px;
+			background-color: #000;
 		}
 	}
 `;
