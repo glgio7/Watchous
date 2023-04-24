@@ -114,20 +114,35 @@ export const Container = styled.div<{
 
 	@media screen and (max-width: 768px) {
 		flex-direction: column;
+		justify-content: flex-start;
 		padding: 1rem;
+		min-height: calc(100vh - 114px);
+
+		.fade {
+			background: linear-gradient(
+				0deg,
+				rgba(0, 0, 0, 0) 0%,
+				rgba(0, 0, 0, 1) 90%
+			);
+		}
 
 		section {
 			margin-block: 1rem;
-			min-height: 240px;
 			height: auto;
 		}
 
 		.card-container {
-			min-width: 60%;
+			width: 75%;
+			aspect-ratio: 3/4;
+		}
+
+		.card-container img {
+			aspect-ratio: 3/4;
+			object-fit: cover;
 		}
 
 		.overview-container {
-			width: 100%;
+			width: 75%;
 		}
 	}
 `;

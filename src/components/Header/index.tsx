@@ -65,16 +65,16 @@ export default function Header({ searchValue, setSearchValue }: HeaderProps) {
 			</S.Header>
 			<S.Navigation active={navOpen} onMouseLeave={hideNav}>
 				<RiCloseFill className="closeMenu" onClick={toggleMenu} />
-				<a href="/">
+				<a href="/" onClick={() => setNavOpen(false)}>
 					<li>Página Inicial</li>
 				</a>
-				<a href="/">
+				<a href="/" onClick={() => setNavOpen(false)}>
 					<li>Minha conta</li>
 				</a>
-				<Link to={"/freetowatch"}>
+				<Link to={"/freetowatch"} onClick={() => setNavOpen(false)}>
 					<li id="new">Grátis para Assistir</li>
 				</Link>
-				<Link to={"/credits"}>
+				<Link to={"/credits"} onClick={() => setNavOpen(false)}>
 					<li id="new">Créditos</li>
 				</Link>
 			</S.Navigation>
