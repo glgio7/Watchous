@@ -75,10 +75,14 @@ export default function Home() {
 		} else if (scrollRemaining === maxScroll && direction === "left") {
 			switch (list) {
 				case "upcoming":
-					setUpcomingPage((prevState) => prevState - 1);
+					if (upcomingPage > 1) {
+						setUpcomingPage((prevState) => prevState - 1);
+					}
 					break;
 				case "series":
-					setSeriesPage((prevState) => prevState - 1);
+					if (seriesPage > 1) {
+						setSeriesPage((prevState) => prevState - 1);
+					}
 					break;
 			}
 		}
