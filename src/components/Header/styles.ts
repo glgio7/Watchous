@@ -127,6 +127,7 @@ export const Navigation = styled.nav<{ active: boolean }>`
 	position: fixed;
 	top: 54px;
 	right: 0;
+	padding: 1rem 0;
 
 	z-index: 99;
 
@@ -166,9 +167,9 @@ export const Navigation = styled.nav<{ active: boolean }>`
 	}
 
 	@media screen and (max-width: 768px) {
-		position: fixed;
+		top: 114px;
 		width: 100%;
-		height: 100%;
+		height: calc(100vh - 114px);
 		backdrop-filter: blur(6px);
 		background: rgb(32, 32, 32);
 		background: linear-gradient(

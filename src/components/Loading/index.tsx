@@ -8,8 +8,8 @@ const Loading = () => {
 				<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 					<g
 						id="SVGRepo_tracerCarrier"
-						stroke-linecap="round"
-						stroke-linejoin="round"
+						strokeLinecap="round"
+						strokeLinejoin="round"
 					></g>
 					<g>
 						<g>

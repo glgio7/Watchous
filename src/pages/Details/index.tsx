@@ -186,7 +186,7 @@ export default function Details() {
 			{/* ----------------------- Movies & Series from search / Results --------------------------- */}
 
 			{moviesFromSearch.length > 0 && (
-				<>
+				<S.SearchContainer>
 					<h1>Filmes da sua pesquisa</h1>
 					<Wrapper>
 						<MovieList ref={listRefs["searchMovies"]}>
@@ -234,11 +234,11 @@ export default function Details() {
 							/>
 						</MovieList>
 					</Wrapper>
-				</>
+				</S.SearchContainer>
 			)}
 
 			{seriesFromSearch.length > 0 && (
-				<>
+				<S.SearchContainer>
 					<h1>Séries da sua pesquisa</h1>
 					<Wrapper>
 						<MovieList ref={listRefs["searchSeries"]}>
@@ -286,7 +286,7 @@ export default function Details() {
 							/>
 						</MovieList>
 					</Wrapper>
-				</>
+				</S.SearchContainer>
 			)}
 		</>
 	);
