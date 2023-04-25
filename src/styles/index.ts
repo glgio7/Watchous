@@ -20,6 +20,7 @@ html, body {
 }
 
 body{
+  -webkit-tap-highlight-color: transparent;
 }
 
 a, li{
@@ -28,7 +29,7 @@ a, li{
 }
 
 ::selection{
-  color:#00aeff;
-}
+    color:#00aeff;
+  }
 
 `;

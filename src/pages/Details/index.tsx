@@ -173,6 +173,7 @@ export default function Details() {
 						<iframe
 							src={`https://www.youtube.com/embed/${movie.trailer}`}
 							title="YouTube video player"
+							allowFullScreen
 						/>
 					</S.IframeContainer>
 				</S.Container>

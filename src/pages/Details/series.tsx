@@ -93,7 +93,6 @@ export default function SeriesDetails() {
 							.join()
 							.replaceAll(",", "/"),
 					};
-					console.log(data);
 					document.title = `Watchous - ${movie.title}`;
 					setMovie(movie);
 				})
@@ -194,6 +193,7 @@ export default function SeriesDetails() {
 						<iframe
 							src={`https://www.youtube.com/embed/${movie.trailer}`}
 							title="YouTube video player"
+							allowFullScreen
 						/>
 					</S.IframeContainer>
 				</S.Container>

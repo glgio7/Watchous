@@ -37,14 +37,18 @@ export const Header = styled.header`
 	}
 
 	input {
+		height: 2rem;
 		width: 100%;
-		border-radius: 3px 0px 0px 3px;
+
 		background-color: #202020;
 		color: #fff;
+
+		border-radius: 3px 0px 0px 3px;
 		border: none;
+
 		font-size: 1rem;
+
 		padding-inline: 15px;
-		height: 2rem;
 		::placeholder {
 			font-size: 0.9rem;
 		}

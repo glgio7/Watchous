@@ -68,9 +68,9 @@ export default function Header({ searchValue, setSearchValue }: HeaderProps) {
 				<a href="/" onClick={() => setNavOpen(false)}>
 					<li>Página Inicial</li>
 				</a>
-				<a href="/" onClick={() => setNavOpen(false)}>
+				<Link to={"/login"} onClick={() => setNavOpen(false)}>
 					<li>Minha conta</li>
-				</a>
+				</Link>
 				<Link to={"/freetowatch"} onClick={() => setNavOpen(false)}>
 					<li id="new">Grátis para Assistir</li>
 				</Link>
