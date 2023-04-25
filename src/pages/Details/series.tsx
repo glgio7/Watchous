@@ -8,6 +8,7 @@ import ListButton from "../../components/ListButton";
 import { Movie } from "../../components/MovieItem";
 import { Link } from "react-router-dom";
 import { IMovieDetails } from "./types";
+import Loading from "../../components/Loading";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -104,6 +105,7 @@ export default function SeriesDetails() {
 
 	return (
 		<>
+			{!movie.genres && <Loading />}
 			{seriesFromSearch.length === 0 && moviesFromSearch.length === 0 && (
 				<S.Container background={`${image_path}/${movie.background}`}>
 					<div className="fade"></div>

@@ -8,6 +8,7 @@ import ListButton from "../../components/ListButton";
 import { MovieList } from "../../components/MovieList";
 import { Movie } from "../../components/MovieItem";
 import { RiCloseFill } from "react-icons/ri";
+import Loading from "../../components/Loading";
 
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
@@ -104,6 +105,7 @@ export default function Home() {
 
 	return (
 		<>
+			{upcoming.length < 5 && <Loading />}
 			<S.Banner>
 				<h2>
 					<span>Sem</span> assinatura, <span>sem</span> fins-lucrativos.

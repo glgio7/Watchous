@@ -21,7 +21,7 @@ export const Movie = styled.li`
 	.vote-average {
 		position: absolute;
 		top: 0;
-		z-index: 9;
+		z-index: 5;
 		right: 1rem;
 		margin: 0 auto;
 		width: 48px;

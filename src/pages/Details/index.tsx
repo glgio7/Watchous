@@ -7,6 +7,7 @@ import { MovieList } from "../../components/MovieList";
 import { Movie } from "../../components/MovieItem";
 import { IListRefs, IMovieDetails } from "./types";
 import ListButton from "../../components/ListButton";
+import Loading from "../../components/Loading";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -89,6 +90,7 @@ export default function Details() {
 
 	return (
 		<>
+			{!movie.genres && <Loading />}
 			{seriesFromSearch.length === 0 && moviesFromSearch.length === 0 && (
 				<S.Container background={`${image_path}/${movie.background}`}>
 					<div className="fade"></div>

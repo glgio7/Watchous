@@ -8,7 +8,7 @@ export const ListButton = styled.button<{ direction: string }>`
 	border: none;
 	font-size: 2rem;
 
-	z-index: 90;
+	z-index: 5;
 
 	position: absolute;
 	top: 0;

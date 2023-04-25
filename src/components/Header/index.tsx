@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { RiCheckboxBlankCircleFill, RiMenuFill } from "react-icons/ri";
 import { RiSearchLine } from "react-icons/ri";
 import { RiCloseFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import * as S from "./styles";
+import { SearchContext } from "../../contexts/SearchContext";
 
 type HeaderProps = {
 	searchValue: string;
@@ -14,6 +15,9 @@ export default function Header({ searchValue, setSearchValue }: HeaderProps) {
 	const [navOpen, setNavOpen] = useState(false);
 	const toggleMenu = () => setNavOpen(!navOpen);
 	const hideNav = () => setNavOpen(false);
+	const { setSeriesFromSearch, setMoviesFromSearch } = useContext(
+		SearchContext
+	);
 
 	const [input, setInput] = useState("");
 
@@ -36,7 +40,14 @@ export default function Header({ searchValue, setSearchValue }: HeaderProps) {
 	return (
 		<>
 			<S.Header>
-				<Link to={"/"} className="logo-container">
+				<Link
+					to={"/"}
+					className="logo-container"
+					onClick={() => {
+						setMoviesFromSearch([]);
+						setSeriesFromSearch([]);
+					}}
+				>
 					<h1 className="logo">
 						<img src={"/img/logo.png"} alt="Watchous" />
 					</h1>
