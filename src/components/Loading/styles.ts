@@ -69,5 +69,9 @@ export const Container = styled.main`
 		top: 114px;
 
 		height: calc(100vh - 114px);
+
+		.svg-container {
+			height: 40%;
+		}
 	}
 `;

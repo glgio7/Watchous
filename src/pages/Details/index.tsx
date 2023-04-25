@@ -80,7 +80,7 @@ export default function Details() {
 						.map((value: { id: number; name: string }) => value.name)
 						.join(" - "),
 					vote_average: Math.round(data.vote_average),
-					related: data.similar.results.slice(0, 4),
+					related: data.similar.results.slice(0, 10),
 				};
 				document.title = `Watchous - ${movie.title}`;
 				setMovie(movie);
@@ -139,23 +139,25 @@ export default function Details() {
 								</li>
 								<li>
 									<h3>Filmes relacionados</h3>
-									{movie.related &&
-										movie.related.map((movie) => (
-											<Link
-												to={`/details/${movie.id}`}
-												key={movie.id}
-												className="related-movie"
-											>
-												<img
-													src={
-														movie.poster_path
-															? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
-															: "/img/movie_placeholder.jpg"
-													}
-												/>
-												{movie.title.substring(0, 9) + "..."}
-											</Link>
-										))}
+									<div className="related-movies">
+										{movie.related &&
+											movie.related.map((movie) => (
+												<Link
+													to={`/details/${movie.id}`}
+													key={movie.id}
+													className="related-movies__movie"
+												>
+													<img
+														src={
+															movie.poster_path
+																? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
+																: "/img/movie_placeholder.jpg"
+														}
+													/>
+													{movie.title.substring(0, 9) + "..."}
+												</Link>
+											))}
+									</div>
 								</li>
 							</ul>
 						</div>

@@ -140,8 +140,6 @@ export const Container = styled.div<{
 		padding: 1rem;
 		background-color: #111;
 		color: #fff;
-		display: flex;
-		flex-wrap: wrap;
 
 		margin-bottom: 0.5rem;
 	}
@@ -161,8 +159,12 @@ export const Container = styled.div<{
 		background-color: transparent;
 		color: rgb(255, 164, 0);
 	}
+	.related-movies {
+		display: flex;
+		overflow-x: auto;
+	}
 
-	.related-movie {
+	.related-movies__movie {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -170,7 +172,7 @@ export const Container = styled.div<{
 		margin-top: 1rem;
 	}
 
-	.related-movie img {
+	.related-movies img {
 		height: 96px;
 		width: 72px;
 		object-fit: cover;

@@ -87,7 +87,7 @@ export default function SeriesDetails() {
 							.join(" - "),
 						vote_average: Math.round(data.vote_average),
 						trailer: data.videos.results[0] ? data.videos.results[0].key : "",
-						related: data.similar.results.slice(0, 4),
+						related: data.similar.results.slice(0, 10),
 						release: data.first_air_date
 							.split("-")
 							.reverse()
@@ -163,7 +163,7 @@ export default function SeriesDetails() {
 											<Link
 												to={`/details/series/${movie.id}`}
 												key={movie.id}
-												className="related-movie"
+												className="related-movies__movie"
 											>
 												<img
 													src={
