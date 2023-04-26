@@ -9,6 +9,7 @@ import { Movie } from "../../components/MovieItem";
 import { Link } from "react-router-dom";
 import { IMovieDetails } from "./types";
 import Loading from "../../components/Loading";
+import { handleScrollList } from "../../utils";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -32,20 +33,6 @@ export default function SeriesDetails() {
 	const listRefs: IListRefs = {
 		searchMovies: useRef<HTMLUListElement>(null),
 		searchSeries: useRef<HTMLUListElement>(null),
-	};
-
-	const handleScrollList = (direction: string, list: string) => {
-		let maxScroll =
-			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
-
-		switch (direction) {
-			case "left":
-				listRefs[list].current!.scrollLeft -= maxScroll / 3;
-				break;
-			case "right":
-				listRefs[list].current!.scrollLeft += maxScroll / 3;
-				break;
-		}
 	};
 
 	if (player) {
@@ -210,7 +197,9 @@ export default function SeriesDetails() {
 						<MovieList ref={listRefs["searchMovies"]}>
 							<ListButton
 								direction={"left"}
-								onClick={() => handleScrollList("left", "searchMovies")}
+								onClick={() =>
+									handleScrollList(listRefs, "left", "searchMovies")
+								}
 							/>
 							{moviesFromSearch.map((movie) => (
 								<Movie key={movie.id}>
@@ -249,7 +238,9 @@ export default function SeriesDetails() {
 							))}
 							<ListButton
 								direction={"right"}
-								onClick={() => handleScrollList("right", "searchMovies")}
+								onClick={() =>
+									handleScrollList(listRefs, "right", "searchMovies")
+								}
 							/>
 						</MovieList>
 					</Wrapper>
@@ -263,7 +254,9 @@ export default function SeriesDetails() {
 						<MovieList ref={listRefs["searchSeries"]}>
 							<ListButton
 								direction={"left"}
-								onClick={() => handleScrollList("left", "searchSeries")}
+								onClick={() =>
+									handleScrollList(listRefs, "left", "searchSeries")
+								}
 							/>
 							{seriesFromSearch.map((movie) => (
 								<Movie key={movie.id}>
@@ -301,7 +294,9 @@ export default function SeriesDetails() {
 							))}
 							<ListButton
 								direction={"right"}
-								onClick={() => handleScrollList("right", "searchSeries")}
+								onClick={() =>
+									handleScrollList(listRefs, "right", "searchSeries")
+								}
 							/>
 						</MovieList>
 					</Wrapper>

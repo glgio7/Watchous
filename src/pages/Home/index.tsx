@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import db from "../../api/movies_list.json";
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { IListRefs, IMovie } from "./types";
+import { IMovie } from "./types";
 import { SearchContext } from "../../contexts/SearchContext";
 import { Link } from "react-router-dom";
 import ListButton from "../../components/ListButton";
@@ -9,6 +9,8 @@ import { MovieList } from "../../components/MovieList";
 import { Movie } from "../../components/MovieItem";
 import { RiCloseFill } from "react-icons/ri";
 import Loading from "../../components/Loading";
+import { IListRefs } from "../../utils/types";
+import { handleScrollList } from "../../utils";
 
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
@@ -89,20 +91,6 @@ export default function Home() {
 		}
 	};
 
-	const handleScrollList = (direction: string, list: string) => {
-		let maxScroll =
-			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
-
-		switch (direction) {
-			case "left":
-				listRefs[list].current!.scrollLeft -= maxScroll / 3;
-				break;
-			case "right":
-				listRefs[list].current!.scrollLeft += maxScroll / 3;
-				break;
-		}
-	};
-
 	return (
 		<>
 			{upcoming.length < 5 && <Loading />}
@@ -127,7 +115,9 @@ export default function Home() {
 							<MovieList ref={listRefs.searchMovies}>
 								<ListButton
 									direction={"left"}
-									onClick={() => handleScrollList("left", "searchMovies")}
+									onClick={() =>
+										handleScrollList(listRefs, "left", "searchMovies")
+									}
 								/>
 								{moviesFromSearch.map((movie) => (
 									<Movie key={movie.id}>
@@ -165,7 +155,9 @@ export default function Home() {
 								))}
 								<ListButton
 									direction={"right"}
-									onClick={() => handleScrollList("right", "searchMovies")}
+									onClick={() =>
+										handleScrollList(listRefs, "right", "searchMovies")
+									}
 								/>
 							</MovieList>
 						</S.Wrapper>
@@ -181,7 +173,9 @@ export default function Home() {
 							<MovieList ref={listRefs.searchSeries}>
 								<ListButton
 									direction={"left"}
-									onClick={() => handleScrollList("left", "searchSeries")}
+									onClick={() =>
+										handleScrollList(listRefs, "left", "searchSeries")
+									}
 								/>
 								{seriesFromSearch.map((movie) => (
 									<Movie key={movie.id}>
@@ -219,7 +213,9 @@ export default function Home() {
 								))}
 								<ListButton
 									direction={"right"}
-									onClick={() => handleScrollList("right", "searchSeries")}
+									onClick={() =>
+										handleScrollList(listRefs, "right", "searchSeries")
+									}
 								/>
 							</MovieList>
 						</S.Wrapper>
@@ -238,7 +234,7 @@ export default function Home() {
 										<ListButton
 											direction={"left"}
 											onClick={() => {
-												handleScrollList("left", "upcoming");
+												handleScrollList(listRefs, "left", "upcoming");
 												handlePageList("left", "upcoming");
 											}}
 										/>
@@ -279,7 +275,7 @@ export default function Home() {
 										<ListButton
 											direction={"right"}
 											onClick={() => {
-												handleScrollList("right", "upcoming");
+												handleScrollList(listRefs, "right", "upcoming");
 												handlePageList("right", "upcoming");
 											}}
 										/>
@@ -295,7 +291,7 @@ export default function Home() {
 										<ListButton
 											direction={"left"}
 											onClick={() => {
-												handleScrollList("left", "series");
+												handleScrollList(listRefs, "left", "series");
 												handlePageList("left", "series");
 											}}
 										/>
@@ -336,7 +332,7 @@ export default function Home() {
 										<ListButton
 											direction={"right"}
 											onClick={() => {
-												handleScrollList("right", "series");
+												handleScrollList(listRefs, "right", "series");
 												handlePageList("right", "series");
 											}}
 										/>
@@ -354,7 +350,9 @@ export default function Home() {
 									<MovieList ref={listRefs[item[0]]}>
 										<ListButton
 											direction={"left"}
-											onClick={() => handleScrollList("left", item[0])}
+											onClick={() =>
+												handleScrollList(listRefs, "left", item[0])
+											}
 										/>
 										{item[1].map((movie) => (
 											<Movie key={movie.id}>
@@ -374,7 +372,9 @@ export default function Home() {
 										))}
 										<ListButton
 											direction={"right"}
-											onClick={() => handleScrollList("right", item[0])}
+											onClick={() =>
+												handleScrollList(listRefs, "right", item[0])
+											}
 										/>
 									</MovieList>
 								</S.Wrapper>

@@ -1,7 +1,3 @@
-export interface IListRefs {
-	[key: string]: React.RefObject<HTMLUListElement>;
-}
-
 export interface IMovie {
 	name?: string;
 	id: string;
