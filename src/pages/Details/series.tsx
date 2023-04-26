@@ -61,7 +61,10 @@ export default function SeriesDetails() {
 							.map((value: { id: number; name: string }) => value.name)
 							.join(" - "),
 						vote_average: Math.round(data.vote_average),
-						trailer: data.videos.results[0] ? data.videos.results[0].key : "",
+						mainTrailer: data.videos.results[0]
+							? data.videos.results[0].key
+							: "",
+						trailers: data.videos.results,
 						related: data.similar.results.slice(0, 10),
 						release: data.first_air_date
 							.split("-")
@@ -153,6 +156,37 @@ export default function SeriesDetails() {
 											))}
 									</div>
 								</li>
+								<li>
+									<h3>Mais trailers</h3>
+									<div className="related-movies">
+										{movie.trailers &&
+											movie.trailers.map(
+												(item) =>
+													item.type === "Trailer" && (
+														<div
+															key={item.key}
+															className="related-movies__movie"
+															onClick={() => {
+																setMovie((prevState) => ({
+																	...prevState,
+																	mainTrailer: item.key,
+																}));
+																setPlayer(true);
+															}}
+														>
+															<img
+																src={
+																	movie.poster_path
+																		? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
+																		: "/img/movie_placeholder.jpg"
+																}
+															/>
+															{item.name && item.name.substring(0, 9) + "..."}
+														</div>
+													)
+											)}
+									</div>
+								</li>
 							</ul>
 						</div>
 						<div
@@ -170,7 +204,7 @@ export default function SeriesDetails() {
 							Fechar
 						</button>
 						<iframe
-							src={`https://www.youtube.com/embed/${movie.trailer}`}
+							src={`https://www.youtube.com/embed/${movie.mainTrailer}`}
 							title="YouTube video player"
 							allowFullScreen
 						/>

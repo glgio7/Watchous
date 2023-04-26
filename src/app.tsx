@@ -11,7 +11,9 @@ import Header from "./components/Header";
 import Login from "./pages/Login";
 
 const App = () => {
-	const { searchValue, setSearchValue } = useContext(SearchContext);
+	const { searchValue, setSearchValue, moviesFromSearch } = useContext(
+		SearchContext
+	);
 	return (
 		<>
 			<GlobalCSS />

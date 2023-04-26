@@ -1,9 +1,11 @@
 export interface IMovieDetails {
 	name?: string;
 	id?: string;
-	release?: string;
-	trailer?: string;
+	trailers?: [{ key: string; name: string; type: string }];
+	mainTrailer?: string;
 	lastEpisode?: string;
+	release: string;
+	related: IMovieDetails[];
 	title: string;
 	vote_average: number;
 	fullSinopse: string;
@@ -11,7 +13,6 @@ export interface IMovieDetails {
 	poster_path: string;
 	background: string;
 	genres: string;
-	related?: IMovieDetails[];
 }
 
 export interface IListRefs {
