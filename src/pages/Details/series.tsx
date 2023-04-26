@@ -132,24 +132,26 @@ export default function SeriesDetails() {
 										: "Não avaliado."}
 								</li>
 								<li>
-									<h3>Séries relacionadas</h3>
-									{movie.related &&
-										movie.related.map((movie) => (
-											<Link
-												to={`/details/series/${movie.id}`}
-												key={movie.id}
-												className="related-movies__movie"
-											>
-												<img
-													src={
-														movie.poster_path
-															? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
-															: "/img/movie_placeholder.jpg"
-													}
-												/>
-												{movie.name && movie.name.substring(0, 9) + "..."}
-											</Link>
-										))}
+									<h3>Séries relacionados</h3>
+									<div className="related-movies">
+										{movie.related &&
+											movie.related.map((movie) => (
+												<Link
+													to={`/details/series/${movie.id}`}
+													key={movie.id}
+													className="related-movies__movie"
+												>
+													<img
+														src={
+															movie.poster_path
+																? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
+																: "/img/movie_placeholder.jpg"
+														}
+													/>
+													{movie.name && movie.name.substring(0, 9) + "..."}
+												</Link>
+											))}
+									</div>
 								</li>
 							</ul>
 						</div>
