@@ -8,6 +8,7 @@ import { Movie } from "../../components/MovieItem";
 import { IListRefs, IMovieDetails } from "./types";
 import ListButton from "../../components/ListButton";
 import Loading from "../../components/Loading";
+import SearchContainer from "../Search";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -184,110 +185,7 @@ export default function Details() {
 			)}
 
 			{/* ----------------------- Movies & Series from search / Results --------------------------- */}
-
-			{moviesFromSearch.length > 0 && (
-				<S.SearchContainer>
-					<h1>Filmes da sua pesquisa</h1>
-					<Wrapper>
-						<MovieList ref={listRefs["searchMovies"]}>
-							<ListButton
-								direction={"left"}
-								onClick={() => handleScrollList("left", "searchMovies")}
-							/>
-							{moviesFromSearch.map((movie) => (
-								<Movie key={movie.id}>
-									<div className="vote-average">
-										<span>
-											{Math.round(movie.vote_average) !== 0
-												? Math.round(movie.vote_average)
-												: "?"}
-										</span>
-										<p>
-											{movie.vote_average > 8
-												? "★★★★★"
-												: movie.vote_average > 6
-												? "★★★★"
-												: movie.vote_average > 4
-												? "★★★"
-												: movie.vote_average > 2
-												? "★★"
-												: "★"}
-										</p>
-									</div>
-									<Link to={`/details/${movie.id}`}>
-										<img
-											src={
-												movie.poster_path
-													? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
-													: "/img/movie_placeholder.jpg"
-											}
-											alt={""}
-											className="moviePoster"
-										/>
-									</Link>
-									<span>{movie.title}</span>
-								</Movie>
-							))}
-							<ListButton
-								direction={"right"}
-								onClick={() => handleScrollList("right", "searchMovies")}
-							/>
-						</MovieList>
-					</Wrapper>
-				</S.SearchContainer>
-			)}
-
-			{seriesFromSearch.length > 0 && (
-				<S.SearchContainer>
-					<h1>Séries da sua pesquisa</h1>
-					<Wrapper>
-						<MovieList ref={listRefs["searchSeries"]}>
-							<ListButton
-								direction={"left"}
-								onClick={() => handleScrollList("left", "searchSeries")}
-							/>
-							{seriesFromSearch.map((movie) => (
-								<Movie key={movie.id}>
-									<div className="vote-average">
-										<span>
-											{Math.round(movie.vote_average) !== 0
-												? Math.round(movie.vote_average)
-												: "?"}
-										</span>
-										<p>
-											{movie.vote_average > 8
-												? "★★★★★"
-												: movie.vote_average > 6
-												? "★★★★"
-												: movie.vote_average > 4
-												? "★★★"
-												: movie.vote_average > 2
-												? "★★"
-												: "★"}
-										</p>
-									</div>
-									<Link to={`/details/series/${movie.id}`}>
-										<img
-											src={
-												movie.poster_path
-													? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
-													: "/img/movie_placeholder.jpg"
-											}
-											alt={""}
-											className="moviePoster"
-										/>
-									</Link>
-									<span>{movie.name}</span>
-								</Movie>
-							))}
-							<ListButton
-								direction={"right"}
-								onClick={() => handleScrollList("right", "searchSeries")}
-							/>
-						</MovieList>
-					</Wrapper>
-				</S.SearchContainer>
-			)}
+			{moviesFromSearch.length >= 1 && <SearchContainer />}
 		</>
 	);
 }

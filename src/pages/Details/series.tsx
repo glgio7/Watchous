@@ -1,21 +1,13 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
-import { useParams } from "react-router-dom";
 import * as S from "./styles";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { SearchContext } from "../../contexts/SearchContext";
-import { Wrapper } from "../Home/styles";
-import { MovieList } from "../../components/MovieList";
-import ListButton from "../../components/ListButton";
-import { Movie } from "../../components/MovieItem";
 import { Link } from "react-router-dom";
 import { IMovieDetails } from "./types";
 import Loading from "../../components/Loading";
-import { handleScrollList } from "../../utils";
+import SearchContainer from "../Search";
 
 const apiKey = process.env.REACT_APP_API_KEY;
-
-interface IListRefs {
-	[key: string]: React.RefObject<HTMLUListElement>;
-}
 
 export default function SeriesDetails() {
 	const {
@@ -24,16 +16,12 @@ export default function SeriesDetails() {
 		setSeriesFromSearch,
 		setMoviesFromSearch,
 	} = useContext(SearchContext);
+
 	const { id } = useParams<string>();
 	const image_path = "https://themoviedb.org/t/p/original";
 	const [movie, setMovie] = useState<IMovieDetails>({} as IMovieDetails);
 	const [fullDescription, setFullDescription] = useState(false);
 	const [player, setPlayer] = useState(false);
-
-	const listRefs: IListRefs = {
-		searchMovies: useRef<HTMLUListElement>(null),
-		searchSeries: useRef<HTMLUListElement>(null),
-	};
 
 	if (player) {
 		document.body.style.overflow = "hidden";
@@ -189,119 +177,7 @@ export default function SeriesDetails() {
 			)}
 
 			{/* ----------------------- Movies & Series from search / Results --------------------------- */}
-
-			{moviesFromSearch.length > 0 && (
-				<>
-					<h1>Filmes da sua pesquisa</h1>
-					<Wrapper>
-						<MovieList ref={listRefs["searchMovies"]}>
-							<ListButton
-								direction={"left"}
-								onClick={() =>
-									handleScrollList(listRefs, "left", "searchMovies")
-								}
-							/>
-							{moviesFromSearch.map((movie) => (
-								<Movie key={movie.id}>
-									<div className="vote-average">
-										<span>{movie.vote_average}</span>
-										<span>
-											{Math.round(movie.vote_average) !== 0
-												? Math.round(movie.vote_average)
-												: "?"}
-										</span>
-										<p>
-											{movie.vote_average > 8
-												? "★★★★★"
-												: movie.vote_average > 6
-												? "★★★★"
-												: movie.vote_average > 4
-												? "★★★"
-												: movie.vote_average > 2
-												? "★★"
-												: "★"}
-										</p>
-									</div>
-									<Link to={`/details/${movie.id}`}>
-										<img
-											src={
-												movie.poster_path
-													? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
-													: "/img/movie_placeholder.jpg"
-											}
-											alt={""}
-											className="moviePoster"
-										/>
-									</Link>
-									<span>{movie.title}</span>
-								</Movie>
-							))}
-							<ListButton
-								direction={"right"}
-								onClick={() =>
-									handleScrollList(listRefs, "right", "searchMovies")
-								}
-							/>
-						</MovieList>
-					</Wrapper>
-				</>
-			)}
-
-			{seriesFromSearch.length > 0 && (
-				<>
-					<h1>Séries da sua pesquisa</h1>
-					<Wrapper>
-						<MovieList ref={listRefs["searchSeries"]}>
-							<ListButton
-								direction={"left"}
-								onClick={() =>
-									handleScrollList(listRefs, "left", "searchSeries")
-								}
-							/>
-							{seriesFromSearch.map((movie) => (
-								<Movie key={movie.id}>
-									<div className="vote-average">
-										<span>
-											{Math.round(movie.vote_average) !== 0
-												? Math.round(movie.vote_average)
-												: "?"}
-										</span>
-										<p>
-											{movie.vote_average > 8
-												? "★★★★★"
-												: movie.vote_average > 6
-												? "★★★★"
-												: movie.vote_average > 4
-												? "★★★"
-												: movie.vote_average > 2
-												? "★★"
-												: "★"}
-										</p>
-									</div>
-									<Link to={`/details/series/${movie.id}`}>
-										<img
-											src={
-												movie.poster_path
-													? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
-													: "/img/movie_placeholder.jpg"
-											}
-											alt={""}
-											className="moviePoster"
-										/>
-									</Link>
-									<span>{movie.name}</span>
-								</Movie>
-							))}
-							<ListButton
-								direction={"right"}
-								onClick={() =>
-									handleScrollList(listRefs, "right", "searchSeries")
-								}
-							/>
-						</MovieList>
-					</Wrapper>
-				</>
-			)}
+			{moviesFromSearch.length >= 1 && <SearchContainer />}
 		</>
 	);
 }
