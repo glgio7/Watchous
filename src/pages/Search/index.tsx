@@ -29,7 +29,6 @@ const SearchContainer = () => {
 					{moviesFromSearch.map((movie) => (
 						<Movie key={movie.id}>
 							<div className="vote-average">
-								<span>{Math.round(movie.vote_average)}</span>
 								<span>
 									{Math.round(movie.vote_average) !== 0
 										? Math.round(movie.vote_average)

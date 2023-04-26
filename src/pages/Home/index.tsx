@@ -11,6 +11,7 @@ import { RiCloseFill } from "react-icons/ri";
 import Loading from "../../components/Loading";
 import { IListRefs } from "../../utils/types";
 import { handleScrollList } from "../../utils";
+import SearchContainer from "../Search";
 
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
@@ -94,134 +95,23 @@ export default function Home() {
 	return (
 		<>
 			{upcoming.length < 5 && <Loading />}
-			<S.Banner>
-				<h2>
-					<span>Sem</span> assinatura, <span>sem</span> fins-lucrativos.
-				</h2>
-				<h1>Atualizações semanais</h1>
-				<h2>
-					<span>Confira</span> antes de assistir.
-				</h2>
-				<video autoPlay loop muted>
-					<source src="/img/aurora.mp4" type="video/mp4" />
-				</video>
-			</S.Banner>
+
+			{moviesFromSearch.length < 1 && (
+				<S.Banner>
+					<h2>
+						<span>Sem</span> assinatura, <span>sem</span> fins-lucrativos.
+					</h2>
+					<h1>Atualizações semanais</h1>
+					<h2>
+						<span>Confira</span> antes de assistir.
+					</h2>
+					<video autoPlay loop muted>
+						<source src="/img/aurora.mp4" type="video/mp4" />
+					</video>
+				</S.Banner>
+			)}
+
 			<S.Container>
-				{/* ----------------------- Movies from search / Results --------------------------- */}
-				{moviesFromSearch.length >= 1 && (
-					<>
-						<h1>Filmes da sua pesquisa</h1>
-						<S.Wrapper>
-							<MovieList ref={listRefs.searchMovies}>
-								<ListButton
-									direction={"left"}
-									onClick={() =>
-										handleScrollList(listRefs, "left", "searchMovies")
-									}
-								/>
-								{moviesFromSearch.map((movie) => (
-									<Movie key={movie.id}>
-										<div className="vote-average">
-											<span>
-												{Math.round(movie.vote_average) !== 0
-													? Math.round(movie.vote_average)
-													: "?"}
-											</span>
-											<p>
-												{movie.vote_average > 8
-													? "★★★★★"
-													: movie.vote_average > 6
-													? "★★★★"
-													: movie.vote_average > 4
-													? "★★★"
-													: movie.vote_average > 2
-													? "★★"
-													: "★"}
-											</p>
-										</div>
-										<Link to={`/details/${movie.id}`}>
-											<img
-												src={
-													movie.poster_path
-														? `https://www.themoviedb.org/t/p/w342${movie.poster_path}`
-														: "/img/movie_placeholder.jpg"
-												}
-												alt={""}
-												className="moviePoster"
-											/>
-										</Link>
-										<span>{movie.title}</span>
-									</Movie>
-								))}
-								<ListButton
-									direction={"right"}
-									onClick={() =>
-										handleScrollList(listRefs, "right", "searchMovies")
-									}
-								/>
-							</MovieList>
-						</S.Wrapper>
-					</>
-				)}
-
-				{/* ----------------------- Series from search / Results --------------------------- */}
-
-				{seriesFromSearch.length >= 1 && (
-					<>
-						<h1>Séries da sua pesquisa</h1>
-						<S.Wrapper>
-							<MovieList ref={listRefs.searchSeries}>
-								<ListButton
-									direction={"left"}
-									onClick={() =>
-										handleScrollList(listRefs, "left", "searchSeries")
-									}
-								/>
-								{seriesFromSearch.map((movie) => (
-									<Movie key={movie.id}>
-										<div className="vote-average">
-											<span>
-												{Math.round(movie.vote_average) !== 0
-													? Math.round(movie.vote_average)
-													: "?"}
-											</span>
-											<p>
-												{movie.vote_average > 8
-													? "★★★★★"
-													: movie.vote_average > 6
-													? "★★★★"
-													: movie.vote_average > 4
-													? "★★★"
-													: movie.vote_average > 2
-													? "★★"
-													: "★"}
-											</p>
-										</div>
-										<Link to={`/details/series/${movie.id}`}>
-											<img
-												src={
-													movie.poster_path
-														? `https://www.themoviedb.org/t/p/w342${movie.poster_path}`
-														: "/img/movie_placeholder.jpg"
-												}
-												alt={""}
-												className="moviePoster"
-											/>
-										</Link>
-										<span>{movie.name}</span>
-									</Movie>
-								))}
-								<ListButton
-									direction={"right"}
-									onClick={() =>
-										handleScrollList(listRefs, "right", "searchSeries")
-									}
-								/>
-							</MovieList>
-						</S.Wrapper>
-					</>
-				)}
-
 				{/* ----------------------- Movies & Series / Recommended --------------------------- */}
 
 				{moviesFromSearch.length < 1 && seriesFromSearch.length < 1 && (
@@ -393,6 +283,9 @@ export default function Home() {
 					?
 				</button>
 			</S.Container>
+
+			{/* ----------------------- From search results --------------------------- */}
+			{moviesFromSearch.length >= 1 && <SearchContainer />}
 		</>
 	);
 }
