@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -36,6 +37,7 @@ router.get("/users", (req, res) => {
 	res.status(200).json(users);
 });
 
+app.use(cors());
 app.use("/api", router);
 
 app.listen(port, () => console.log(`Everything is ok!`));

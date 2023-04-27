@@ -13,7 +13,6 @@ import { IListRefs } from "../../utils/types";
 import { handleScrollList } from "../../utils";
 import { IMovie } from "./types";
 
-
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
 
