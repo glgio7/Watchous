@@ -1,16 +1,18 @@
-import React, { useContext, useRef } from "react";
 import * as S from "./styles";
+import React, { useContext, useRef } from "react";
 import { SearchContext } from "../../contexts/SearchContext";
-import { Wrapper } from "../Home/styles";
-import { MovieList } from "../../components/MovieList";
+import Wrapper from "../../components/Wrapper";
+import MovieList from "../../components/MovieList";
 import ListButton from "../../components/ListButton";
+import Movie from "../../components/MovieItem";
 import { handleScrollList } from "../../utils";
 import { IListRefs } from "../../utils/types";
-import { Movie } from "../../components/MovieItem";
 import { Link } from "react-router-dom";
 
 const SearchContainer = () => {
-	const { moviesFromSearch, seriesFromSearch } = useContext(SearchContext);
+	const { moviesFromSearch, seriesFromSearch, setSearchValue } = useContext(
+		SearchContext
+	);
 
 	const listRefs: IListRefs = {
 		searchMovies: useRef<HTMLUListElement>(null),
@@ -27,7 +29,7 @@ const SearchContainer = () => {
 						onClick={() => handleScrollList(listRefs, "left", "searchMovies")}
 					/>
 					{moviesFromSearch.map((movie) => (
-						<Movie key={movie.id}>
+						<Movie key={movie.id} onClick={() => setSearchValue("")}>
 							<div className="vote-average">
 								<span>
 									{Math.round(movie.vote_average) !== 0
@@ -74,7 +76,7 @@ const SearchContainer = () => {
 						onClick={() => handleScrollList(listRefs, "left", "searchSeries")}
 					/>
 					{seriesFromSearch.map((movie) => (
-						<Movie key={movie.id}>
+						<Movie key={movie.id} onClick={() => setSearchValue("")}>
 							<div className="vote-average">
 								<span>
 									{Math.round(movie.vote_average) !== 0

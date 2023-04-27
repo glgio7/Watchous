@@ -2,43 +2,43 @@
 	"freemovies": [
 		{
 			"title": "Donnie Darko",
-			"image_path": "/fhQoQfejY1hUcwyuLgpBrYs6uFt.jpg",
+			"poster_path": "/fhQoQfejY1hUcwyuLgpBrYs6uFt.jpg",
 			"imdb": "tt0246578",
 			"key": "RPZTgNgsdIw"
 		},
 		{
 			"title": "O Sexto sentido",
-			"image_path": "/ds7jw0WYCd6k7hBzMnzgFsTfg96.jpg",
+			"poster_path": "/ds7jw0WYCd6k7hBzMnzgFsTfg96.jpg",
 			"imdb": "tt0167404",
 			"key": "ohrmQXEUTjY"
 		},
 		{
 			"title": "A Novata",
-			"image_path": "/aZgdsGk8Oo7bwhVBtg43pM3hbM5.jpg",
+			"poster_path": "/aZgdsGk8Oo7bwhVBtg43pM3hbM5.jpg",
 			"imdb": "tt11131464",
 			"key": "y3c44UZ385c"
 		},
 		{
 			"title": "A Freira",
-			"image_path": "/28vxo5DvV0nHWTbYQL8gN3hmuli.jpg",
+			"poster_path": "/28vxo5DvV0nHWTbYQL8gN3hmuli.jpg",
 			"imdb": "tt5814060",
 			"key": "jFBGUT1sV40"
 		},
 		{
 			"title": "Tempo",
-			"image_path": "/p732IfeEzAGbfJiLK2RTEJmsntk.jpg",
+			"poster_path": "/p732IfeEzAGbfJiLK2RTEJmsntk.jpg",
 			"imdb": "tt10954652",
 			"key": "HU8GpUspWUE"
 		},
 		{
 			"title": "A Orfã 2",
-			"image_path": "/uRdpVgEufzYNVnDPTXEjt0mpD99.jpg",
+			"poster_path": "/uRdpVgEufzYNVnDPTXEjt0mpD99.jpg",
 			"imdb": "tt11851548",
 			"key": "c6Q_22v-SCE"
 		},
 		{
 			"title": "O Meme do Mal",
-			"image_path": "/wAjwcIUMOM5ADGvzrqwTtrZhKYy.jpg",
+			"poster_path": "/wAjwcIUMOM5ADGvzrqwTtrZhKYy.jpg",
 			"imdb": "tt17196124",
 			"key": "HCpsm4AYliI"
 		}

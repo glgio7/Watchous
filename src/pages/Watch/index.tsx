@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../components/Header";
 import dataMovies from "../../api/freemovies_list.json";
 import { Container } from "./styles";
-import { Movie } from "../../components/MovieItem";
+import Movie from "../../components/MovieItem";
 
 export default function FreeToWatch() {
 	return (
@@ -15,12 +15,13 @@ export default function FreeToWatch() {
 							href={`https://youtube.com/watch?v=${movie.key}`}
 							target="_blank"
 							rel="noopener noreferrer"
+							key={movie.imdb}
 						>
 							<Movie key={movie.imdb} className="movie-box">
 								<img
 									src={
-										movie.image_path
-											? `https://www.themoviedb.org/t/p/w500${movie.image_path}`
+										movie.poster_path
+											? `https://www.themoviedb.org/t/p/w500${movie.poster_path}`
 											: "/img/movie_placeholder.jpg"
 									}
 									alt={""}

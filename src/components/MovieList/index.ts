@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const MovieList = styled.ul`
+const MovieList = styled.ul`
 	overflow-x: scroll;
 	overflow-y: hidden;
 	display: flex;
@@ -17,3 +17,5 @@ export const MovieList = styled.ul`
 		background-color: transparent;
 	}
 `;
+
+export default MovieList;

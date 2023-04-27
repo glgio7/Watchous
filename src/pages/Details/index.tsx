@@ -1,14 +1,9 @@
 import * as S from "./styles";
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { SearchContext } from "../../contexts/SearchContext";
-import { Wrapper } from "../Home/styles";
-import { MovieList } from "../../components/MovieList";
-import { Movie } from "../../components/MovieItem";
-import { IListRefs, IMovieDetails } from "./types";
-import ListButton from "../../components/ListButton";
+import { IMovieDetails } from "./types";
 import Loading from "../../components/Loading";
-import SearchContainer from "../Search";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -20,29 +15,10 @@ export default function Details() {
 		setMoviesFromSearch,
 	} = useContext(SearchContext);
 	const { id } = useParams();
-	const image_path = "https://themoviedb.org/t/p/original";
+	const baseImageURL = "https://themoviedb.org/t/p/original";
 	const [movie, setMovie] = useState<IMovieDetails>({} as IMovieDetails);
 	const [fullDescription, setFullDescription] = useState<boolean>(false);
 	const [player, setPlayer] = useState<boolean>(false);
-
-	const listRefs: IListRefs = {
-		searchMovies: useRef<HTMLUListElement>(null),
-		searchSeries: useRef<HTMLUListElement>(null),
-	};
-
-	const handleScrollList = (direction: string, list: string) => {
-		let maxScroll =
-			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
-
-		switch (direction) {
-			case "left":
-				listRefs[list].current!.scrollLeft -= maxScroll / 3;
-				break;
-			case "right":
-				listRefs[list].current!.scrollLeft += maxScroll / 3;
-				break;
-		}
-	};
 
 	if (player) {
 		document.body.style.overflow = "hidden";
@@ -94,7 +70,7 @@ export default function Details() {
 		<>
 			{!movie.genres && <Loading />}
 			{seriesFromSearch.length === 0 && moviesFromSearch.length === 0 && (
-				<S.Container background={`${image_path}/${movie.background}`}>
+				<S.Container background={`${baseImageURL}/${movie.background}`}>
 					<div className="fade"></div>
 					<section className="card-container">
 						<div className="container-info__top">
@@ -103,7 +79,7 @@ export default function Details() {
 						<img
 							src={
 								movie.poster_path
-									? `${image_path}/${movie.poster_path}`
+									? `${baseImageURL}/${movie.poster_path}`
 									: "/img/movie_placeholder.jpg"
 							}
 							alt={`Capa do filme ${movie.title}`}
@@ -161,11 +137,12 @@ export default function Details() {
 											))}
 									</div>
 								</li>
-								<li>
-									<h3>Mais trailers</h3>
-									<div className="related-movies">
-										{movie.trailers &&
-											movie.trailers.map(
+
+								{movie.trailers && movie.trailers.length > 0 && (
+									<li>
+										<h3>Mais trailers</h3>
+										<div className="related-movies">
+											{movie.trailers.map(
 												(item) =>
 													item.type === "Trailer" && (
 														<div
@@ -190,8 +167,9 @@ export default function Details() {
 														</div>
 													)
 											)}
-									</div>
-								</li>
+										</div>
+									</li>
+								)}
 							</ul>
 						</div>
 						<div
@@ -215,9 +193,6 @@ export default function Details() {
 					</S.IframeContainer>
 				</S.Container>
 			)}
-
-			{/* ----------------------- Movies & Series from search / Results --------------------------- */}
-			{moviesFromSearch.length >= 1 && <SearchContainer />}
 		</>
 	);
 }

@@ -6,20 +6,19 @@ import { Link } from "react-router-dom";
 import * as S from "./styles";
 import { SearchContext } from "../../contexts/SearchContext";
 
-type HeaderProps = {
-	searchValue: string;
-	setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-};
-
-export default function Header({ searchValue, setSearchValue }: HeaderProps) {
+export default function Header() {
 	const [navOpen, setNavOpen] = useState(false);
-	const toggleMenu = () => setNavOpen(!navOpen);
-	const hideNav = () => setNavOpen(false);
-	const { setSeriesFromSearch, setMoviesFromSearch } = useContext(
-		SearchContext
-	);
 
 	const [input, setInput] = useState("");
+
+	const toggleMenu = () => setNavOpen(!navOpen);
+
+	const {
+		setSeriesFromSearch,
+		setMoviesFromSearch,
+		searchValue,
+		setSearchValue,
+	} = useContext(SearchContext);
 
 	const search = (props: React.KeyboardEvent) => {
 		if (props.key === "Enter") {
@@ -46,6 +45,7 @@ export default function Header({ searchValue, setSearchValue }: HeaderProps) {
 					onClick={() => {
 						setMoviesFromSearch([]);
 						setSeriesFromSearch([]);
+						setSearchValue("");
 					}}
 				>
 					<h1 className="logo">
@@ -74,18 +74,38 @@ export default function Header({ searchValue, setSearchValue }: HeaderProps) {
 				</div>
 				{/* <RiCheckboxBlankCircleFill className="notification" /> */}
 			</S.Header>
-			<S.Navigation active={navOpen} onMouseLeave={hideNav}>
+			<S.Navigation active={navOpen} onMouseLeave={() => setNavOpen(false)}>
 				<RiCloseFill className="closeMenu" onClick={toggleMenu} />
-				<a href="/" onClick={() => setNavOpen(false)}>
+				<a
+					href="/"
+					onClick={() => {
+						setNavOpen(false), setSearchValue("");
+					}}
+				>
 					<li>Página Inicial</li>
 				</a>
-				<Link to={"/login"} onClick={() => setNavOpen(false)}>
+				<Link
+					to={"/login"}
+					onClick={() => {
+						setNavOpen(false), setSearchValue("");
+					}}
+				>
 					<li>Minha conta</li>
 				</Link>
-				<Link to={"/freetowatch"} onClick={() => setNavOpen(false)}>
+				<Link
+					to={"/freetowatch"}
+					onClick={() => {
+						setNavOpen(false), setSearchValue("");
+					}}
+				>
 					<li id="new">Grátis para Assistir</li>
 				</Link>
-				<Link to={"/credits"} onClick={() => setNavOpen(false)}>
+				<Link
+					to={"/credits"}
+					onClick={() => {
+						setNavOpen(false), setSearchValue("");
+					}}
+				>
 					<li id="new">Créditos</li>
 				</Link>
 			</S.Navigation>

@@ -1,17 +1,18 @@
 import * as S from "./styles";
 import db from "../../api/movies_list.json";
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { IMovie } from "./types";
-import { SearchContext } from "../../contexts/SearchContext";
 import { Link } from "react-router-dom";
+import { SearchContext } from "../../contexts/SearchContext";
+import Wrapper from "../../components/Wrapper";
 import ListButton from "../../components/ListButton";
-import { MovieList } from "../../components/MovieList";
-import { Movie } from "../../components/MovieItem";
-import { RiCloseFill } from "react-icons/ri";
+import MovieList from "../../components/MovieList";
+import Movie from "../../components/MovieItem";
 import Loading from "../../components/Loading";
+import { RiCloseFill } from "react-icons/ri";
 import { IListRefs } from "../../utils/types";
 import { handleScrollList } from "../../utils";
-import SearchContainer from "../Search";
+import { IMovie } from "./types";
+
 
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
@@ -27,10 +28,10 @@ export default function Home() {
 	const [series, setSeries] = useState<IMovie[]>([]);
 
 	const listRefs: IListRefs = {
-		upcoming: useRef<HTMLUListElement>(null),
-		series: useRef<HTMLUListElement>(null),
 		searchMovies: useRef<HTMLUListElement>(null),
 		searchSeries: useRef<HTMLUListElement>(null),
+		upcoming: useRef<HTMLUListElement>(null),
+		series: useRef<HTMLUListElement>(null),
 		thriller: useRef<HTMLUListElement>(null),
 		horror: useRef<HTMLUListElement>(null),
 		fantasy: useRef<HTMLUListElement>(null),
@@ -119,7 +120,7 @@ export default function Home() {
 						{upcoming.length > 5 && (
 							<>
 								<h1>Novos no Watchous</h1>
-								<S.Wrapper>
+								<Wrapper>
 									<MovieList ref={listRefs.upcoming}>
 										<ListButton
 											direction={"left"}
@@ -170,13 +171,13 @@ export default function Home() {
 											}}
 										/>
 									</MovieList>
-								</S.Wrapper>
+								</Wrapper>
 							</>
 						)}
 						{series.length > 5 && (
 							<>
 								<h1>Series em alta</h1>
-								<S.Wrapper>
+								<Wrapper>
 									<MovieList ref={listRefs.series}>
 										<ListButton
 											direction={"left"}
@@ -227,7 +228,7 @@ export default function Home() {
 											}}
 										/>
 									</MovieList>
-								</S.Wrapper>
+								</Wrapper>
 							</>
 						)}
 
@@ -236,7 +237,7 @@ export default function Home() {
 						{Object.entries(db).map((item) => (
 							<div key={item[0]}>
 								<h1>{item[0]}</h1>
-								<S.Wrapper>
+								<Wrapper>
 									<MovieList ref={listRefs[item[0]]}>
 										<ListButton
 											direction={"left"}
@@ -267,7 +268,7 @@ export default function Home() {
 											}
 										/>
 									</MovieList>
-								</S.Wrapper>
+								</Wrapper>
 							</div>
 						))}
 					</>
@@ -283,9 +284,6 @@ export default function Home() {
 					?
 				</button>
 			</S.Container>
-
-			{/* ----------------------- From search results --------------------------- */}
-			{moviesFromSearch.length >= 1 && <SearchContainer />}
 		</>
 	);
 }

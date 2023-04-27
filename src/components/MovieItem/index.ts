@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Movie = styled.li`
+const Movie = styled.li`
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -87,3 +87,5 @@ export const Movie = styled.li`
 		}
 	}
 `;
+
+export default Movie;

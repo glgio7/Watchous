@@ -5,7 +5,6 @@ import { SearchContext } from "../../contexts/SearchContext";
 import { Link } from "react-router-dom";
 import { IMovieDetails } from "./types";
 import Loading from "../../components/Loading";
-import SearchContainer from "../Search";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -18,7 +17,7 @@ export default function SeriesDetails() {
 	} = useContext(SearchContext);
 
 	const { id } = useParams<string>();
-	const image_path = "https://themoviedb.org/t/p/original";
+	const baseImageURL = "https://themoviedb.org/t/p/original";
 	const [movie, setMovie] = useState<IMovieDetails>({} as IMovieDetails);
 	const [fullDescription, setFullDescription] = useState(false);
 	const [player, setPlayer] = useState(false);
@@ -85,7 +84,7 @@ export default function SeriesDetails() {
 		<>
 			{!movie.genres && <Loading />}
 			{seriesFromSearch.length === 0 && moviesFromSearch.length === 0 && (
-				<S.Container background={`${image_path}/${movie.background}`}>
+				<S.Container background={`${baseImageURL}/${movie.background}`}>
 					<div className="fade"></div>
 					<section className="card-container">
 						<div className="container-info__top">
@@ -94,7 +93,7 @@ export default function SeriesDetails() {
 						<img
 							src={
 								movie.poster_path
-									? `${image_path}/${movie.poster_path}`
+									? `${baseImageURL}/${movie.poster_path}`
 									: "/img/movie_placeholder.jpg"
 							}
 							alt={`Capa do filme ${movie.title}`}
@@ -156,11 +155,11 @@ export default function SeriesDetails() {
 											))}
 									</div>
 								</li>
-								<li>
-									<h3>Mais trailers</h3>
-									<div className="related-movies">
-										{movie.trailers &&
-											movie.trailers.map(
+								{movie.trailers && movie.trailers.length > 0 && (
+									<li>
+										<h3>Mais trailers</h3>
+										<div className="related-movies">
+											{movie.trailers.map(
 												(item) =>
 													item.type === "Trailer" && (
 														<div
@@ -185,8 +184,9 @@ export default function SeriesDetails() {
 														</div>
 													)
 											)}
-									</div>
-								</li>
+										</div>
+									</li>
+								)}
 							</ul>
 						</div>
 						<div
@@ -211,9 +211,6 @@ export default function SeriesDetails() {
 					</S.IframeContainer>
 				</S.Container>
 			)}
-
-			{/* ----------------------- Movies & Series from search / Results --------------------------- */}
-			{moviesFromSearch.length >= 1 && <SearchContainer />}
 		</>
 	);
 }

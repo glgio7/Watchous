@@ -9,23 +9,26 @@ import FreeToWatch from "./pages/Watch";
 import Credits from "./pages/Credits";
 import Header from "./components/Header";
 import Login from "./pages/Login";
+import SearchContainer from "./pages/Search";
 
 const App = () => {
-	const { searchValue, setSearchValue, moviesFromSearch } = useContext(
-		SearchContext
-	);
+	const { searchValue } = useContext(SearchContext);
+
 	return (
 		<>
 			<GlobalCSS />
-			<Header searchValue={searchValue} setSearchValue={setSearchValue} />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/details/:id" element={<Details />} />
-				<Route path="/details/series/:id" element={<SeriesDetails />} />
-				<Route path="/freetowatch" element={<FreeToWatch />} />
-				<Route path="/credits" element={<Credits />} />
-			</Routes>
+			<Header />
+			{searchValue && <SearchContainer />}
+			{!searchValue && (
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/details/:id" element={<Details />} />
+					<Route path="/details/series/:id" element={<SeriesDetails />} />
+					<Route path="/freetowatch" element={<FreeToWatch />} />
+					<Route path="/credits" element={<Credits />} />
+				</Routes>
+			)}
 		</>
 	);
 };
