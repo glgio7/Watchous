@@ -8,7 +8,8 @@ const app = express();
 const router = express.Router();
 
 router.get("/", (req, res) => {
-	res.send("<h1>Hello world!</h1>");
+	alert("Api em construção");
+	res.status(204);
 });
 
 app.use("/api", router);
