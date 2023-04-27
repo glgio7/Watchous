@@ -8,3 +8,4 @@
   from = "/api/*"
   to = "/api/:splat"
   status = 200
+  port = "${PORT}"
