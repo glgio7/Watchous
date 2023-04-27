@@ -5,9 +5,12 @@ dotenv.config();
 const port = process.env.PORT;
 
 const app = express();
+const router = express.Router();
 
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
 	res.send("<h1>Hello world!</h1>");
 });
+
+app.use("/api", router);
 
 app.listen(port, () => console.log(`Everything is ok!`));
