@@ -6,5 +6,5 @@
 
 [[redirects]]
   from = "/api"
-  to = "https://watchous.netlify.app/:splat"
+  to = "/:splat"
   status = 200
