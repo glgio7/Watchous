@@ -2,28 +2,19 @@ import React from "react";
 import * as S from "./styles";
 import { Link } from "react-router-dom";
 import { RiHeartFill } from "react-icons/ri";
+import { IMovie } from "./types";
 
-type MovieCardProps = {
-	vote_average: number;
-	id: string;
-	poster_path?: string;
-	title: string;
-};
-
-const MovieCard = ({
-	id,
-	vote_average,
-	poster_path,
-	title,
-}: MovieCardProps) => {
+const MovieCard = ({ id, vote_average, poster_path, title, name }: IMovie) => {
 	return (
 		<S.default key={id}>
 			<div className="vote-average">
 				<span>
-					{Math.round(vote_average) !== 0 ? Math.round(vote_average) : "?"}
+					{vote_average && Math.round(vote_average) !== 0
+						? Math.round(vote_average)
+						: "?" || "?"}
 				</span>
 				<p>
-					{vote_average > 8
+					{vote_average && vote_average > 8
 						? "★★★★★"
 						: vote_average > 6
 						? "★★★★"
@@ -34,7 +25,7 @@ const MovieCard = ({
 						: "★"}
 				</p>
 			</div>
-			<Link to={`/details/${id}`}>
+			<Link to={title ? `/details/${id}` : `/details/series/${id}`}>
 				<img
 					src={
 						poster_path
@@ -45,7 +36,10 @@ const MovieCard = ({
 					className="moviePoster"
 				/>
 			</Link>
-			<span>{title.length > 18 ? title.substring(0, 18) + "..." : title}</span>
+			<span>
+				{title && title.length > 18 ? title.substring(0, 18) + "..." : title}
+				{name && name.length > 18 ? name.substring(0, 18) + "..." : name}
+			</span>
 			<RiHeartFill className="fav-btn" />
 		</S.default>
 	);

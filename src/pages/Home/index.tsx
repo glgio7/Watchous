@@ -11,7 +11,7 @@ import Loading from "../../components/Loading";
 import { RiCloseFill, RiHeartFill } from "react-icons/ri";
 import { IListRefs } from "../../utils/types";
 import { handleScrollList } from "../../utils";
-import { IMovie } from "./types";
+import { IMovie, IMovieFromDb } from "../../components/MovieCard/types";
 import MovieCard from "../../components/MovieCard";
 
 export default function Home() {
@@ -133,7 +133,8 @@ export default function Home() {
 											<MovieCard
 												id={movie.id}
 												vote_average={movie.vote_average}
-												title={movie.title}
+												title={movie.title || ""}
+												name={movie.name || ""}
 												poster_path={movie.poster_path}
 											/>
 										))}
@@ -161,38 +162,13 @@ export default function Home() {
 											}}
 										/>
 										{series.map((movie) => (
-											<Movie key={movie.id}>
-												<div className="vote-average">
-													<span>
-														{Math.round(movie.vote_average) !== 0
-															? Math.round(movie.vote_average)
-															: "?"}
-													</span>
-													<p>
-														{movie.vote_average > 8
-															? "★★★★★"
-															: movie.vote_average > 6
-															? "★★★★"
-															: movie.vote_average > 4
-															? "★★★"
-															: movie.vote_average > 2
-															? "★★"
-															: "★"}
-													</p>
-												</div>
-												<Link to={`/details/series/${movie.id}`}>
-													<img
-														src={
-															movie.poster_path
-																? `https://www.themoviedb.org/t/p/w342${movie.poster_path}`
-																: "/img/movie_placeholder.jpg"
-														}
-														alt={""}
-														className="moviePoster"
-													/>
-												</Link>
-												<span>{movie.name}</span>
-											</Movie>
+											<MovieCard
+												id={movie.id}
+												vote_average={movie.vote_average}
+												title={movie.title || ""}
+												name={movie.name || ""}
+												poster_path={movie.poster_path}
+											/>
 										))}
 										<ListButton
 											direction={"right"}
@@ -219,21 +195,14 @@ export default function Home() {
 												handleScrollList(listRefs, "left", item[0])
 											}
 										/>
-										{item[1].map((movie) => (
-											<Movie key={movie.id}>
-												<Link to={`/details/${movie.id}`}>
-													<img
-														src={
-															movie.poster_path
-																? `https://www.themoviedb.org/t/p/w342${movie.poster_path}`
-																: "/img/movie_placeholder.jpg"
-														}
-														alt={""}
-														className="moviePoster"
-													/>
-												</Link>
-												<span>{movie.title}</span>
-											</Movie>
+										{item[1].map((movie: IMovieFromDb) => (
+											<MovieCard
+												id={movie.id}
+												vote_average={movie.vote_average}
+												title={movie.title || ""}
+												name={movie.name || ""}
+												poster_path={movie.poster_path}
+											/>
 										))}
 										<ListButton
 											direction={"right"}
