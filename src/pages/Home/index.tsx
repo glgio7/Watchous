@@ -8,7 +8,7 @@ import MovieList from "../../components/MovieList";
 import Loading from "../../components/Loading";
 import { RiCloseFill } from "react-icons/ri";
 import { IListRefs } from "../../utils/types";
-import { handleScrollList } from "../../utils";
+import { handlePageList, handleScrollList } from "../../utils";
 import { IMovie, IMovieFromDb } from "../../components/MovieCard/types";
 import MovieCard from "../../components/MovieCard";
 
@@ -61,38 +61,6 @@ export default function Home() {
 			.catch((err) => console.log(err));
 	}, [seriesPage]);
 
-	const handlePageList = (direction: string, list: string) => {
-		const maxScroll =
-			listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
-
-		let scrollRemaining = maxScroll - listRefs[list].current!.scrollLeft;
-
-		if (scrollRemaining < 50 && direction === "right") {
-			switch (list) {
-				case "upcoming":
-					setUpcomingPage((prevState) => prevState + 1);
-					break;
-				case "series":
-					setSeriesPage((prevState) => prevState + 1);
-					break;
-			}
-			listRefs[list].current!.scrollLeft = 0;
-		} else if (scrollRemaining === maxScroll && direction === "left") {
-			switch (list) {
-				case "upcoming":
-					if (upcomingPage > 1) {
-						setUpcomingPage((prevState) => prevState - 1);
-					}
-					break;
-				case "series":
-					if (seriesPage > 1) {
-						setSeriesPage((prevState) => prevState - 1);
-					}
-					break;
-			}
-		}
-	};
-
 	return (
 		<>
 			{upcoming.length < 5 && <Loading />}
@@ -126,7 +94,13 @@ export default function Home() {
 											direction={"left"}
 											onClick={() => {
 												handleScrollList(listRefs, "left", "upcoming");
-												handlePageList("left", "upcoming");
+												handlePageList(
+													listRefs,
+													"left",
+													"upcoming",
+													upcomingPage,
+													setUpcomingPage
+												);
 											}}
 										/>
 										{upcoming.map((movie) => (
@@ -144,7 +118,13 @@ export default function Home() {
 											direction={"right"}
 											onClick={() => {
 												handleScrollList(listRefs, "right", "upcoming");
-												handlePageList("right", "upcoming");
+												handlePageList(
+													listRefs,
+													"right",
+													"upcoming",
+													upcomingPage,
+													setUpcomingPage
+												);
 											}}
 										/>
 									</MovieList>
@@ -160,7 +140,13 @@ export default function Home() {
 											direction={"left"}
 											onClick={() => {
 												handleScrollList(listRefs, "left", "series");
-												handlePageList("left", "series");
+												handlePageList(
+													listRefs,
+													"left",
+													"series",
+													seriesPage,
+													setSeriesPage
+												);
 											}}
 										/>
 										{series.map((movie) => (
@@ -177,7 +163,13 @@ export default function Home() {
 											direction={"right"}
 											onClick={() => {
 												handleScrollList(listRefs, "right", "series");
-												handlePageList("right", "series");
+												handlePageList(
+													listRefs,
+													"right",
+													"series",
+													seriesPage,
+													setSeriesPage
+												);
 											}}
 										/>
 									</MovieList>
