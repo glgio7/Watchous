@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../components/Header";
 import dataMovies from "../../api/freemovies_list.json";
 import { Container } from "./styles";
-import Movie from "../../components/MovieItem";
+import Movie from "../../components/MovieCard/styles";
 
 export default function FreeToWatch() {
 	return (

@@ -6,12 +6,13 @@ import { SearchContext } from "../../contexts/SearchContext";
 import Wrapper from "../../components/Wrapper";
 import ListButton from "../../components/ListButton";
 import MovieList from "../../components/MovieList";
-import Movie from "../../components/MovieItem";
+import Movie from "../../components/MovieCard/styles";
 import Loading from "../../components/Loading";
 import { RiCloseFill, RiHeartFill } from "react-icons/ri";
 import { IListRefs } from "../../utils/types";
 import { handleScrollList } from "../../utils";
 import { IMovie } from "./types";
+import MovieCard from "../../components/MovieCard";
 
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
@@ -129,43 +130,12 @@ export default function Home() {
 											}}
 										/>
 										{upcoming.map((movie) => (
-											<Movie key={movie.id}>
-												<div className="vote-average">
-													<span>
-														{Math.round(movie.vote_average) !== 0
-															? Math.round(movie.vote_average)
-															: "?"}
-													</span>
-													<p>
-														{movie.vote_average > 8
-															? "★★★★★"
-															: movie.vote_average > 6
-															? "★★★★"
-															: movie.vote_average > 4
-															? "★★★"
-															: movie.vote_average > 2
-															? "★★"
-															: "★"}
-													</p>
-												</div>
-												<Link to={`/details/${movie.id}`}>
-													<img
-														src={
-															movie.poster_path
-																? `https://www.themoviedb.org/t/p/w342${movie.poster_path}`
-																: "/img/movie_placeholder.jpg"
-														}
-														alt={""}
-														className="moviePoster"
-													/>
-												</Link>
-												<span>
-													{movie.title.length > 18
-														? movie.title.substring(0, 18) + "..."
-														: movie.title}
-												</span>
-												<RiHeartFill className="fav-btn" />
-											</Movie>
+											<MovieCard
+												id={movie.id}
+												vote_average={movie.vote_average}
+												title={movie.title}
+												poster_path={movie.poster_path}
+											/>
 										))}
 										<ListButton
 											direction={"right"}

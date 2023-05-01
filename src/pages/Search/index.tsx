@@ -4,7 +4,7 @@ import { SearchContext } from "../../contexts/SearchContext";
 import Wrapper from "../../components/Wrapper";
 import MovieList from "../../components/MovieList";
 import ListButton from "../../components/ListButton";
-import Movie from "../../components/MovieItem";
+import Movie from "../../components/MovieCard/styles";
 import { handleScrollList } from "../../utils";
 import { IListRefs } from "../../utils/types";
 import { Link } from "react-router-dom";
