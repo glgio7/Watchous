@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../../components/Header";
 import dataMovies from "../../api/freemovies_list.json";
 import { Container } from "./styles";
 import MovieCard from "../../components/MovieCard/";

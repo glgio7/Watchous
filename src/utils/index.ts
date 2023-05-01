@@ -2,37 +2,34 @@ import React from "react";
 import { IListRefs } from "./types";
 
 export const handleScrollList = (
-	listRefs: IListRefs,
-	direction: string,
-	list: string
+	listRef: React.RefObject<HTMLUListElement>,
+	direction: string
 ) => {
-	let maxScroll =
-		listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
+	let maxScroll = listRef.current!.scrollWidth - listRef.current!.clientWidth;
 
 	switch (direction) {
 		case "left":
-			listRefs[list].current!.scrollLeft -= maxScroll / 3;
+			listRef.current!.scrollLeft -= maxScroll / 3;
 			break;
 		case "right":
-			listRefs[list].current!.scrollLeft += maxScroll / 3;
+			listRef.current!.scrollLeft += maxScroll / 3;
 			break;
 	}
 };
 
 export const handlePageList = (
-	listRefs: IListRefs,
+	listRef: React.RefObject<HTMLUListElement>,
 	direction: string,
-	list: string,
+	listName: string,
 	state: number,
 	setState: React.Dispatch<React.SetStateAction<number>>
 ) => {
-	const maxScroll =
-		listRefs[list].current!.scrollWidth - listRefs[list].current!.clientWidth;
+	const maxScroll = listRef.current!.scrollWidth - listRef.current!.clientWidth;
 
-	let scrollRemaining = maxScroll - listRefs[list].current!.scrollLeft;
+	let scrollRemaining = maxScroll - listRef.current!.scrollLeft;
 
 	if (scrollRemaining < 50 && direction === "right") {
-		switch (list) {
+		switch (listName) {
 			case "upcoming":
 				setState((prevState: number) => prevState + 1);
 				break;
@@ -40,9 +37,9 @@ export const handlePageList = (
 				setState((prevState: number) => prevState + 1);
 				break;
 		}
-		listRefs[list].current!.scrollLeft = 0;
+		listRef.current!.scrollLeft = 0;
 	} else if (scrollRemaining === maxScroll && direction === "left") {
-		switch (list) {
+		switch (listName) {
 			case "upcoming":
 				if (state > 1) {
 					setState((prevState: number) => prevState - 1);
