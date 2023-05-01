@@ -5,24 +5,6 @@ export const Container = styled.main`
 	/* margin-top: 60px; */
 	padding: 2rem;
 
-	.loading {
-		position: absolute;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		z-index: 90;
-		background-color: #000;
-	}
-
-	.loading img {
-		width: 25%;
-		object-fit: contain;
-	}
-
 	.buttonDisclaimer {
 		background-color: rgba(0, 174, 255, 0.65);
 		font-weight: bold;

@@ -8,7 +8,7 @@ import ListButton from "../../components/ListButton";
 import MovieList from "../../components/MovieList";
 import Movie from "../../components/MovieItem";
 import Loading from "../../components/Loading";
-import { RiCloseFill } from "react-icons/ri";
+import { RiCloseFill, RiHeartFill } from "react-icons/ri";
 import { IListRefs } from "../../utils/types";
 import { handleScrollList } from "../../utils";
 import { IMovie } from "./types";
@@ -159,7 +159,12 @@ export default function Home() {
 														className="moviePoster"
 													/>
 												</Link>
-												<span>{movie.title}</span>
+												<span>
+													{movie.title.length > 18
+														? movie.title.substring(0, 18) + "..."
+														: movie.title}
+												</span>
+												<RiHeartFill className="fav-btn" />
 											</Movie>
 										))}
 										<ListButton

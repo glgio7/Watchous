@@ -3,6 +3,7 @@ import styled from "styled-components";
 const MovieList = styled.ul`
 	overflow-x: scroll;
 	overflow-y: hidden;
+	padding: 1rem 0;
 	display: flex;
 	height: 100%;
 	transition: all ease 250ms;
