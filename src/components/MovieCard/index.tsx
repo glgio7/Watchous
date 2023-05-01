@@ -2,11 +2,18 @@ import React from "react";
 import * as S from "./styles";
 import { Link } from "react-router-dom";
 import { RiHeartFill } from "react-icons/ri";
-import { IMovie } from "./types";
+import { MovieCardProps } from "./types";
 
-const MovieCard = ({ id, vote_average, poster_path, title, name }: IMovie) => {
+const MovieCard = ({
+	id,
+	vote_average,
+	poster_path,
+	title,
+	name,
+	onClick,
+}: MovieCardProps) => {
 	return (
-		<S.default key={id}>
+		<S.Movie key={id} onClick={onClick}>
 			<div className="vote-average">
 				<span>
 					{vote_average && Math.round(vote_average) !== 0
@@ -41,7 +48,7 @@ const MovieCard = ({ id, vote_average, poster_path, title, name }: IMovie) => {
 				{name && name.length > 18 ? name.substring(0, 18) + "..." : name}
 			</span>
 			<RiHeartFill className="fav-btn" />
-		</S.default>
+		</S.Movie>
 	);
 };
 

@@ -1,14 +1,12 @@
 import * as S from "./styles";
 import db from "../../api/movies_list.json";
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
 import { SearchContext } from "../../contexts/SearchContext";
 import Wrapper from "../../components/Wrapper";
 import ListButton from "../../components/ListButton";
 import MovieList from "../../components/MovieList";
-import Movie from "../../components/MovieCard/styles";
 import Loading from "../../components/Loading";
-import { RiCloseFill, RiHeartFill } from "react-icons/ri";
+import { RiCloseFill } from "react-icons/ri";
 import { IListRefs } from "../../utils/types";
 import { handleScrollList } from "../../utils";
 import { IMovie, IMovieFromDb } from "../../components/MovieCard/types";
@@ -17,7 +15,9 @@ import MovieCard from "../../components/MovieCard";
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
 
-	const { seriesFromSearch, moviesFromSearch } = useContext(SearchContext);
+	const { seriesFromSearch, moviesFromSearch, setSearchValue } = useContext(
+		SearchContext
+	);
 
 	const [disclaimer, setDisclaimer] = useState(false);
 	const handleDisclaimer = () => setDisclaimer(!disclaimer);
@@ -131,11 +131,13 @@ export default function Home() {
 										/>
 										{upcoming.map((movie) => (
 											<MovieCard
+												key={movie.id}
 												id={movie.id}
 												vote_average={movie.vote_average}
 												title={movie.title || ""}
 												name={movie.name || ""}
 												poster_path={movie.poster_path}
+												onClick={() => setSearchValue("")}
 											/>
 										))}
 										<ListButton
@@ -163,6 +165,7 @@ export default function Home() {
 										/>
 										{series.map((movie) => (
 											<MovieCard
+												key={movie.id}
 												id={movie.id}
 												vote_average={movie.vote_average}
 												title={movie.title || ""}
@@ -197,6 +200,7 @@ export default function Home() {
 										/>
 										{item[1].map((movie: IMovieFromDb) => (
 											<MovieCard
+												key={movie.id}
 												id={movie.id}
 												vote_average={movie.vote_average}
 												title={movie.title || ""}

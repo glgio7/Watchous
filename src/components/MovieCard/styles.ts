@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Movie = styled.li`
+export const Movie = styled.li`
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -119,26 +119,5 @@ const Movie = styled.li`
 				font-size: 0.5rem;
 			}
 		}
-
-		/* .vote-average {
-			display: flex;
-			align-items: flex-end;
-			justify-content: space-evenly;
-			height: 1rem;
-			position: absolute;
-			top: 0;
-			margin: 0 auto;
-			width: 75%;
-			color: #fff;
-			border-radius: 0 0 3px 3px;
-			background-color: #001b80;
-			z-index: 1;
-		}
-
-		span {
-			font-size: 1rem;
-		} */
 	}
 `;
-
-export default Movie;
