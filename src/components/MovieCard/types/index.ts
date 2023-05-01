@@ -17,8 +17,9 @@ export interface IMovieFromDb {
 export type MovieCardProps = {
 	name?: string;
 	title?: string;
+	onClick?: () => void;
+	free?: string;
 	vote_average: number;
 	id: string;
 	poster_path: string;
-	onClick?: () => void;
 };

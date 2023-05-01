@@ -23,6 +23,7 @@ export default function FreeToWatch() {
 								title={movie.title}
 								vote_average={NaN}
 								poster_path={movie.poster_path}
+								free={movie.key}
 							/>
 						</a>
 					))}

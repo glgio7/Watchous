@@ -10,6 +10,7 @@ const MovieCard = ({
 	poster_path,
 	title,
 	name,
+	free,
 	onClick,
 }: MovieCardProps) => {
 	return (
@@ -32,17 +33,33 @@ const MovieCard = ({
 						: "★"}
 				</p>
 			</div>
-			<Link to={title ? `/details/${id}` : `/details/series/${id}`}>
-				<img
-					src={
-						poster_path
-							? `https://www.themoviedb.org/t/p/w342${poster_path}`
-							: "/img/movie_placeholder.jpg"
-					}
-					alt={""}
-					className="moviePoster"
-				/>
-			</Link>
+			{!free && (
+				<Link to={title ? `/details/${id}` : `/details/series/${id}`}>
+					<img
+						src={
+							poster_path
+								? `https://www.themoviedb.org/t/p/w342${poster_path}`
+								: "/img/movie_placeholder.jpg"
+						}
+						alt={""}
+						className="moviePoster"
+					/>
+				</Link>
+			)}
+
+			{free && (
+				<a href={`https://youtu.be/${free}`} target="_blank">
+					<img
+						src={
+							poster_path
+								? `https://www.themoviedb.org/t/p/w342${poster_path}`
+								: "/img/movie_placeholder.jpg"
+						}
+						alt={""}
+						className="moviePoster"
+					/>
+				</a>
+			)}
 			<span>
 				{title && title.length > 18 ? title.substring(0, 18) + "..." : title}
 				{name && name.length > 18 ? name.substring(0, 18) + "..." : name}
