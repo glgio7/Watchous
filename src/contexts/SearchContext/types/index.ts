@@ -1,10 +1,4 @@
-export interface IMovie {
-	name?: string;
-	id: string;
-	title: string;
-	vote_average: number;
-	poster_path: string;
-}
+import { IMovie } from "../../../components/MovieCard/types";
 
 export interface ISearchContext {
 	searchValue: string;

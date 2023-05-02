@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
-import { IMovie, ISearchContext, SearchProviderProps } from "./types";
+import { ISearchContext, SearchProviderProps } from "./types";
+import { IMovie } from "../../components/MovieCard/types";
 
 export const SearchContext = createContext<ISearchContext>(
 	{} as ISearchContext
