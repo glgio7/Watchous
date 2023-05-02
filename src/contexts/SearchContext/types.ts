@@ -1,4 +1,4 @@
-import { IMovie } from "../../../components/MovieCard/types";
+import { IMovie } from "../../components/MovieCard/types";
 
 export interface ISearchContext {
 	searchValue: string;

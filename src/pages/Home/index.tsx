@@ -8,8 +8,6 @@ import Wrapper from "../../components/Wrapper";
 import Loading from "../../components/Loading";
 import MovieList from "../../components/MovieList";
 
-// feat: add to favorites using localStorage
-
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
 
