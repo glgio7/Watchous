@@ -45,7 +45,8 @@ export const Movie = styled.li`
 		}
 	}
 
-	.fav-btn {
+	.fav-btn,
+	.unfav-btn {
 		position: absolute;
 		right: 0.5rem;
 		top: 0;
@@ -64,6 +65,14 @@ export const Movie = styled.li`
 		transition: all 300ms;
 		&:hover {
 			color: firebrick;
+		}
+	}
+
+	.unfav-btn {
+		color: firebrick;
+
+		&:hover {
+			color: rgba(255, 255, 255, 0.5);
 		}
 	}
 

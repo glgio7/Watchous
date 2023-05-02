@@ -1,8 +1,8 @@
 export interface IMovie {
 	name?: string;
-	vote_average: number;
+	title?: string;
+	vote_average?: number;
 	id: string;
-	title: string;
 	poster_path: string;
 }
 
@@ -19,6 +19,7 @@ export type MovieCardProps = {
 	title?: string;
 	onClick?: () => void;
 	free?: string;
+	movie?: IMovie | IMovieFromDb;
 	vote_average: number;
 	id: string;
 	poster_path: string;

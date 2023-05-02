@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import * as S from "./styles";
 import { Link } from "react-router-dom";
 import { RiHeartFill } from "react-icons/ri";
 import { MovieCardProps } from "./types";
+import { FavoritesContext } from "../../contexts/FavoritesContext";
 
 const MovieCard = ({
 	id,
@@ -11,8 +12,11 @@ const MovieCard = ({
 	title,
 	name,
 	free,
+	movie,
 	onClick,
 }: MovieCardProps) => {
+	const { favorites, handleFavorite } = useContext(FavoritesContext);
+
 	return (
 		<S.Movie key={id} onClick={onClick}>
 			<div className="vote-average">
@@ -64,7 +68,18 @@ const MovieCard = ({
 				{title && title.length > 18 ? title.substring(0, 18) + "..." : title}
 				{name && name.length > 18 ? name.substring(0, 18) + "..." : name}
 			</span>
-			<RiHeartFill className="fav-btn" />
+			<RiHeartFill
+				className={
+					favorites.some((item) => {
+						if (movie) {
+							return item.id === movie.id;
+						}
+					})
+						? "unfav-btn"
+						: "fav-btn"
+				}
+				onClick={() => movie && handleFavorite(movie)}
+			/>
 		</S.Movie>
 	);
 };

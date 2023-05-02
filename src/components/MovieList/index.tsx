@@ -45,6 +45,7 @@ const MovieList = ({ list, options }: IMovieListProps) => {
 					title={movie.title || ""}
 					name={movie.name || ""}
 					poster_path={movie.poster_path}
+					movie={movie}
 				/>
 			))}
 			<ListButton

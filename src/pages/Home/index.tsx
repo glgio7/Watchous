@@ -1,17 +1,19 @@
 import * as S from "./styles";
 import React, { useState, useEffect, useContext } from "react";
 import db from "../../api/movies_list.json";
-import { SearchContext } from "../../contexts/SearchContext";
+import { FavoritesContext } from "../../contexts/FavoritesContext";
 import { IMovie } from "../../components/MovieCard/types";
 import { RiCloseFill } from "react-icons/ri";
 import Wrapper from "../../components/Wrapper";
 import Loading from "../../components/Loading";
 import MovieList from "../../components/MovieList";
 
+// feat: add to favorites using localStorage
+
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
 
-	const { seriesFromSearch, moviesFromSearch } = useContext(SearchContext);
+	const { favorites } = useContext(FavoritesContext);
 
 	const [disclaimer, setDisclaimer] = useState(false);
 	const handleDisclaimer = () => setDisclaimer(!disclaimer);
@@ -63,6 +65,14 @@ export default function Home() {
 
 			<S.Container>
 				{/* ----------------------- Movies & Series / Recommended --------------------------- */}
+				{favorites.length > 0 && (
+					<>
+						<h1>Favoritos</h1>
+						<Wrapper>
+							<MovieList list={favorites} />
+						</Wrapper>
+					</>
+				)}
 
 				{upcoming.length > 5 && (
 					<>
@@ -109,7 +119,7 @@ export default function Home() {
 				{/* ----------------------- Disclaimer/Advices --------------------------- */}
 				<div className={disclaimer ? "disclaimer active" : "disclaimer"}>
 					<RiCloseFill className="closeDisclaimer" onClick={handleDisclaimer} />
-					<h2>Novidade: lista de filmes gratuitos do Youtube.</h2>
+					<h2>Novidade: adicione filmes aos favoritos</h2>
 					<h2>Em breve: cadastro e lista de interesse.</h2>
 				</div>
 				<button className="buttonDisclaimer" onClick={handleDisclaimer}>
