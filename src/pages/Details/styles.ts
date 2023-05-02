@@ -100,23 +100,30 @@ export const Container = styled.div<{
 
 	.card-container {
 		aspect-ratio: 3/4;
+
 		margin-right: 2rem;
 	}
 
 	.card-container img {
-		aspect-ratio: 3/4;
 		object-fit: cover;
+
+		height: calc(100% - 4rem);
 	}
 
 	.overview-container {
-		width: 60%;
+		aspect-ratio: 4/3;
 	}
 
 	.overview-body {
 		display: flex;
-		height: 100%;
+
 		overflow-y: auto;
+
+		height: 100%;
 		width: 100%;
+
+		aspect-ratio: 4/3;
+
 		padding: 1rem 0;
 	}
 
@@ -184,7 +191,6 @@ export const Container = styled.div<{
 	@media screen and (max-width: 900px) {
 		.card-container {
 			margin-right: 0rem;
-			margin-bottom: 5rem;
 		}
 
 		.fade {
