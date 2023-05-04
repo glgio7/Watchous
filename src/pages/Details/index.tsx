@@ -11,7 +11,7 @@ import { IMovie } from "../../components/MovieCard/types";
 const apiKey = process.env.REACT_APP_API_KEY;
 
 export default function Details() {
-const {favorites, handleFavorite} = useContext(FavoritesContext)
+	const { favorites, handleFavorite } = useContext(FavoritesContext);
 
 	const {
 		moviesFromSearch,
@@ -78,18 +78,7 @@ const {favorites, handleFavorite} = useContext(FavoritesContext)
 				<S.Container background={`${baseImageURL}/${movie.background}`}>
 					<div className="fade"></div>
 					<section className="card-container">
-						<div className="container-info__top"><RiHeartFill
-				className={
-					favorites.some((item) => {
-						if (movie) {
-							return item.id === movie.id;
-						}
-					})
-						? "unfav-btn"
-						: "fav-btn"
-				}
-				onClick={() => movie && handleFavorite(movie as IMovie)}
-			/>
+						<div className="container-info__top">
 							<span>{movie.title}</span>
 						</div>
 						<img
@@ -100,7 +89,21 @@ const {favorites, handleFavorite} = useContext(FavoritesContext)
 							}
 							alt={`Capa do filme ${movie.title}`}
 						/>
-						<div className="container-info__bottom">Filme</div>
+						<div className="container-info__bottom">
+							<RiHeartFill
+								className={
+									favorites.some((item) => {
+										if (movie) {
+											return item.id === movie.id;
+										}
+									})
+										? "unfav-btn"
+										: "fav-btn"
+								}
+								onClick={() => movie && handleFavorite(movie as IMovie)}
+							/>
+							Filme
+						</div>
 					</section>
 					<section className="overview-container">
 						<div className="container-info__top">
