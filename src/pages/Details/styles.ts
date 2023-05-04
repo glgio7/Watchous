@@ -73,6 +73,10 @@ export const Container = styled.div<{
 		width: 100%;
 		height: 2rem;
 
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
 		font-size: 1.25rem;
 		text-align: center;
 
@@ -98,8 +102,39 @@ export const Container = styled.div<{
 		border-radius: 0 0 10px 10px;
 	}
 
+	.fav-btn,
+	.unfav-btn {
+		background-color: #262626;
+		color: #fff;
+
+		padding: 6px;
+		position: absolute;
+		left: .5rem;
+
+		border-radius: 50%;
+
+		cursor: pointer;
+
+		font-size: 1.75rem;
+
+		transition: all 300ms;
+		&:hover {
+			color: firebrick;
+		}
+	}
+
+	.unfav-btn {
+		color: firebrick;
+
+		&:hover {
+			color: rgba(255, 255, 255, 0.5);
+		}
+	}
+
 	.card-container {
 		aspect-ratio: 3/4;
+
+		position: relative;
 
 		margin-right: 2rem;
 	}

@@ -4,10 +4,15 @@ import { useParams, Link } from "react-router-dom";
 import { SearchContext } from "../../contexts/SearchContext";
 import { IMovieDetails } from "./types";
 import Loading from "../../components/Loading";
+import { FavoritesContext } from "../../contexts/FavoritesContext";
+import { RiHeartFill } from "react-icons/ri";
+import { IMovie } from "../../components/MovieCard/types";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
 export default function Details() {
+const {favorites, handleFavorite} = useContext(FavoritesContext)
+
 	const {
 		moviesFromSearch,
 		seriesFromSearch,
@@ -73,7 +78,18 @@ export default function Details() {
 				<S.Container background={`${baseImageURL}/${movie.background}`}>
 					<div className="fade"></div>
 					<section className="card-container">
-						<div className="container-info__top">
+						<div className="container-info__top"><RiHeartFill
+				className={
+					favorites.some((item) => {
+						if (movie) {
+							return item.id === movie.id;
+						}
+					})
+						? "unfav-btn"
+						: "fav-btn"
+				}
+				onClick={() => movie && handleFavorite(movie as IMovie)}
+			/>
 							<span>{movie.title}</span>
 						</div>
 						<img
