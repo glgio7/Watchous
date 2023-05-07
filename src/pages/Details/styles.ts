@@ -109,7 +109,7 @@ export const Container = styled.div<{
 
 		padding: 6px;
 		position: absolute;
-		left: .5rem;
+		left: 0.5rem;
 
 		border-radius: 50%;
 
@@ -156,8 +156,6 @@ export const Container = styled.div<{
 
 		height: 100%;
 		width: 100%;
-
-		aspect-ratio: 4/3;
 
 		padding: 1rem 0;
 	}
@@ -254,6 +252,8 @@ export const Container = styled.div<{
 		.overview-container {
 			width: 90%;
 			min-height: 360px;
+
+			aspect-ratio: initial;
 		}
 
 		.overview-body {

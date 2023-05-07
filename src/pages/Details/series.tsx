@@ -98,7 +98,7 @@ export default function SeriesDetails() {
 							}
 							alt={`Capa do filme ${movie.title}`}
 						/>
-						<div className="container-info__bottom">Série</div>
+						<div className="container-info__bottom">Favoritar esta série</div>
 					</section>
 					<section className="overview-container">
 						<div className="container-info__top">

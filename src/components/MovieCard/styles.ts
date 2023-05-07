@@ -49,7 +49,7 @@ export const Movie = styled.li`
 	.unfav-btn {
 		position: absolute;
 		right: 0.5rem;
-		top: 0;
+		top: 0.5rem;
 
 		background-color: #262626;
 		color: #fff;

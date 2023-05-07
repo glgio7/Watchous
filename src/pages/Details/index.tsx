@@ -102,7 +102,7 @@ export default function Details() {
 								}
 								onClick={() => movie && handleFavorite(movie as IMovie)}
 							/>
-							Filme
+							Favoritar este filme
 						</div>
 					</section>
 					<section className="overview-container">
