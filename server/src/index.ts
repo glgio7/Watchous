@@ -3,22 +3,30 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { GetUsersController } from "./controllers/get-users/get-users";
 import { MongoGetUsersRepository } from "./repositories/get-users/mongo-get-users";
+import { MongoClient } from "./database/mongo";
 
-dotenv.config();
-const port = process.env.PORT || 8000;
+const main = async () => {
+	dotenv.config();
 
-const app = express();
-const router = Router();
+	const port = process.env.PORT || 8000;
+	const app = express();
+	const router = Router();
 
-router.get("/users", async (req, res) => {
-	const getUsersRepository = new MongoGetUsersRepository();
-	const getUsersController = new GetUsersController(getUsersRepository);
+	await MongoClient.connect();
 
-	const response = await getUsersController.handle();
+	router.get("/users", async (req, res) => {
+		const getUsersRepository = new MongoGetUsersRepository();
+		const getUsersController = new GetUsersController(getUsersRepository);
 
-	res.send(response.body).status(response.statusCode);
-});
+		const response = await getUsersController.handle();
 
-app.use(cors());
-app.use("/", router);
-app.listen(port, () => console.log(`Everything is ok!`));
+		res.send(response.body).status(response.statusCode);
+	});
+
+	app.use(cors());
+	app.use("/", router);
+
+	app.listen(port, () => console.log(`Everything is ok!`));
+};
+
+main();
