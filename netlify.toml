@@ -5,7 +5,7 @@
 
 
 [[redirects]]
-  from = "/api/*"
-  to = "/api/:splat"
+  from = "/*"
+  to = "/:splat"
   status = 200
   port = "${PORT}"
