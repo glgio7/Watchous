@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Login from "./pages/Login";
 import SearchContainer from "./pages/Search";
 import FavoritesProvider from "./contexts/FavoritesContext";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
 	const { searchValue } = useContext(SearchContext);
@@ -29,6 +30,7 @@ const App = () => {
 						<Route path="/details/series/:id" element={<SeriesDetails />} />
 						<Route path="/freetowatch" element={<FreeToWatch />} />
 						<Route path="/credits" element={<Credits />} />
+						<Route path="*" element={<NotFound />} />
 					</Routes>
 				)}
 			</FavoritesProvider>
