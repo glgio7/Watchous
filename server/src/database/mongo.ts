@@ -12,12 +12,17 @@ export const MongoClient = {
 		const username = process.env.MONGODB_USERNAME;
 		const password = process.env.MONGODB_PASSWORD;
 
-		const client = new Mongo(url, { auth: { username, password } });
-		const db = client.db("users-db");
+		try {
+			const client = new Mongo(url, { auth: { username, password } });
+			const db = client.db("users-db");
+			await client.connect();
 
-		this.client = client;
-		this.db = db;
+			this.client = client;
+			this.db = db;
 
-		console.log("Connected to Database!");
+			console.log("Connected to Database!");
+		} catch (error) {
+			console.error("Failed to connect to Database!", error);
+		}
 	},
 };
