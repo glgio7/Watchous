@@ -1,4 +1,7 @@
 import { MongoClient as Mongo, Db } from "mongodb";
+import { config } from "dotenv";
+
+config();
 
 export const MongoClient = {
 	client: (undefined as unknown) as Mongo,
