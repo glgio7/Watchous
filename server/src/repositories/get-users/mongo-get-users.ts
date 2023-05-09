@@ -1,15 +1,17 @@
 import { IGetUsersRepository } from "../../controllers/get-users/protocols";
+import { MongoClient } from "../../database/mongo";
 import { IUser } from "../../models/user";
 
 export class MongoGetUsersRepository implements IGetUsersRepository {
 	async getUsers(): Promise<IUser[]> {
-		return [
-			{
-				firstName: "",
-				lasttName: "",
-				email: "",
-				password: "",
-			},
-		];
+		const users = await MongoClient.db
+			.collection<Omit<IUser, "id">>("users")
+			.find({})
+			.toArray();
+
+		return users.map(({ _id, ...user }) => ({
+			...user,
+			id: _id.toHexString(),
+		}));
 	}
 }
