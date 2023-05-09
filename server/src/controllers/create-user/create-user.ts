@@ -13,14 +13,20 @@ export class CreateUserController implements ICreateUserController {
 		httpRequest: HttpRequest<ICreateUserParams>
 	): Promise<HttpResponse<IUser>> {
 		try {
-			if (!httpRequest.body) {
-				return {
-					statusCode: 400,
-					body: "Need to specify a body",
-				};
+			const requiredFields = ["firstName", "lasstName", "email", "password"];
+
+			for (const field of requiredFields) {
+				if (!httpRequest.body?.[field as keyof ICreateUserParams]) {
+					return {
+						statusCode: 400,
+						body: `Need to specify a ${field} `,
+					};
+				}
 			}
 
-			const user = await this.createUserRepository.createUser(httpRequest.body);
+			const user = await this.createUserRepository.createUser(
+				httpRequest.body!
+			);
 
 			return {
 				statusCode: 200,
