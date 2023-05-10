@@ -11,7 +11,7 @@ const main = async () => {
 	const app = express();
 
 	app.use(express.json());
-	app.use(cors());
+	app.use(cors({ origin: "https://watchous.netlify.app" }));
 	app.use("/", createRoutes());
 
 	await MongoClient.connect();
