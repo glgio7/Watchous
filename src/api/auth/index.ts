@@ -4,7 +4,7 @@ import { config } from "dotenv";
 
 config();
 
-const port = process.env.PORT || 8000;
+const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
 export const handleAuth = async ({
 	email,
@@ -12,7 +12,7 @@ export const handleAuth = async ({
 	navigate,
 }: HandleAuthProps) => {
 	try {
-		const response = await axios.post(`/auth`, {
+		const response = await axios.post(`:${backendPort}/auth`, {
 			email,
 			password,
 		});

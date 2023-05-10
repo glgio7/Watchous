@@ -8,4 +8,4 @@
   from = "/*"
   to = "/:splat"
   status = 200
-  port = "${PORT}"
+  port = "${REACT_APP_BACKEND_PORT}"
