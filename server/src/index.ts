@@ -7,7 +7,7 @@ import { createRoutes } from "./routes";
 const main = async () => {
 	dotenv.config();
 
-	const port = process.env.BACKEND_PORT || 8000;
+	const port = process.env.PORT || 3333;
 	const app = express();
 
 	app.use(express.json());
