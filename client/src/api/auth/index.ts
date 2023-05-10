@@ -4,21 +4,16 @@ import { config } from "dotenv";
 
 config();
 
-const axiosInstance = axios.create();
-
 export const handleAuth = async ({
 	email,
 	password,
 	navigate,
 }: HandleAuthProps) => {
 	try {
-		const response = await axiosInstance.post(
-			`${process.env.REACT_APP_API_URL}/auth`,
-			{
-				email,
-				password,
-			}
-		);
+		const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth`, {
+			email,
+			password,
+		});
 
 		const id = await response.data._id;
 
