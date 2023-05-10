@@ -15,7 +15,7 @@ export const createRoutes = () => {
 
 		const response = await getUsersController.handle();
 
-		res.send(response.body).status(response.statusCode);
+		res.status(response.statusCode).send(response.body);
 	});
 
 	router.post("/users", async (req, res) => {
@@ -26,7 +26,7 @@ export const createRoutes = () => {
 			body: req.body,
 		});
 
-		res.send(body).status(statusCode);
+		res.status(statusCode).send(body);
 	});
 
 	router.post("/auth", async (req, res) => {
@@ -37,7 +37,7 @@ export const createRoutes = () => {
 			body: req.body,
 		});
 
-		res.send(body).status(statusCode);
+		res.status(statusCode).send(body);
 	});
 
 	return router;
