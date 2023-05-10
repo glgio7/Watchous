@@ -6,18 +6,13 @@ config();
 
 const port = process.env.PORT || 8000;
 
-const apiURL =
-	process.env.NODE_ENV === "production"
-		? "https://watchous.netlify.app/auth"
-		: `http://localhost:${port}/auth`;
-
 export const handleAuth = async ({
 	email,
 	password,
 	navigate,
 }: HandleAuthProps) => {
 	try {
-		const response = await axios.post(apiURL, {
+		const response = await axios.post(`/auth`, {
 			email,
 			password,
 		});

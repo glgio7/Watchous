@@ -7,6 +7,7 @@ import { RiCloseFill } from "react-icons/ri";
 import Wrapper from "../../components/Wrapper";
 import Loading from "../../components/Loading";
 import MovieList from "../../components/MovieList";
+import axios from "axios";
 
 export default function Home() {
 	const apiKey = process.env.REACT_APP_API_KEY;
@@ -23,23 +24,25 @@ export default function Home() {
 
 	//////////////////// upcoming
 	useEffect(() => {
-		fetch(
-			`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=pt-BR&page=${upcomingPage}`
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				setUpcoming(data.results);
+		axios
+			.get(
+				`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=pt-BR&page=${upcomingPage}`
+			)
+			.then((response) => {
+				const data: IMovie[] = response.data.results;
+				setUpcoming(data);
 			})
 			.catch((err) => console.log(err));
 	}, [upcomingPage]);
 	//////////////////// series
 	useEffect(() => {
-		fetch(
-			`https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}&language=pt-BR&page=${seriesPage}`
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				setSeries(data.results);
+		axios
+			.get(
+				`https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}&language=pt-BR&page=${seriesPage}`
+			)
+			.then((response) => {
+				const data: IMovie[] = response.data.results;
+				setSeries(data);
 			})
 			.catch((err) => console.log(err));
 	}, [seriesPage]);
