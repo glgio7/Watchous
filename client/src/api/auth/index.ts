@@ -1,8 +1,5 @@
 import axios from "axios";
 import { HandleAuthProps } from "./types";
-import { config } from "dotenv";
-
-config();
 
 export const handleAuth = async ({
 	email,
@@ -10,7 +7,7 @@ export const handleAuth = async ({
 	navigate,
 }: HandleAuthProps) => {
 	try {
-		const response = await axios.post(`auth`, {
+		const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth`, {
 			email,
 			password,
 		});
@@ -24,6 +21,7 @@ export const handleAuth = async ({
 		console.log(response.data);
 		navigate("/");
 	} catch (error) {
+		console.log(error);
 		alert("Credenciais inválidas!");
 	}
 };
