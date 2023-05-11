@@ -9,7 +9,7 @@ import { AuthUserController } from "./controllers/auth-user/auth-user";
 export const createRoutes = () => {
 	const router = Router();
 
-	router.get("/api/users", async (req, res) => {
+	router.get("/users", async (req, res) => {
 		const getUsersRepository = new MongoGetUsersRepository();
 		const getUsersController = new GetUsersController(getUsersRepository);
 
@@ -18,7 +18,7 @@ export const createRoutes = () => {
 		res.status(response.statusCode).send(response.body);
 	});
 
-	router.post("/api/users", async (req, res) => {
+	router.post("/users", async (req, res) => {
 		const createUserRepository = new MongoCreateUserRepository();
 		const createUserController = new CreateUserController(createUserRepository);
 
@@ -29,7 +29,7 @@ export const createRoutes = () => {
 		res.status(statusCode).send(body);
 	});
 
-	router.post("/api/auth", async (req, res) => {
+	router.post("/auth", async (req, res) => {
 		const authUserRepository = new MongoAuthUserRepository();
 		const authUserController = new AuthUserController(authUserRepository);
 
