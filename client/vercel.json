@@ -1,18 +1,18 @@
 {
 	"version": 2,
 	"builds": [
-		{ "src": "../server/src/index.ts", "use": "@vercel/node" },
-		{ "src": "./package.json", "use": "@vercel/static-build" }
+		{
+			"src": "src/index.tsx",
+			"use": "@vercel/static-build",
+			"config": {
+				"distDir": "build"
+			}
+		}
 	],
 	"routes": [
-		{ "handle": "filesystem" },
-		{
-			"src": "/api/(.*)",
-			"dest": "../server/src/index.ts"
-		},
 		{
 			"src": "/(.*)",
-			"dest": "/"
+			"dest": "/index.html"
 		}
 	]
 }
