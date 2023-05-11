@@ -2,7 +2,7 @@
 	"name": "watchouss",
 	"version": "0.1.0",
 	"engines": {
-		"node": "16.x",
+		"node": "16.16.0",
 		"npm": "6.14.7"
 	},
 	"private": true,
@@ -26,7 +26,7 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build",
+		"build": "tsc && react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},
