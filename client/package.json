@@ -30,6 +30,9 @@
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},
+	"output": {
+		"directory": "client/build"
+	},
 	"eslintConfig": {
 		"extends": [
 			"react-app",
