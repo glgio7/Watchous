@@ -12,14 +12,14 @@
 			"src": "server/package.json",
 			"use": "@vercel/node",
 			"config": {
-				"outputDirectory": "server/build"
+				"outputDirectory": "server/dist"
 			}
 		}
 	],
 	"routes": [
 		{
 			"src": "/api/(.*)",
-			"dest": "server/$1"
+			"dest": "server/dist/$1"
 		},
 		{
 			"src": "/(.*)",
