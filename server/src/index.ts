@@ -11,7 +11,14 @@ const main = async () => {
 	const app = express();
 
 	app.use(express.json());
-	app.use(cors({ origin: "*" }));
+
+	app.use(
+		cors({
+			origin: "*",
+			exposedHeaders: "Access-Control-Allow-Origin",
+		})
+	);
+
 	app.use("/", createRoutes());
 
 	await MongoClient.connect();
