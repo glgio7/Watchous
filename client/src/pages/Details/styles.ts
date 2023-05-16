@@ -221,11 +221,22 @@ export const Container = styled.div<{
 		object-fit: cover;
 	}
 
-	@media screen and (max-width: 900px) {
+	@media screen and (max-width: 1048px) {
+		section {
+			height: auto;
+			width: 80%;
+		}
+
+		.overview-container,
+		.card-container {
+			aspect-ratio: 4/3;
+		}
 		.card-container {
 			margin-right: 0rem;
 		}
+	}
 
+	@media screen and (max-width: 900px) {
 		.fade {
 			background: linear-gradient(
 				0deg,
@@ -247,6 +258,7 @@ export const Container = styled.div<{
 
 		.card-container {
 			width: 90%;
+			aspect-ratio: 3/4;
 		}
 
 		.overview-container {
