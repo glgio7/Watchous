@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { RiMenuFill } from "react-icons/ri";
-import { RiSearchLine } from "react-icons/ri";
-import { RiCloseFill } from "react-icons/ri";
+import { RiMenuFill, RiSearchLine, RiLogoutBoxLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import * as S from "./styles";
 import { SearchContext } from "../../contexts/SearchContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function Header() {
 	const [navOpen, setNavOpen] = useState(false);
@@ -19,6 +18,8 @@ export default function Header() {
 		searchValue,
 		setSearchValue,
 	} = useContext(SearchContext);
+
+	const { authenticated, setAuthenticated } = useContext(AuthContext);
 
 	const search = (props: React.KeyboardEvent) => {
 		if (props.key === "Enter") {
@@ -72,25 +73,40 @@ export default function Header() {
 				<div className="menu-container">
 					<RiMenuFill className="menu" onClick={toggleMenu} />
 				</div>
-				{/* <RiCheckboxBlankCircleFill className="notification" /> */}
 			</S.Header>
 			<S.Navigation active={navOpen} onMouseLeave={() => setNavOpen(false)}>
-				<RiCloseFill className="closeMenu" onClick={toggleMenu} />
-				<a
-					href="/"
+				{authenticated && (
+					<RiLogoutBoxLine
+						className="logout-btn"
+						onClick={() => setAuthenticated(false)}
+					/>
+				)}
+				{authenticated ? (
+					<Link
+						to={"/"}
+						onClick={() => {
+							setNavOpen(false), setSearchValue("");
+						}}
+					>
+						<li>Minha conta</li>
+					</Link>
+				) : (
+					<Link
+						to={"/login"}
+						onClick={() => {
+							setNavOpen(false), setSearchValue("");
+						}}
+					>
+						<li>Fazer login</li>
+					</Link>
+				)}
+				<Link
+					to="/"
 					onClick={() => {
 						setNavOpen(false), setSearchValue("");
 					}}
 				>
 					<li>Página Inicial</li>
-				</a>
-				<Link
-					to={"/login"}
-					onClick={() => {
-						setNavOpen(false), setSearchValue("");
-					}}
-				>
-					<li>Minha conta</li>
 				</Link>
 				<Link
 					to={"/freetowatch"}

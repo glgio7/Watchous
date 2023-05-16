@@ -162,8 +162,21 @@ export const Navigation = styled.nav<{ active: boolean }>`
 		width: max-content;
 		padding: 0 0.5rem;
 	}
-	.closeMenu {
-		display: none;
+
+	.logout-btn {
+		display: block;
+
+		background-color: #fff;
+		color: #0070ff;
+
+		padding: 0.25rem;
+
+		border-radius: 10px;
+
+		font-size: 2rem;
+		font-weight: bold;
+
+		cursor: pointer;
 	}
 
 	@media screen and (max-width: 768px) {
@@ -178,24 +191,5 @@ export const Navigation = styled.nav<{ active: boolean }>`
 			rgba(48, 48, 48, 1) 15%,
 			rgba(16, 16, 16, 1) 100%
 		);
-
-		.closeMenu {
-			display: flex;
-
-			position: absolute;
-			top: 1rem;
-			right: 1rem;
-
-			background-color: #fff;
-			color: #0070ff;
-
-			padding: 0.25rem;
-
-			border-radius: 10px;
-
-			font-size: 2rem;
-
-			cursor: pointer;
-		}
 	}
 `;
