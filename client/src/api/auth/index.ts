@@ -1,5 +1,5 @@
 import axios from "axios";
-import { HandleSignInProps } from "./types";
+import { HandleSignInProps, HandleSignOutProps } from "./types";
 import { IUser } from "../../contexts/AuthContext/types";
 
 export const handleSignIn = async ({
@@ -24,9 +24,20 @@ export const handleSignIn = async ({
 
 		setAuthenticated(true);
 		setUser(user);
+		localStorage.setItem("token", token);
+		console.log(user);
 		navigate("/");
 	} catch (error) {
 		console.log(error);
 		alert("Credenciais inválidas!");
 	}
+};
+
+export const handleSignOut = ({
+	setAuthenticated,
+	setUser,
+}: HandleSignOutProps) => {
+	localStorage.removeItem("token");
+	setAuthenticated(false);
+	setUser(null);
 };

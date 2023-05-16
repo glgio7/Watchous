@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import * as S from "./styles";
 import { SearchContext } from "../../contexts/SearchContext";
 import { AuthContext } from "../../contexts/AuthContext";
+import { handleSignOut } from "../../api/auth";
 
 export default function Header() {
 	const [navOpen, setNavOpen] = useState(false);
@@ -19,7 +20,7 @@ export default function Header() {
 		setSearchValue,
 	} = useContext(SearchContext);
 
-	const { authenticated, setAuthenticated } = useContext(AuthContext);
+	const { authenticated, setAuthenticated, setUser } = useContext(AuthContext);
 
 	const search = (props: React.KeyboardEvent) => {
 		if (props.key === "Enter") {
@@ -78,7 +79,7 @@ export default function Header() {
 				{authenticated && (
 					<RiLogoutBoxLine
 						className="logout-btn"
-						onClick={() => setAuthenticated(false)}
+						onClick={() => handleSignOut({ setAuthenticated, setUser })}
 					/>
 				)}
 				{authenticated ? (

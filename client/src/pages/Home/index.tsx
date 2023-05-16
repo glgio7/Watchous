@@ -10,6 +10,7 @@ import MovieList from "../../components/MovieList";
 import axios from "axios";
 
 export default function Home() {
+	document.title = `Watchous | Home`;
 	const apiKey = process.env.REACT_APP_API_KEY;
 
 	const { favorites } = useContext(FavoritesContext);
