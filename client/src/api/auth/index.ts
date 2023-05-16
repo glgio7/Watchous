@@ -1,29 +1,29 @@
 import axios from "axios";
-import { HandleAuthProps } from "./types";
-import { config } from "dotenv";
+import { HandleSignInProps } from "./types";
+import { IUser } from "../../contexts/AuthContext/types";
 
-config();
-
-export const handleAuth = async ({
+export const handleSignIn = async ({
 	email,
 	password,
 	navigate,
 	setAuthenticated,
-}: HandleAuthProps) => {
+	setUser,
+}: HandleSignInProps) => {
 	try {
 		const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth`, {
 			email,
 			password,
 		});
 
-		const id = await response.data._id;
+		const { _id: id, firstName, lastName, token } = await response.data;
+		const user: IUser = { id, firstName, lastName, token };
 
 		if (!id) {
 			throw new Error();
 		}
 
 		setAuthenticated(true);
-		console.log(response.data);
+		setUser(user);
 		navigate("/");
 	} catch (error) {
 		console.log(error);
