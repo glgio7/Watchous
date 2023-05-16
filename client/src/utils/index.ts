@@ -1,5 +1,4 @@
 import React from "react";
-import { IListRefs } from "./types";
 
 export const handleScrollList = (
 	listRef: React.RefObject<HTMLUListElement>,

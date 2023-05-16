@@ -12,12 +12,13 @@ import Login from "./pages/Login";
 import SearchContainer from "./pages/Search";
 import FavoritesProvider from "./contexts/FavoritesContext";
 import NotFound from "./pages/NotFound";
+import AuthProvider from "./contexts/AuthContext";
 
 const App = () => {
 	const { searchValue } = useContext(SearchContext);
 
 	return (
-		<>
+		<AuthProvider>
 			<GlobalCSS />
 			<Header />
 			<FavoritesProvider>
@@ -34,7 +35,7 @@ const App = () => {
 					</Routes>
 				)}
 			</FavoritesProvider>
-		</>
+		</AuthProvider>
 	);
 };
 
