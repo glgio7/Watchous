@@ -8,6 +8,7 @@ export const handleAuth = async ({
 	email,
 	password,
 	navigate,
+	setAuthenticated,
 }: HandleAuthProps) => {
 	try {
 		const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth`, {
@@ -21,6 +22,7 @@ export const handleAuth = async ({
 			throw new Error();
 		}
 
+		setAuthenticated(true);
 		console.log(response.data);
 		navigate("/");
 	} catch (error) {
