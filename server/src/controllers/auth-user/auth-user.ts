@@ -1,4 +1,3 @@
-import { MongoClient } from "../../database/mongo";
 import { IUser } from "../../models/user";
 import { HttpRequest, HttpResponse } from "../protocols";
 import {

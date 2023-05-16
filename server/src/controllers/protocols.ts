@@ -5,6 +5,8 @@ export interface HttpResponse<T> {
 
 export interface HttpRequest<B> {
 	params?: unknown;
-	headers?: unknown;
+	headers?: {
+		token: string;
+	};
 	body?: B;
 }

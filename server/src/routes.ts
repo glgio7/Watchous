@@ -5,6 +5,8 @@ import { MongoCreateUserRepository } from "./repositories/create-user/mongo-crea
 import { CreateUserController } from "./controllers/create-user/create-user";
 import { MongoAuthUserRepository } from "./repositories/auth-user/mongo-auth-user";
 import { AuthUserController } from "./controllers/auth-user/auth-user";
+import { MongoAuthTokenRepository } from "./repositories/auth-token-user/mongo-auth-token-user";
+import { AuthTokenController } from "./controllers/auth-token-user/auth-token-user";
 
 export const createRoutes = () => {
 	const router = Router();
@@ -35,6 +37,23 @@ export const createRoutes = () => {
 
 		const { body, statusCode } = await authUserController.handle({
 			body: req.body,
+		});
+
+		res.status(statusCode).send(body);
+	});
+	router.post("/authtoken", async (req, res) => {
+		const authTokenRepository = new MongoAuthTokenRepository();
+		const authTokenController = new AuthTokenController(authTokenRepository);
+
+		let token = req.headers.token;
+		if (Array.isArray(token)) {
+			token = token[0];
+		}
+
+		const { body, statusCode } = await authTokenController.handle({
+			headers: {
+				token: token || "",
+			},
 		});
 
 		res.status(statusCode).send(body);
