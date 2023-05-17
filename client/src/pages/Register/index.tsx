@@ -3,6 +3,7 @@ import * as S from "./styles";
 import React, { useState } from "react";
 import Form from "../../components/Form";
 import InputContainer from "../../components/InputForm";
+import { handleSignUp } from "../../api/register";
 
 const Register = () => {
 	const [email, setEmail] = useState("");
@@ -15,6 +16,7 @@ const Register = () => {
 
 	const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		handleSignUp({ firstName, lastName, email, password, navigate });
 		// handleSignIn({ email, password, navigate, setAuthenticated, setUser });
 	};
 

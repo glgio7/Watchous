@@ -14,6 +14,7 @@ export const Container = styled.main`
 	justify-content: center;
 
 	background-image: url("/img/login-background.jpg");
+	background-attachment: fixed;
 	background-size: cover;
 
 	padding: 2rem;
