@@ -7,13 +7,14 @@ type FormProps = {
 	handler: (e: React.FormEvent<HTMLFormElement>) => void;
 	spanTip: string[];
 	route: string;
+	spanSubmit: string;
 };
 
-const Form = ({ children, handler, spanTip, route }: FormProps) => {
+const Form = ({ children, handler, spanTip, route, spanSubmit }: FormProps) => {
 	return (
 		<S.Form onSubmit={handler}>
 			{children}
-			<input type="submit" value="Entrar" />
+			<input type="submit" value={spanSubmit} />
 			<span>
 				{spanTip[0]}
 				<Link to={route}>{spanTip[1]}</Link>

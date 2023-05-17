@@ -66,6 +66,12 @@ export const Form = styled.form`
 		}
 	}
 
+	.advice {
+		color: #ff0000;
+		margin-top: -2rem;
+		margin-bottom: 2rem;
+	}
+
 	@media screen and (max-width: 900px) {
 		width: 90%;
 	}

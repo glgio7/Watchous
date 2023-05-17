@@ -13,6 +13,7 @@ import SearchContainer from "./pages/Search";
 import FavoritesProvider from "./contexts/FavoritesContext";
 import NotFound from "./pages/NotFound";
 import AuthProvider from "./contexts/AuthContext";
+import Register from "./pages/Register";
 
 const App = () => {
 	const { searchValue } = useContext(SearchContext);
@@ -26,6 +27,7 @@ const App = () => {
 				{!searchValue && (
 					<Routes>
 						<Route path="/" element={<Home />} />
+						<Route path="/register" element={<Register />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/details/:id" element={<Details />} />
 						<Route path="/details/series/:id" element={<SeriesDetails />} />

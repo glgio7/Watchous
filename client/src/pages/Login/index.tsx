@@ -1,6 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
 import * as S from "./styles";
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { handleSignIn } from "../../api/auth";
 import { AuthContext } from "../../contexts/AuthContext";
 import Form from "../../components/Form";
@@ -26,7 +26,8 @@ const Login = () => {
 			<Form
 				handler={(e) => handleLogin(e)}
 				spanTip={["Ainda não tem uma conta?", "Registre-se aqui"]}
-				route={"/"}
+				route={"/register"}
+				spanSubmit="Entrar"
 			>
 				<InputContainer
 					label="Email"
