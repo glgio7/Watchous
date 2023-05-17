@@ -7,6 +7,15 @@ import { IUser } from "../../models/user";
 
 export class MongoCreateUserRepository implements ICreateUserRepository {
 	async createUser(params: ICreateUserParams): Promise<IUser> {
+		const { email } = params;
+		const userExists = await MongoClient.db
+			.collection("users")
+			.findOne({ email: email });
+
+		if (userExists) {
+			throw new Error(`Email is already in use.`);
+		}
+
 		const { insertedId } = await MongoClient.db
 			.collection("users")
 			.insertOne(params);
