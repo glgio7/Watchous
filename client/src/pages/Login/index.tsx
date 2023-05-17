@@ -3,6 +3,7 @@ import * as S from "./styles";
 import React, { useContext, useState } from "react";
 import { handleSignIn } from "../../api/auth";
 import { AuthContext } from "../../contexts/AuthContext";
+import Form from "../../components/Form";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
@@ -21,7 +22,11 @@ const Login = () => {
 		<S.Container>
 			<div className="fade"></div>
 			<h2>Login</h2>
-			<form onSubmit={(e) => handleLogin(e)}>
+			<Form
+				handler={(e) => handleLogin(e)}
+				spanTip={["Ainda não tem uma conta?", "Registre-se aqui"]}
+				route={"/"}
+			>
 				<label htmlFor="email">Email</label>
 				<input
 					type="text"
@@ -39,10 +44,7 @@ const Login = () => {
 					required
 				/>
 				<input type="submit" value="Entrar" />
-				<span>
-					Ainda não tem uma conta? <Link to={"/"}>Registre-se aqui</Link>
-				</span>
-			</form>
+			</Form>
 		</S.Container>
 	);
 };
