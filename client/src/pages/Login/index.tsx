@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react";
 import { handleSignIn } from "../../api/auth";
 import { AuthContext } from "../../contexts/AuthContext";
 import Form from "../../components/Form";
+import InputContainer from "../../components/InputForm";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
@@ -27,23 +28,22 @@ const Login = () => {
 				spanTip={["Ainda não tem uma conta?", "Registre-se aqui"]}
 				route={"/"}
 			>
-				<label htmlFor="email">Email</label>
-				<input
+				<InputContainer
+					label="Email"
 					type="text"
 					id="email"
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
-					required
+					required={true}
 				/>
-				<label htmlFor="password">Password</label>
-				<input
+				<InputContainer
+					label="Password"
 					type="password"
 					id="password"
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
-					required
+					required={true}
 				/>
-				<input type="submit" value="Entrar" />
 			</Form>
 		</S.Container>
 	);

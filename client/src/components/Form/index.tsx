@@ -13,6 +13,7 @@ const Form = ({ children, handler, spanTip, route }: FormProps) => {
 	return (
 		<S.Form onSubmit={handler}>
 			{children}
+			<input type="submit" value="Entrar" />
 			<span>
 				{spanTip[0]}
 				<Link to={route}>{spanTip[1]}</Link>
