@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { MongoClient } from "./database/mongo";
+import { MongoClientUsers } from "./database/mongo";
 import { createRoutes } from "./routes";
 
 const main = async () => {
@@ -21,7 +21,7 @@ const main = async () => {
 
 	app.use("/", createRoutes());
 
-	await MongoClient.connect();
+	await MongoClientUsers.connect();
 
 	app.listen(port, () => console.log(`Everything is ok!`));
 };

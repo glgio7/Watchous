@@ -1,14 +1,14 @@
 import {
 	ICreateUserParams,
 	ICreateUserRepository,
-} from "../../controllers/create-user/protocols";
-import { MongoClient } from "../../database/mongo";
-import { IUser } from "../../models/user";
+} from "../../../controllers/users/create-user/protocols";
+import { MongoClientUsers } from "../../../database/mongo";
+import { IUser } from "../../../models/user";
 
 export class MongoCreateUserRepository implements ICreateUserRepository {
 	async createUser(params: ICreateUserParams): Promise<IUser> {
 		const { email } = params;
-		const userExists = await MongoClient.db
+		const userExists = await MongoClientUsers.db
 			.collection("users")
 			.findOne({ email: email });
 
@@ -16,11 +16,11 @@ export class MongoCreateUserRepository implements ICreateUserRepository {
 			throw new Error(`Email is already in use.`);
 		}
 
-		const { insertedId } = await MongoClient.db
+		const { insertedId } = await MongoClientUsers.db
 			.collection("users")
 			.insertOne(params);
 
-		const user = await MongoClient.db
+		const user = await MongoClientUsers.db
 			.collection<Omit<IUser, "id">>("users")
 			.findOne({ _id: insertedId });
 

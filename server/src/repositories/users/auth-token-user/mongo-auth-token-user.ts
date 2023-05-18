@@ -1,9 +1,9 @@
 import {
 	IAuthTokenParams,
 	IAuthTokenRepository,
-} from "../../controllers/auth-token-user/protocols";
-import { MongoClient } from "../../database/mongo";
-import { IUser } from "../../models/user";
+} from "../../../controllers/users/auth-token-user/protocols";
+import { MongoClientUsers } from "../../../database/mongo";
+import { IUser } from "../../../models/user";
 import jwt from "jsonwebtoken";
 
 export class MongoAuthTokenRepository implements IAuthTokenRepository {
@@ -15,7 +15,7 @@ export class MongoAuthTokenRepository implements IAuthTokenRepository {
 				userId: string;
 			};
 
-			const user = await MongoClient.db
+			const user = await MongoClientUsers.db
 				.collection<IUser>("users")
 				.findOne({ id: decodedToken.userId });
 

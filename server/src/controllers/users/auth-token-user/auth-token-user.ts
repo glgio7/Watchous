@@ -1,5 +1,5 @@
-import { IUser } from "../../models/user";
-import { HttpRequest, HttpResponse } from "../protocols";
+import { IUser } from "../../../models/user";
+import { HttpRequest, HttpResponse } from "../../protocols";
 import {
 	IAuthTokenController,
 	IAuthTokenParams,

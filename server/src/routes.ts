@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { GetUsersController } from "./controllers/get-users/get-users";
-import { MongoGetUsersRepository } from "./repositories/get-users/mongo-get-users";
-import { MongoCreateUserRepository } from "./repositories/create-user/mongo-create-user";
-import { CreateUserController } from "./controllers/create-user/create-user";
-import { MongoAuthUserRepository } from "./repositories/auth-user/mongo-auth-user";
-import { AuthUserController } from "./controllers/auth-user/auth-user";
-import { MongoAuthTokenRepository } from "./repositories/auth-token-user/mongo-auth-token-user";
-import { AuthTokenController } from "./controllers/auth-token-user/auth-token-user";
+import { GetUsersController } from "./controllers/users/get-users/get-users";
+import { MongoGetUsersRepository } from "./repositories/users/get-users/mongo-get-users";
+import { MongoCreateUserRepository } from "./repositories/users/create-user/mongo-create-user";
+import { CreateUserController } from "./controllers/users/create-user/create-user";
+import { MongoAuthUserRepository } from "./repositories/users/auth-user/mongo-auth-user";
+import { AuthUserController } from "./controllers/users/auth-user/auth-user";
+import { MongoAuthTokenRepository } from "./repositories/users/auth-token-user/mongo-auth-token-user";
+import { AuthTokenController } from "./controllers/users/auth-token-user/auth-token-user";
 
 export const createRoutes = () => {
 	const router = Router();

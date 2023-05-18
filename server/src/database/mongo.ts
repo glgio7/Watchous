@@ -3,9 +3,9 @@ import { config } from "dotenv";
 
 config();
 
-export const MongoClient = {
-	client: (undefined as unknown) as Mongo,
-	db: (undefined as unknown) as Db,
+export const MongoClientUsers = {
+	client: undefined as unknown as Mongo,
+	db: undefined as unknown as Db,
 
 	async connect(): Promise<void> {
 		const url = process.env.MONGODB_URL || "localhost:17017";

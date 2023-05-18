@@ -1,16 +1,16 @@
 import {
 	IAuthUserParams,
 	IAuthUserRepository,
-} from "../../controllers/auth-user/protocols";
-import { MongoClient } from "../../database/mongo";
-import { IUser } from "../../models/user";
+} from "../../../controllers/users/auth-user/protocols";
+import { MongoClientUsers } from "../../../database/mongo";
+import { IUser } from "../../../models/user";
 import jwt from "jsonwebtoken";
 
 export class MongoAuthUserRepository implements IAuthUserRepository {
 	async authUser(params: IAuthUserParams): Promise<IUser> {
 		const { email, password } = params;
 
-		const user = await MongoClient.db
+		const user = await MongoClientUsers.db
 			.collection<IUser>("users")
 			.findOne({ email, password });
 
