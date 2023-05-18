@@ -25,7 +25,6 @@ export const handleSignIn = async ({
 		setAuthenticated(true);
 		setUser(user);
 		localStorage.setItem("token", token);
-		console.log(user);
 		navigate("/");
 	} catch (error) {
 		console.log(error);

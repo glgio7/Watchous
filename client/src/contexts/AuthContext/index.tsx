@@ -28,7 +28,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 					console.log("Login bem-sucedido!");
 				})
 				.catch((error) => {
-					console.log("Erro de autenticação:");
+					localStorage.removeItem("token");
 				});
 		}
 	}, []);
