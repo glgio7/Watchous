@@ -6,7 +6,25 @@ export const Container = styled.main`
 	flex-direction: column;
 	align-items: center;
 	min-height: calc(100vh - 60px);
+
+	z-index: 5;
+	position: relative;
+
 	padding: 2rem;
+
+	.background {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+
+		z-index: -1;
+		opacity: 0.25;
+
+		background-image: url("/img/background.jpg");
+		background-size: cover;
+	}
 
 	.image-container {
 		width: 240px;

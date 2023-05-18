@@ -4,6 +4,7 @@ import * as S from "./styles";
 export default function Credits() {
 	return (
 		<S.Container>
+			<div className="background"></div>
 			<h1>Desenvolvedor</h1>
 			<a href="https://github.com/glgio7" className="image-container">
 				<img src="/img/github-logo.png" alt="" />
