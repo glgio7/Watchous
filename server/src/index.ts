@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { MongoClientUsers } from "./database/mongo";
+import { MongoClientMovies, MongoClientUsers } from "./database/mongo";
 import { createRoutes } from "./routes";
 
 const main = async () => {
@@ -22,6 +22,7 @@ const main = async () => {
 	app.use("/", createRoutes());
 
 	await MongoClientUsers.connect();
+	await MongoClientMovies.connect();
 
 	app.listen(port, () => console.log(`Everything is ok!`));
 };
