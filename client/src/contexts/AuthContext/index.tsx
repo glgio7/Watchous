@@ -21,8 +21,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 					},
 				})
 				.then((response) => {
-					const { _id: id, firstName, lastName, token } = response.data;
-					const user: IUser = { id, firstName, lastName, token };
+					const { _id: id, name, username, token } = response.data;
+					const user: IUser = { id, name, username, token };
 					setAuthenticated(true);
 					setUser(user);
 					console.log("Login bem-sucedido!");

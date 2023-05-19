@@ -2,16 +2,16 @@ import axios, { AxiosError } from "axios";
 import { HandleSignUpProps } from "./types";
 
 export const handleSignUp = async ({
-	firstName,
-	lastName,
+	name,
+	username,
 	email,
 	password,
 	navigate,
 }: HandleSignUpProps) => {
 	try {
 		await axios.post(`${process.env.REACT_APP_API_URL}/users`, {
-			firstName,
-			lastName,
+			name,
+			username,
 			email,
 			password,
 		});

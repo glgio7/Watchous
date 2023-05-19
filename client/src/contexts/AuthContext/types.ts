@@ -2,8 +2,8 @@ import React, { SetStateAction } from "react";
 
 export interface IUser {
 	id: string;
-	firstName: string;
-	lastName: string;
+	name: string;
+	username: string;
 	token?: string;
 }
 

@@ -7,8 +7,8 @@ import { handleSignUp } from "../../api/register";
 
 const Register = () => {
 	const [email, setEmail] = useState("");
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
+	const [name, setName] = useState("");
+	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
@@ -16,8 +16,7 @@ const Register = () => {
 
 	const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		handleSignUp({ firstName, lastName, email, password, navigate });
-		// handleSignIn({ email, password, navigate, setAuthenticated, setUser });
+		handleSignUp({ name, username, email, password, navigate });
 	};
 
 	return (
@@ -33,17 +32,17 @@ const Register = () => {
 				<InputContainer
 					label="Nome"
 					type="text"
-					id="firstName"
-					value={firstName}
-					onChange={(e) => setFirstName(e.target.value)}
+					id="name"
+					value={name}
+					onChange={(e) => setName(e.target.value)}
 					required={true}
 				/>
 				<InputContainer
-					label="Sobrenome"
+					label="Username"
 					type="text"
-					id="lastName"
-					value={lastName}
-					onChange={(e) => setLastName(e.target.value)}
+					id="username"
+					value={username}
+					onChange={(e) => setUsername(e.target.value)}
 					required={true}
 				/>
 				<InputContainer

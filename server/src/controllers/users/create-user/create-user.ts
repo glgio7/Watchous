@@ -13,7 +13,7 @@ export class CreateUserController implements ICreateUserController {
 		httpRequest: HttpRequest<ICreateUserParams>
 	): Promise<HttpResponse<IUser>> {
 		try {
-			const requiredFields = ["firstName", "lastName", "email", "password"];
+			const requiredFields = ["name", "username", "email", "password"];
 
 			for (const field of requiredFields) {
 				if (!httpRequest.body?.[field as keyof ICreateUserParams]) {

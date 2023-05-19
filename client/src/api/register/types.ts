@@ -1,8 +1,8 @@
 import { NavigateFunction } from "react-router-dom";
 
 export type HandleSignUpProps = {
-	firstName: string;
-	lastName: string;
+	name: string;
+	username: string;
 	email: string;
 	password: string;
 	navigate: NavigateFunction;

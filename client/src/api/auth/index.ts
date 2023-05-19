@@ -15,8 +15,8 @@ export const handleSignIn = async ({
 			password,
 		});
 
-		const { _id: id, firstName, lastName, token } = await response.data;
-		const user: IUser = { id, firstName, lastName, token };
+		const { _id: id, name, username, token } = await response.data;
+		const user: IUser = { id, name, username, token };
 
 		if (!id) {
 			throw new Error();
