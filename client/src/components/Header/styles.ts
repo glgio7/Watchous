@@ -88,7 +88,22 @@ export const Header = styled.header`
 		border-radius: 10px;
 
 		font-size: 2rem;
+		width: 2rem;
+		height: 2rem;
 		font-weight: bold;
+
+		cursor: pointer;
+	}
+	.profile-icon {
+		display: block;
+
+		background-color: #fff;
+		color: #0070ff;
+
+		border-radius: 50%;
+
+		width: 2rem;
+		height: 2rem;
 
 		cursor: pointer;
 	}
@@ -177,6 +192,12 @@ export const Navigation = styled.nav<{ active: boolean }>`
 		font-weight: bold;
 
 		cursor: pointer;
+
+		transition: all 250ms;
+
+		&:hover {
+			opacity: 0.8;
+		}
 	}
 
 	@media screen and (max-width: 768px) {

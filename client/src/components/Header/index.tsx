@@ -7,6 +7,14 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { handleSignOut } from "../../api/auth";
 
 export default function Header() {
+	const profileIcons = [
+		"robot-icon.png",
+		"girl-icon.png",
+		"boy-icon.png",
+		"cat-icon.png",
+		"dog-icon.png",
+	];
+
 	const [navOpen, setNavOpen] = useState(false);
 
 	const [input, setInput] = useState("");
@@ -72,7 +80,16 @@ export default function Header() {
 					/>
 				</div>
 				<div className="menu-container">
-					<RiMenuFill className="menu" onClick={toggleMenu} />
+					{authenticated == false ? (
+						<RiMenuFill className="menu" onClick={toggleMenu} />
+					) : (
+						<img
+							src={`/assets/${profileIcons[3]}`}
+							alt=""
+							className="profile-icon"
+							onClick={toggleMenu}
+						/>
+					)}
 				</div>
 			</S.Header>
 			<S.Navigation active={navOpen} onMouseLeave={() => setNavOpen(false)}>
