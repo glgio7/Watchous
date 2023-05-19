@@ -7,6 +7,10 @@ import { MongoAuthUserRepository } from "./repositories/users/auth-user/mongo-au
 import { AuthUserController } from "./controllers/users/auth-user/auth-user";
 import { MongoAuthTokenRepository } from "./repositories/users/auth-token-user/mongo-auth-token-user";
 import { AuthTokenController } from "./controllers/users/auth-token-user/auth-token-user";
+import { MongoAddFreeMovieRepository } from "./repositories/movies/add-freemovie/mongo-add-freemovie";
+import { AddFreeMovieController } from "./controllers/movies/add-freemovie/add-freemovie";
+import { MongoGetFreeMoviesRepository } from "./repositories/movies/get-freemovies/mongo-get-freemovies";
+import { GetFreeMoviesController } from "./controllers/movies/get-freemovies/get-freemovies";
 
 export const createRoutes = () => {
 	const router = Router();
@@ -55,6 +59,29 @@ export const createRoutes = () => {
 				token: token || "",
 			},
 		});
+
+		res.status(statusCode).send(body);
+	});
+
+	router.post("/freemovies", async (req, res) => {
+		const addFreeMovieRepository = new MongoAddFreeMovieRepository();
+		const addFreeMovieController = new AddFreeMovieController(
+			addFreeMovieRepository
+		);
+
+		const { statusCode, body } = await addFreeMovieController.handle({
+			body: req.body,
+		});
+
+		res.status(statusCode).send(body);
+	});
+	router.get("/freemovies", async (req, res) => {
+		const getFreeMoviesRepository = new MongoGetFreeMoviesRepository();
+		const getFreeMovieController = new GetFreeMoviesController(
+			getFreeMoviesRepository
+		);
+
+		const { statusCode, body } = await getFreeMovieController.handle();
 
 		res.status(statusCode).send(body);
 	});
