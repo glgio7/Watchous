@@ -25,35 +25,4 @@ export const InputContainer = styled.div`
 	input:focus {
 		border: #0040ff 1px solid;
 	}
-
-	input[type="submit"] {
-		cursor: pointer;
-		background-color: #0040ff;
-
-		font-weight: bold;
-
-		transition: all 300ms;
-
-		&:hover {
-			background-color: #ffa400;
-			color: #000;
-		}
-	}
-
-	span {
-		margin: 0 auto;
-		color: #fff;
-	}
-
-	a {
-		margin-left: 0.25rem;
-
-		color: #ffa400;
-
-		transition: all 300ms;
-
-		&:hover {
-			opacity: 0.75;
-		}
-	}
 `;

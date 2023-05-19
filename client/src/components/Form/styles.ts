@@ -4,6 +4,8 @@ export const Form = styled.form`
 	background-color: rgba(20, 20, 20, 0.95);
 	padding: 1rem;
 
+	position: relative;
+
 	border-radius: 10px;
 
 	display: flex;
@@ -12,32 +14,16 @@ export const Form = styled.form`
 	width: 40%;
 	min-height: 50vh;
 
-	label {
-		color: #fff;
-		font-weight: bold;
-		margin-bottom: 1rem;
-	}
-
-	input {
-		background-color: #202020;
-		color: #fff;
+	input[type="submit"] {
+		cursor: pointer;
 
 		height: 40px;
 
 		margin-bottom: 2rem;
 		padding: 9px 15px;
 
-		caret-color: #ffa400;
-		outline: none;
-	}
-
-	input:focus {
-		border: #0040ff 1px solid;
-	}
-
-	input[type="submit"] {
-		cursor: pointer;
 		background-color: #0040ff;
+		color: #fff;
 
 		font-weight: bold;
 
@@ -46,6 +32,55 @@ export const Form = styled.form`
 		&:hover {
 			background-color: #ffa400;
 			color: #000;
+		}
+	}
+
+	.loading-submit {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		background-color: #000;
+		color: #fff;
+
+		height: 40px;
+
+		margin-bottom: 2rem;
+		padding: 9px 15px;
+
+		cursor: default;
+
+		font-weight: bold;
+
+		transition: all 300ms;
+	}
+
+	.loader {
+		border: 3px solid #0040ff;
+		background-color: #000;
+		border-radius: 50%;
+		width: 1.75rem;
+		height: 1.75rem;
+		position: relative;
+		animation: spin 1s linear infinite;
+
+		&::after {
+			position: absolute;
+			content: "";
+			background: #000;
+			top: 0px;
+			right: 0px;
+			width: 3px;
+			height: 6px;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
 		}
 	}
 

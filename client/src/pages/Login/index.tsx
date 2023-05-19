@@ -14,9 +14,19 @@ const Login = () => {
 
 	const navigate = useNavigate();
 
-	const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+	const [loading, setLoading] = useState<boolean>(false);
+
+	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+		setLoading(true);
 		e.preventDefault();
-		handleSignIn({ email, password, navigate, setAuthenticated, setUser });
+		await handleSignIn({
+			email,
+			password,
+			navigate,
+			setAuthenticated,
+			setUser,
+		});
+		setLoading(false);
 	};
 
 	return (
@@ -28,6 +38,7 @@ const Login = () => {
 				spanTip={["Ainda não tem uma conta?", "Registre-se aqui"]}
 				route={"/register"}
 				spanSubmit="Entrar"
+				loading={loading}
 			>
 				<InputContainer
 					label="Email"
