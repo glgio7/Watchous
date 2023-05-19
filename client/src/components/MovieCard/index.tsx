@@ -52,17 +52,15 @@ const MovieCard = ({
 			)}
 
 			{free && (
-				<a href={`https://youtu.be/${free}`} target="_blank">
-					<img
-						src={
-							poster_path
-								? `https://www.themoviedb.org/t/p/w342${poster_path}`
-								: "/img/movie_placeholder.jpg"
-						}
-						alt={""}
-						className="moviePoster"
-					/>
-				</a>
+				<img
+					src={
+						poster_path
+							? `https://www.themoviedb.org/t/p/w342${poster_path}`
+							: "/img/movie_placeholder.jpg"
+					}
+					alt={""}
+					className="moviePoster"
+				/>
 			)}
 			<span>
 				{title && title.length > 18 ? title.substring(0, 18) + "..." : title}

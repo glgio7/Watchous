@@ -1,17 +1,26 @@
-import React from "react";
-import dataMovies from "../../api/freemovies_list.json";
+import React, { useEffect, useState } from "react";
 import { Container } from "./styles";
 import MovieCard from "../../components/MovieCard/";
+import { getFreeMovies } from "../../api/freemovies/get-freemovies";
+import { IFreeMovie } from "../../api/freemovies/types";
 
 export default function FreeToWatch() {
+	const [moviesList, setMoviesList] = useState<IFreeMovie[]>([]);
+
+	useEffect(() => {
+		getFreeMovies().then((movies) => {
+			setMoviesList(movies);
+		});
+	}, []);
+
 	return (
 		<>
 			<Container>
 				<div className="fade"></div>
 				<ul>
-					{dataMovies.freemovies.map((movie) => (
+					{moviesList.map((movie) => (
 						<a
-							href={`https://youtube.com/watch?v=${movie.key}`}
+							href={movie.youtubeUrl}
 							target="_blank"
 							rel="noopener noreferrer"
 							key={movie.imdb}
@@ -21,8 +30,8 @@ export default function FreeToWatch() {
 								id={movie.imdb}
 								title={movie.title}
 								vote_average={NaN}
-								poster_path={movie.poster_path}
-								free={movie.key}
+								poster_path={movie.imgUrl}
+								free={movie.youtubeUrl}
 							/>
 						</a>
 					))}
