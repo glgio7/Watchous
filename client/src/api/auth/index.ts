@@ -1,5 +1,9 @@
 import axios from "axios";
-import { HandleSignInProps, HandleSignOutProps } from "./types";
+import {
+	HandleSignInProps,
+	HandleSignOutProps,
+	handleSignInWithTokenProps,
+} from "./types";
 import { IUser } from "../../contexts/AuthContext/types";
 
 export const handleSignIn = async ({
@@ -24,7 +28,7 @@ export const handleSignIn = async ({
 
 		setAuthenticated(true);
 		setUser(user);
-		localStorage.setItem("token", token);
+
 		navigate("/");
 	} catch (error) {
 		console.log(error);
@@ -32,11 +36,30 @@ export const handleSignIn = async ({
 	}
 };
 
-export const handleSignOut = ({
+export const handleSignOut = async ({
 	setAuthenticated,
 	setUser,
 }: HandleSignOutProps) => {
-	localStorage.removeItem("token");
 	setAuthenticated(false);
 	setUser(null);
+};
+
+export const handleSignInWithToken = async ({
+	setUser,
+}: handleSignInWithTokenProps) => {
+	axios
+		.post(`${process.env.REACT_APP_API_URL}/authtoken`, null, {
+			headers: {
+				// token: tokenPersistence,
+			},
+		})
+		.then((response) => {
+			const { id, name, username, token } = response.data;
+
+			console.log("Login bem-sucedido!");
+			setUser({ id, name, username, token });
+		})
+		.catch((error) => {
+			console.log(error);
+		});
 };

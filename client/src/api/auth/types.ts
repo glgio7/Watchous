@@ -9,6 +9,11 @@ export type HandleSignInProps = {
 	setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 	setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
 };
+
+export type handleSignInWithTokenProps = {
+	setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+};
+
 export type HandleSignOutProps = {
 	setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 	setUser: React.Dispatch<React.SetStateAction<IUser | null>>;

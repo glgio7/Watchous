@@ -28,7 +28,9 @@ export default function Header() {
 		setSearchValue,
 	} = useFromSearch();
 
-	const { authenticated, setAuthenticated, setUser } = useAuth();
+	const { authenticated, setAuthenticated, setUser, user } = useAuth();
+
+	console.log(user);
 
 	const search = (props: React.KeyboardEvent) => {
 		if (props.key === "Enter") {
@@ -101,7 +103,7 @@ export default function Header() {
 				)}
 				{authenticated ? (
 					<Link
-						to={"/"}
+						to={"/dashboard"}
 						onClick={() => {
 							setNavOpen(false), setSearchValue("");
 						}}
