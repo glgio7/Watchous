@@ -1,19 +1,19 @@
 import * as S from "./styles";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import db from "../../api/movies_list.json";
-import { FavoritesContext } from "../../contexts/FavoritesContext";
 import { IMovie } from "../../components/MovieCard/types";
 import { RiCloseFill } from "react-icons/ri";
 import Wrapper from "../../components/Wrapper";
 import Loading from "../../components/Loading";
 import MovieList from "../../components/MovieList";
 import axios from "axios";
+import { useFavorites } from "../../hooks/useFavorites";
 
 export default function Home() {
 	document.title = `Watchous | Home`;
 	const apiKey = process.env.REACT_APP_API_KEY;
 
-	const { favorites } = useContext(FavoritesContext);
+	const { favorites } = useFavorites();
 
 	const [disclaimer, setDisclaimer] = useState(false);
 	const handleDisclaimer = () => setDisclaimer(!disclaimer);

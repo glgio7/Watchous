@@ -1,10 +1,9 @@
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import * as S from "./styles";
 import ListButton from "../ListButton";
 import { handlePageList, handleScrollList } from "../../utils";
 import MovieCard from "../MovieCard";
 import { IMovie, IMovieFromDb } from "../MovieCard/types";
-import { SearchContext } from "../../contexts/SearchContext";
 
 type IMovieListProps = {
 	list: IMovie[] | IMovieFromDb[];

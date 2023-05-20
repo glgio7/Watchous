@@ -1,24 +1,24 @@
 import * as S from "./styles";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { SearchContext } from "../../contexts/SearchContext";
 import { Link } from "react-router-dom";
 import { IMovieDetails } from "./types";
 import Loading from "../../components/Loading";
-import { FavoritesContext } from "../../contexts/FavoritesContext";
 import { RiHeartFill } from "react-icons/ri";
 import { IMovie } from "../../components/MovieCard/types";
+import { useFromSearch } from "../../hooks/useFromSearch";
+import { useFavorites } from "../../hooks/useFavorites";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
 export default function SeriesDetails() {
-	const { favorites, handleFavorite } = useContext(FavoritesContext);
+	const { favorites, handleFavorite } = useFavorites();
 	const {
 		moviesFromSearch,
 		seriesFromSearch,
 		setSeriesFromSearch,
 		setMoviesFromSearch,
-	} = useContext(SearchContext);
+	} = useFromSearch();
 
 	const { id } = useParams<string>();
 	const baseImageURL = "https://themoviedb.org/t/p/original";

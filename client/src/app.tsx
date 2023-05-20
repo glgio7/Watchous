@@ -1,23 +1,23 @@
-import React, { useContext } from "react";
+import React from "react";
 import { GlobalCSS } from "./styles";
 import { Route, Routes } from "react-router-dom";
-import { SearchContext } from "./contexts/SearchContext";
-import { AuthContext } from "./contexts/AuthContext";
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
 import SeriesDetails from "./pages/Details/series";
 import FreeToWatch from "./pages/Watch";
 import Credits from "./pages/Credits";
-import Header from "./components/Header";
 import Login from "./pages/Login";
 import SearchContainer from "./pages/Search";
-import FavoritesProvider from "./contexts/FavoritesContext";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
+import FavoritesProvider from "./contexts/FavoritesContext";
+import { useAuth } from "./hooks/useAuth";
+import { useFromSearch } from "./hooks/useFromSearch";
 
 const App = () => {
-	const { searchValue } = useContext(SearchContext);
-	const { authenticated } = useContext(AuthContext);
+	const { searchValue } = useFromSearch();
+	const { authenticated } = useAuth();
 
 	return (
 		<>

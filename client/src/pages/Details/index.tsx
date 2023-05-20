@@ -1,15 +1,15 @@
 import * as S from "./styles";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { SearchContext } from "../../contexts/SearchContext";
 import { IMovieDetails } from "./types";
 import Loading from "../../components/Loading";
-import { FavoritesContext } from "../../contexts/FavoritesContext";
 import { RiHeartFill } from "react-icons/ri";
 import { IMovie } from "../../components/MovieCard/types";
 import Form from "../../components/Form";
 import InputContainer from "../../components/InputForm";
 import { addFreeMovie } from "../../api/freemovies/add-freemovies";
+import { useFromSearch } from "../../hooks/useFromSearch";
+import { useFavorites } from "../../hooks/useFavorites";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -22,13 +22,13 @@ export default function Details() {
 	const [formOpen, setFormOpen] = useState<boolean>(false);
 	const [loadingForm, setLoadingForm] = useState<boolean>(false);
 
-	const { favorites, handleFavorite } = useContext(FavoritesContext);
+	const { favorites, handleFavorite } = useFavorites();
 	const {
 		moviesFromSearch,
 		seriesFromSearch,
 		setSeriesFromSearch,
 		setMoviesFromSearch,
-	} = useContext(SearchContext);
+	} = useFromSearch();
 
 	if (player || formOpen) {
 		document.body.style.overflow = "hidden";

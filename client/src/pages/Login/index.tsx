@@ -1,8 +1,8 @@
 import * as S from "./styles";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { handleSignIn } from "../../api/auth";
-import { AuthContext } from "../../contexts/AuthContext";
 import Form from "../../components/Form";
 import InputContainer from "../../components/InputForm";
 
@@ -10,7 +10,7 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const { setAuthenticated, setUser } = useContext(AuthContext);
+	const { setAuthenticated, setUser } = useAuth();
 
 	const navigate = useNavigate();
 

@@ -1,11 +1,11 @@
 import * as S from "./styles";
-import React, { useContext } from "react";
-import { SearchContext } from "../../contexts/SearchContext";
+import React from "react";
 import Wrapper from "../../components/Wrapper";
 import MovieList from "../../components/MovieList/";
+import { useFromSearch } from "../../hooks/useFromSearch";
 
 const SearchContainer = () => {
-	const { moviesFromSearch, seriesFromSearch } = useContext(SearchContext);
+	const { moviesFromSearch, seriesFromSearch } = useFromSearch();
 
 	return (
 		<S.SearchContainer>

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { RiMenuFill, RiSearchLine, RiLogoutBoxLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import * as S from "./styles";
-import { SearchContext } from "../../contexts/SearchContext";
-import { AuthContext } from "../../contexts/AuthContext";
 import { handleSignOut } from "../../api/auth";
+import { useAuth } from "../../hooks/useAuth";
+import { useFromSearch } from "../../hooks/useFromSearch";
 
 export default function Header() {
 	const profileIcons = [
@@ -26,9 +26,9 @@ export default function Header() {
 		setMoviesFromSearch,
 		searchValue,
 		setSearchValue,
-	} = useContext(SearchContext);
+	} = useFromSearch();
 
-	const { authenticated, setAuthenticated, setUser } = useContext(AuthContext);
+	const { authenticated, setAuthenticated, setUser } = useAuth();
 
 	const search = (props: React.KeyboardEvent) => {
 		if (props.key === "Enter") {

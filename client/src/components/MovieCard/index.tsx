@@ -1,10 +1,10 @@
 import * as S from "./styles";
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { RiHeartFill } from "react-icons/ri";
 import { MovieCardProps } from "./types";
-import { FavoritesContext } from "../../contexts/FavoritesContext";
-import { SearchContext } from "../../contexts/SearchContext";
+import { useFavorites } from "../../hooks/useFavorites";
+import { useFromSearch } from "../../hooks/useFromSearch";
 
 const MovieCard = ({
 	id,
@@ -15,9 +15,9 @@ const MovieCard = ({
 	free,
 	movie,
 }: MovieCardProps) => {
-	const { favorites, handleFavorite } = useContext(FavoritesContext);
+	const { favorites, handleFavorite } = useFavorites();
 
-	const { setSearchValue } = useContext(SearchContext);
+	const { setSearchValue } = useFromSearch();
 
 	return (
 		<S.Movie key={id} onClick={() => setSearchValue("")}>
