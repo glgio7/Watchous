@@ -56,7 +56,7 @@ export const Form = styled.form`
 	}
 
 	.loader {
-		border: 3px solid #0040ff;
+		border: 3px solid #ffa400;
 		background-color: #000;
 		border-radius: 50%;
 		width: 1.75rem;

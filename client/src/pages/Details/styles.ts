@@ -77,21 +77,19 @@ export const Container = styled.div<{
 		align-items: center;
 		justify-content: center;
 
-		font-size: 1.25rem;
+		font-size: 1rem;
 		text-align: center;
 
 		background-color: #0010ff;
 		color: rgb(255, 164, 0);
 
 		font-weight: bold;
-		strong {
-			margin-right: 10px;
-
-			color: #fff;
-		}
 
 		span {
+			display: inline-flex;
+			align-items: center;
 			color: #fff;
+			margin: 0 auto;
 		}
 	}
 
@@ -100,6 +98,7 @@ export const Container = styled.div<{
 	}
 	.container-info__bottom {
 		border-radius: 0 0 10px 10px;
+		padding: 6px;
 	}
 
 	.fav-btn,
@@ -108,14 +107,16 @@ export const Container = styled.div<{
 		color: #fff;
 
 		padding: 6px;
-		position: absolute;
-		left: 0.5rem;
+		margin-right: 6px;
 
 		border-radius: 50%;
 
 		cursor: pointer;
 
 		font-size: 1.75rem;
+
+		width: 1.75rem;
+		height: 1.75rem;
 
 		transition: all 300ms;
 		&:hover {

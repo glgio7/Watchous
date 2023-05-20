@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
 import * as S from "./styles";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { RiHeartFill } from "react-icons/ri";
 import { MovieCardProps } from "./types";
 import { FavoritesContext } from "../../contexts/FavoritesContext";
+import { SearchContext } from "../../contexts/SearchContext";
 
 const MovieCard = ({
 	id,
@@ -13,20 +14,17 @@ const MovieCard = ({
 	name,
 	free,
 	movie,
-	onClick,
 }: MovieCardProps) => {
 	const { favorites, handleFavorite } = useContext(FavoritesContext);
 
+	const { setSearchValue } = useContext(SearchContext);
+
 	return (
-		<S.Movie key={id} onClick={onClick}>
+		<S.Movie key={id} onClick={() => setSearchValue("")}>
 			<div className="vote-average">
-				<span>
-					{vote_average && Math.round(vote_average) !== 0
-						? Math.round(vote_average)
-						: "?" || "?"}
-				</span>
+				<span>{Math.round(vote_average) || "★"}</span>
 				<p>
-					{vote_average && vote_average > 8
+					{vote_average > 8
 						? "★★★★★"
 						: vote_average > 6
 						? "★★★★"
@@ -38,7 +36,7 @@ const MovieCard = ({
 				</p>
 			</div>
 			{!free && (
-				<Link to={title ? `/details/${id}` : `/details/series/${id}`}>
+				<Link to={name ? `/details/series/${id}` : `/details/${id}`}>
 					<img
 						src={
 							poster_path
@@ -66,18 +64,20 @@ const MovieCard = ({
 				{title && title.length > 18 ? title.substring(0, 18) + "..." : title}
 				{name && name.length > 18 ? name.substring(0, 18) + "..." : name}
 			</span>
-			<RiHeartFill
-				className={
-					favorites.some((item) => {
-						if (movie) {
-							return item.id === movie.id;
-						}
-					})
-						? "unfav-btn"
-						: "fav-btn"
-				}
-				onClick={() => movie && handleFavorite(movie)}
-			/>
+			{!free && (
+				<RiHeartFill
+					className={
+						favorites.some((item) => {
+							if (movie) {
+								return item.id === movie.id;
+							}
+						})
+							? "unfav-btn"
+							: "fav-btn"
+					}
+					onClick={() => movie && handleFavorite(movie)}
+				/>
+			)}
 		</S.Movie>
 	);
 };

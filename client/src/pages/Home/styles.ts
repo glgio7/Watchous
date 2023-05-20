@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.main`
 	width: 100%;
-	/* margin-top: 60px; */
 	padding: 2rem;
 
 	.buttonDisclaimer {
@@ -29,11 +28,11 @@ export const Container = styled.main`
 	.disclaimer.active {
 		background: rgb(0, 162, 211);
 		background: linear-gradient(
-			0deg,
-			rgba(0, 120, 200, 1) 0%,
-			rgba(0, 60, 150, 0.95) 25%,
-			rgba(0, 60, 150, 0.9) 75%,
-			rgba(0, 80, 160, 0.95) 100%
+			180deg,
+			rgba(0, 70, 150, 1) 0%,
+			rgba(0, 0, 75, 0.96) 25%,
+			rgba(0, 0, 50, 0.96) 75%,
+			rgba(0, 0, 75, 0.9) 100%
 		);
 		display: flex;
 		opacity: 1;
@@ -50,12 +49,26 @@ export const Container = styled.main`
 		animation: flash;
 		animation-duration: 0.5s;
 
-		h2 {
+		h2,
+		li {
 			color: #fff;
-			font-size: 1.25rem;
+			font-size: 1.5rem;
 			line-height: 2rem;
-			text-align: center;
-			width: 90%;
+			margin: 0 auto;
+		}
+
+		h2 {
+			background-color: #111;
+			border-radius: 4px;
+			color: #0040ff;
+			padding: 3px 6px;
+		}
+
+		li {
+			color: #fff;
+			font-size: 1rem;
+			line-height: normal;
+			margin-left: 3px;
 		}
 
 		.closeDisclaimer {
