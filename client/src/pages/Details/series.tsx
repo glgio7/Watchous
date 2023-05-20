@@ -5,10 +5,14 @@ import { SearchContext } from "../../contexts/SearchContext";
 import { Link } from "react-router-dom";
 import { IMovieDetails } from "./types";
 import Loading from "../../components/Loading";
+import { FavoritesContext } from "../../contexts/FavoritesContext";
+import { RiHeartFill } from "react-icons/ri";
+import { IMovie } from "../../components/MovieCard/types";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
 export default function SeriesDetails() {
+	const { favorites, handleFavorite } = useContext(FavoritesContext);
 	const {
 		moviesFromSearch,
 		seriesFromSearch,
@@ -98,7 +102,23 @@ export default function SeriesDetails() {
 							}
 							alt={`Capa do filme ${movie.title}`}
 						/>
-						<div className="container-info__bottom">Favoritar esta série</div>
+						<div className="container-info__bottom">
+							<span>
+								<RiHeartFill
+									className={
+										favorites.some((item) => {
+											if (movie) {
+												return item.id === movie.id;
+											}
+										})
+											? "unfav-btn"
+											: "fav-btn"
+									}
+									onClick={() => movie && handleFavorite(movie as IMovie)}
+								/>
+								Favoritar
+							</span>
+						</div>
 					</section>
 					<section className="overview-container">
 						<div className="container-info__top">

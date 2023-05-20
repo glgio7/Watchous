@@ -324,3 +324,46 @@ export const IframeContainer = styled.div<{ active: boolean }>`
 		height: calc(100vh - 114px);
 	}
 `;
+
+export const FormContainer = styled.div<{ active: boolean }>`
+	background-color: rgba(0, 0, 0, 0.85);
+
+	position: fixed;
+	top: 54px;
+
+	height: calc(100vh - 54px);
+	overflow-y: auto;
+	width: 100%;
+
+	padding: 2rem;
+
+	z-index: 9;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	opacity: ${({ active }) => (active ? "1" : "0")};
+	pointer-events: ${({ active }) => (active ? "all" : "none")};
+
+	transition: all 600ms;
+
+	.close-btn {
+		color: #ffa400;
+
+		height: 40px;
+		background-color: #0040ff;
+		width: 50%;
+
+		border-radius: 10px;
+
+		/* position: absolute; */
+	}
+
+	@media screen and (max-width: 768px) {
+		top: 114px;
+
+		width: 80%;
+		height: calc(100vh - 114px);
+	}
+`;

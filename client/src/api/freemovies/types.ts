@@ -5,3 +5,10 @@ export interface IFreeMovie {
 	imgUrl: string;
 	youtubeUrl: string;
 }
+
+export type AddFreeMoviesProps = {
+	imdb: string;
+	title: string;
+	imgUrl: string;
+	youtubeUrl: string;
+};

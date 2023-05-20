@@ -11,8 +11,8 @@ export const Form = styled.form`
 	display: flex;
 	flex-direction: column;
 
-	width: 40%;
-	min-height: 50vh;
+	width: 50%;
+	height: max-content;
 
 	input[type="submit"] {
 		cursor: pointer;

@@ -7,27 +7,32 @@ import Loading from "../../components/Loading";
 import { FavoritesContext } from "../../contexts/FavoritesContext";
 import { RiHeartFill } from "react-icons/ri";
 import { IMovie } from "../../components/MovieCard/types";
+import Form from "../../components/Form";
+import InputContainer from "../../components/InputForm";
+import { addFreeMovie } from "../../api/freemovies/add-freemovies";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
 export default function Details() {
-	const { favorites, handleFavorite } = useContext(FavoritesContext);
+	const { id } = useParams();
+	const baseImageURL = "https://themoviedb.org/t/p/original";
+	const [movie, setMovie] = useState<IMovieDetails>({} as IMovieDetails);
+	const [fullDescription, setFullDescription] = useState<boolean>(false);
+	const [player, setPlayer] = useState<boolean>(false);
+	const [formOpen, setFormOpen] = useState<boolean>(false);
+	const [loadingForm, setLoadingForm] = useState<boolean>(false);
 
+	const { favorites, handleFavorite } = useContext(FavoritesContext);
 	const {
 		moviesFromSearch,
 		seriesFromSearch,
 		setSeriesFromSearch,
 		setMoviesFromSearch,
 	} = useContext(SearchContext);
-	const { id } = useParams();
-	const baseImageURL = "https://themoviedb.org/t/p/original";
-	const [movie, setMovie] = useState<IMovieDetails>({} as IMovieDetails);
-	const [fullDescription, setFullDescription] = useState<boolean>(false);
-	const [player, setPlayer] = useState<boolean>(false);
 
-	if (player) {
+	if (player || formOpen) {
 		document.body.style.overflow = "hidden";
-	} else if (!player) {
+	} else if (!player || formOpen) {
 		document.body.style.overflow = "auto";
 	}
 
@@ -64,12 +69,33 @@ export default function Details() {
 						.join(" - "),
 					vote_average: Math.round(data.vote_average),
 					related: data.similar.results.slice(0, 10),
+					youtubeUrl: "",
 				};
 				document.title = `Watchous - ${movie.title}`;
 				setMovie(movie);
 			})
 			.catch((e) => console.log(e));
 	}, [id]);
+
+	const addYoutubeUrl = (url: string) => {
+		setMovie((movie) => {
+			return { ...movie, youtubeUrl: url };
+		});
+	};
+
+	const handleAddFreeMovie = async (movie: IMovieDetails) => {
+		if (movie.youtubeUrl) {
+			setLoadingForm(true);
+			await addFreeMovie(
+				movie.id!,
+				movie.title,
+				movie.poster_path,
+				movie.youtubeUrl
+			);
+			setLoadingForm(false);
+			setFormOpen(false);
+		} else return;
+	};
 
 	return (
 		<>
@@ -110,7 +136,9 @@ export default function Details() {
 									src="/assets/youtube-btn.svg"
 									alt=""
 									className={"fav-btn"}
-									onClick={() => {}}
+									onClick={() => {
+										setFormOpen(true);
+									}}
 								/>
 								Adicionar link do Youtube
 							</span>
@@ -209,6 +237,54 @@ export default function Details() {
 							<button>Ver trailer</button>
 						</div>
 					</section>
+					{/* Add movie form container */}
+					{formOpen && (
+						<S.FormContainer active={formOpen}>
+							<button className="close-btn" onClick={() => setFormOpen(false)}>
+								Fechar
+							</button>
+							<Form
+								handler={() => handleAddFreeMovie(movie)}
+								spanTip={[]}
+								route={""}
+								spanSubmit={"Adicionar"}
+								loading={loadingForm}
+							>
+								<InputContainer
+									label="Id"
+									type="text"
+									id="imdb"
+									value={movie.id!}
+									required
+									readonly
+								/>
+								<InputContainer
+									label="Titulo"
+									type="text"
+									id="title"
+									value={movie.title!}
+									required
+									readonly
+								/>
+								<InputContainer
+									label="Capa do Filme"
+									type="text"
+									id="imgUrl"
+									value={movie.poster_path}
+									required
+									readonly
+								/>
+								<InputContainer
+									label="Link do Youtube"
+									type="text"
+									id="youtubeUrl"
+									value={movie.youtubeUrl || ""}
+									onChange={(e) => addYoutubeUrl(e.target.value)}
+									required
+								/>
+							</Form>
+						</S.FormContainer>
+					)}
 
 					{/* Trailer visualizer */}
 					<S.IframeContainer active={player}>

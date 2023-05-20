@@ -4,6 +4,7 @@ export interface IMovieDetails {
 	trailers?: [{ key: string; name: string; type: string }];
 	mainTrailer?: string;
 	lastEpisode?: string;
+	youtubeUrl?: string;
 	release: string;
 	related: IMovieDetails[];
 	title: string;
