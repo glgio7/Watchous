@@ -16,9 +16,8 @@ const Login = () => {
 
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleLogin = async () => {
 		setLoading(true);
-		e.preventDefault();
 		await handleSignIn({
 			email,
 			password,
@@ -34,7 +33,7 @@ const Login = () => {
 			<div className="fade"></div>
 			<h2>Login</h2>
 			<Form
-				handler={(e) => handleLogin(e)}
+				handler={() => handleLogin()}
 				spanTip={["Ainda não tem uma conta?", "Registre-se aqui"]}
 				route={"/register"}
 				spanSubmit="Entrar"

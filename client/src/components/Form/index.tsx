@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import * as S from "./styles";
 import React from "react";
-import Loading from "../Loading";
 
 type FormProps = {
 	children: React.ReactNode;
-	handler: (e: React.FormEvent<HTMLFormElement>) => void;
+	handler: () => void;
 	spanTip: string[];
 	route: string;
 	spanSubmit: string;
@@ -21,7 +20,12 @@ const Form = ({
 	loading,
 }: FormProps) => {
 	return (
-		<S.Form onSubmit={handler}>
+		<S.Form
+			onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+				e.preventDefault();
+				handler();
+			}}
+		>
 			{children}
 			{!loading && <input type="submit" value={spanSubmit} />}
 			{loading && (

@@ -6,8 +6,9 @@ type InputProps = {
 	id: string;
 	type: string;
 	value: string;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	required: boolean;
+	readonly?: boolean;
 };
 
 const InputContainer = ({
@@ -17,6 +18,7 @@ const InputContainer = ({
 	value,
 	onChange,
 	required,
+	readonly,
 }: InputProps) => {
 	return (
 		<S.InputContainer>
@@ -27,6 +29,7 @@ const InputContainer = ({
 				value={value}
 				onChange={onChange}
 				required={required}
+				readOnly={readonly}
 			/>
 		</S.InputContainer>
 	);

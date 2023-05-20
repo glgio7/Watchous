@@ -14,8 +14,7 @@ const Register = () => {
 
 	const navigate = useNavigate();
 
-	const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const handleRegister = () => {
 		handleSignUp({ name, username, email, password, navigate });
 	};
 
@@ -24,7 +23,7 @@ const Register = () => {
 			<div className="fade"></div>
 			<h2>Criar conta</h2>
 			<Form
-				handler={(e) => handleRegister(e)}
+				handler={() => handleRegister()}
 				spanTip={["Já possui uma conta?", "Faça login aqui."]}
 				route={"/login"}
 				spanSubmit="Registrar"
