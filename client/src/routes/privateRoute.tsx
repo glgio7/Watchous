@@ -8,12 +8,7 @@ type PrivateRouteProps = {
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
 	const { authenticated } = useAuth();
-	return (
-		<>
-			{authenticated && { children }}
-			{!authenticated && <Login />}
-		</>
-	);
+	return <>{authenticated ? children : <Login />}</>;
 };
 
 export default PrivateRoute;

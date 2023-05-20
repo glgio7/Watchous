@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import PrivateRoute from "./privateRoute";
 import Home from "../pages/Home";
 import Details from "../pages/Details";
 import SeriesDetails from "../pages/Details/series";
@@ -8,12 +9,9 @@ import Credits from "../pages/Credits";
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
-import { useAuth } from "../hooks/useAuth";
-import PrivateRoute from "./privateRoute";
+import Dashboard from "../pages/Dashboard";
 
 const AppRoutes = () => {
-	const { authenticated } = useAuth();
-
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
@@ -26,6 +24,14 @@ const AppRoutes = () => {
 				element={
 					<PrivateRoute>
 						<FreeToWatch />
+					</PrivateRoute>
+				}
+			/>
+			<Route
+				path="/dashboard"
+				element={
+					<PrivateRoute>
+						<Dashboard />
 					</PrivateRoute>
 				}
 			/>
