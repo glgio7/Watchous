@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { GlobalCSS } from "./styles";
 import { Route, Routes } from "react-router-dom";
 import { SearchContext } from "./contexts/SearchContext";
+import { AuthContext } from "./contexts/AuthContext";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
 import SeriesDetails from "./pages/Details/series";
@@ -12,14 +13,14 @@ import Login from "./pages/Login";
 import SearchContainer from "./pages/Search";
 import FavoritesProvider from "./contexts/FavoritesContext";
 import NotFound from "./pages/NotFound";
-import AuthProvider from "./contexts/AuthContext";
 import Register from "./pages/Register";
 
 const App = () => {
 	const { searchValue } = useContext(SearchContext);
+	const { authenticated } = useContext(AuthContext);
 
 	return (
-		<AuthProvider>
+		<>
 			<GlobalCSS />
 			<Header />
 			<FavoritesProvider>
@@ -31,13 +32,16 @@ const App = () => {
 						<Route path="/login" element={<Login />} />
 						<Route path="/details/:id" element={<Details />} />
 						<Route path="/details/series/:id" element={<SeriesDetails />} />
-						<Route path="/freetowatch" element={<FreeToWatch />} />
+						<Route
+							path="/freetowatch"
+							element={authenticated ? <FreeToWatch /> : <Login />}
+						/>
 						<Route path="/credits" element={<Credits />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				)}
 			</FavoritesProvider>
-		</AuthProvider>
+		</>
 	);
 };
 
