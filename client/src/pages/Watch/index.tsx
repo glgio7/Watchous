@@ -9,7 +9,7 @@ export default function FreeToWatch() {
 
 	useEffect(() => {
 		getFreeMovies().then((movies) => {
-			setMoviesList(movies);
+			movies ? setMoviesList(movies) : setMoviesList([]);
 		});
 	}, []);
 
@@ -29,7 +29,7 @@ export default function FreeToWatch() {
 								key={movie.imdb}
 								id={movie.imdb}
 								title={movie.title}
-								vote_average={NaN}
+								vote_average={0}
 								poster_path={movie.imgUrl}
 								free={movie.youtubeUrl}
 							/>

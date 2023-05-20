@@ -15,6 +15,14 @@ import { GetFreeMoviesController } from "./controllers/movies/get-freemovies/get
 export const createRoutes = () => {
 	const router = Router();
 
+	router.get("/", (req, res) => {
+		res
+			.status(200)
+			.send(
+				"Welcome to Watchous API. We're working on a great documentation for you. It may take a few time."
+			);
+	});
+
 	router.get("/users", async (req, res) => {
 		const getUsersRepository = new MongoGetUsersRepository();
 		const getUsersController = new GetUsersController(getUsersRepository);

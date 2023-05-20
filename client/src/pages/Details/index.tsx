@@ -90,19 +90,30 @@ export default function Details() {
 							alt={`Capa do filme ${movie.title}`}
 						/>
 						<div className="container-info__bottom">
-							<RiHeartFill
-								className={
-									favorites.some((item) => {
-										if (movie) {
-											return item.id === movie.id;
-										}
-									})
-										? "unfav-btn"
-										: "fav-btn"
-								}
-								onClick={() => movie && handleFavorite(movie as IMovie)}
-							/>
-							Favoritar este filme
+							<span>
+								<RiHeartFill
+									className={
+										favorites.some((item) => {
+											if (movie) {
+												return item.id === movie.id;
+											}
+										})
+											? "unfav-btn"
+											: "fav-btn"
+									}
+									onClick={() => movie && handleFavorite(movie as IMovie)}
+								/>
+								Favoritar
+							</span>
+							<span>
+								<img
+									src="/assets/youtube-btn.svg"
+									alt=""
+									className={"fav-btn"}
+									onClick={() => {}}
+								/>
+								Adicionar link do Youtube
+							</span>
 						</div>
 					</section>
 					<section className="overview-container">

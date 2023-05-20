@@ -121,8 +121,12 @@ export default function Home() {
 				{/* ----------------------- Disclaimer/Advices --------------------------- */}
 				<div className={disclaimer ? "disclaimer active" : "disclaimer"}>
 					<RiCloseFill className="closeDisclaimer" onClick={handleDisclaimer} />
-					<h2>Novidade: adicione filmes aos favoritos</h2>
-					<h2>Em breve: cadastro e lista de interesse.</h2>
+					<ul>
+						<h2>Notas de atualização 20/Maio/23</h2>
+						<li>feat: sistema de cadastro adicionado.</li>
+						<li>feat: lista de filmes disponíveis no youtube</li>
+						<li>feat: adicione favoritos a memória do navegador</li>
+					</ul>
 				</div>
 				<button className="buttonDisclaimer" onClick={handleDisclaimer}>
 					?
