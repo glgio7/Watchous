@@ -7,7 +7,7 @@ export const SearchContext = createContext<ISearchContext>(
 );
 
 const SearchProvider = ({ children }: SearchProviderProps) => {
-	const apiKey = process.env.REACT_APP_API_KEY;
+	const apiKey = import.meta.env.VITE_APP_API_KEY;
 	const [searchValue, setSearchValue] = useState<string>("");
 	const [moviesFromSearch, setMoviesFromSearch] = useState<IMovie[]>([]);
 	const [seriesFromSearch, setSeriesFromSearch] = useState<IMovie[]>([]);

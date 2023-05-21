@@ -9,7 +9,7 @@ export const handleSignUp = async ({
 	navigate,
 }: HandleSignUpProps) => {
 	try {
-		await axios.post(`${process.env.REACT_APP_API_URL}/users`, {
+		await axios.post(`${import.meta.env.VITE_APP_API_URL}/users`, {
 			name,
 			username,
 			email,

@@ -9,6 +9,7 @@ type InputProps = {
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	required: boolean;
 	readonly?: boolean;
+	children?: React.ReactNode;
 };
 
 const InputContainer = ({
@@ -19,10 +20,14 @@ const InputContainer = ({
 	onChange,
 	required,
 	readonly,
+	children,
 }: InputProps) => {
 	return (
 		<S.InputContainer>
-			<label htmlFor={id}>{label}</label>
+			<label htmlFor={id}>
+				{children}
+				{label}
+			</label>
 			<input
 				type={type}
 				id={id}

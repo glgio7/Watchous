@@ -12,7 +12,7 @@ import { useFromSearch } from "../../hooks/useFromSearch";
 import { useFavorites } from "../../hooks/useFavorites";
 import { useAuth } from "../../hooks/useAuth";
 
-const apiKey = process.env.REACT_APP_API_KEY;
+const apiKey = import.meta.env.VITE_APP_API_KEY;
 
 export default function Details() {
 	const { id } = useParams();

@@ -11,7 +11,7 @@ import { useFavorites } from "../../hooks/useFavorites";
 
 export default function Home() {
 	document.title = `Watchous | Home`;
-	const apiKey = process.env.REACT_APP_API_KEY;
+	const apiKey = import.meta.env.VITE_APP_API_KEY;
 
 	const { favorites } = useFavorites();
 

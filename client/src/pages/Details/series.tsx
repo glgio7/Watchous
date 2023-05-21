@@ -9,7 +9,7 @@ import { IMovie } from "../../components/MovieCard/types";
 import { useFromSearch } from "../../hooks/useFromSearch";
 import { useFavorites } from "../../hooks/useFavorites";
 
-const apiKey = process.env.REACT_APP_API_KEY;
+const apiKey = import.meta.env.VITE_APP_API_KEY;
 
 export default function SeriesDetails() {
 	const { favorites, handleFavorite } = useFavorites();

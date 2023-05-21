@@ -32,9 +32,12 @@ export const Container = styled.main`
 
 	.profile-container {
 		position: relative;
+
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+
 		margin-block: 1rem;
 	}
 
@@ -75,8 +78,20 @@ export const Container = styled.main`
 		}
 	}
 
-	h3 {
-		margin-top: 1rem;
+	.profile-container h3,
+	.profile-container span {
+		text-align: center;
+		margin-block: initial;
+	}
+
+	.edit-input {
+		color: #0070ff;
+
+		cursor: pointer;
+
+		font-size: 1.15rem;
+
+		margin-right: 0.25rem;
 	}
 
 	@media screen and (max-width: 768px) {

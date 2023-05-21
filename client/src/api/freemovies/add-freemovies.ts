@@ -7,7 +7,7 @@ export const addFreeMovie = async (
 	youtubeUrl: string
 ) => {
 	try {
-		await axios.post(`${process.env.REACT_APP_API_URL}/freemovies`, {
+		await axios.post(`${import.meta.env.VITE_APP_API_URL}/freemovies`, {
 			imdb,
 			title,
 			imgUrl,

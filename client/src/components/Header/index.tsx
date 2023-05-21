@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RiMenuFill, RiSearchLine, RiLogoutBoxLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import * as S from "./styles";
-import { handleSignOut } from "../../api/auth";
+import { handleSignOut } from "../../api/users/auth";
 import { useAuth } from "../../hooks/useAuth";
 import { useFromSearch } from "../../hooks/useFromSearch";
 
