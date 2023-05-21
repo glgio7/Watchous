@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import db from "../../api/movies_list.json";
 import { IMovie } from "../../components/MovieCard/types";
 import { RiCloseFill } from "react-icons/ri";

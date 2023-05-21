@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { FavoriteProviderProps, IFavoritesContext } from "./types";
 import { IMovieFromDb, IMovie } from "../../components/MovieCard/types";
 

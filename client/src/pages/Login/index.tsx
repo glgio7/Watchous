@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { handleSignIn } from "../../api/users/auth";

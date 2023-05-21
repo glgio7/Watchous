@@ -2,7 +2,7 @@ import * as S from "./styles";
 import Form from "../../components/Form";
 import InputContainer from "../../components/InputForm";
 import Loading from "../../components/Loading";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { IMovieDetails } from "./types";
 import { RiHeartFill } from "react-icons/ri";

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import { ISearchContext, SearchProviderProps } from "./types";
 import { IMovie } from "../../components/MovieCard/types";
 

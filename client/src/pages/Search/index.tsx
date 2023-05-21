@@ -1,5 +1,4 @@
 import * as S from "./styles";
-import React from "react";
 import Wrapper from "../../components/Wrapper";
 import MovieList from "../../components/MovieList/";
 import { useFromSearch } from "../../hooks/useFromSearch";

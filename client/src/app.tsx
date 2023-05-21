@@ -1,6 +1,4 @@
-import React from "react";
 import { GlobalCSS } from "./styles";
-import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import SearchContainer from "./pages/Search";
 import { useFromSearch } from "./hooks/useFromSearch";

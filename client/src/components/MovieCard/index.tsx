@@ -1,5 +1,4 @@
 import * as S from "./styles";
-import React from "react";
 import { Link } from "react-router-dom";
 import { RiHeartFill } from "react-icons/ri";
 import { MovieCardProps } from "./types";

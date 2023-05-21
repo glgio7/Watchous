@@ -1,5 +1,4 @@
 import * as S from "./styles";
-import React from "react";
 
 const Loading = () => {
 	return (
