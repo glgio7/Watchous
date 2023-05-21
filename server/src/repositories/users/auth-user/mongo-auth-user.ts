@@ -21,8 +21,8 @@ export class MongoAuthUserRepository implements IAuthUserRepository {
 
 		if (!passwordMatch) throw new Error("Invalid password.");
 
-		const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
-			expiresIn: "2h",
+		const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
+			expiresIn: "1h",
 		});
 
 		user.token = token;

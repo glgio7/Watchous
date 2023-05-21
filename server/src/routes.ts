@@ -53,19 +53,12 @@ export const createRoutes = () => {
 
 		res.status(statusCode).send(body);
 	});
-	router.post("/authtoken", async (req, res) => {
+	router.post("/auth/token", async (req, res) => {
 		const authTokenRepository = new MongoAuthTokenRepository();
 		const authTokenController = new AuthTokenController(authTokenRepository);
 
-		let token = req.headers.token;
-		if (Array.isArray(token)) {
-			token = token[0];
-		}
-
 		const { body, statusCode } = await authTokenController.handle({
-			headers: {
-				token: token || "",
-			},
+			body: req.body,
 		});
 
 		res.status(statusCode).send(body);

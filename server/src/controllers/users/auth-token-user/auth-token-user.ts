@@ -13,16 +13,15 @@ export class AuthTokenController implements IAuthTokenController {
 		httpRequest: HttpRequest<IAuthTokenParams>
 	): Promise<HttpResponse<IUser>> {
 		try {
-			if (!httpRequest.headers || !httpRequest.headers.token) {
+			if (!httpRequest.body?.token) {
 				return {
-					statusCode: 500,
-					body: "Token inválido, reinicie a sessão!",
+					statusCode: 400,
+					body: `Sorry, field token is invalid or doesn't exist on our db.`,
 				};
 			}
-
-			const user = await this.authTokenRepository.authUserWithToken({
-				token: httpRequest.headers.token,
-			});
+			const user = await this.authTokenRepository.authUserWithToken(
+				httpRequest.body!
+			);
 
 			return {
 				statusCode: 200,

@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import {
 	IAuthTokenParams,
 	IAuthTokenRepository,
@@ -9,23 +10,18 @@ import jwt from "jsonwebtoken";
 export class MongoAuthTokenRepository implements IAuthTokenRepository {
 	async authUserWithToken(params: IAuthTokenParams): Promise<IUser> {
 		const { token } = params;
+		const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as {
+			userId: string;
+		};
 
-		try {
-			const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as {
-				userId: string;
-			};
+		if (!decodedToken) throw new Error("Invalid token.");
 
-			const user = await MongoClientUsers.db
-				.collection<IUser>("users")
-				.findOne({ id: decodedToken.userId });
+		const user = await MongoClientUsers.db
+			.collection<IUser>("users")
+			.findOne({ _id: new ObjectId(decodedToken.userId) });
 
-			if (!user) throw new Error("Invalid token");
+		if (!user) throw new Error("User not found.");
 
-			user.token = token;
-
-			return user;
-		} catch (error) {
-			throw new Error("Invalid token");
-		}
+		return user;
 	}
 }
