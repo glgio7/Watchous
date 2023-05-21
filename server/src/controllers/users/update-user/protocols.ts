@@ -2,10 +2,11 @@ import { IUser } from "../../../models/user";
 import { HttpRequest, HttpResponse } from "../../protocols";
 
 export interface IUpdateUserParams {
+	id: string;
+	password: string;
 	name?: string;
 	username?: string;
 	email?: string;
-	password?: string;
 	profileIcon?: string;
 	favoritesMovies?: {
 		title: string;
