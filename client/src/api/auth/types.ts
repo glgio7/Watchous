@@ -12,6 +12,7 @@ export type HandleSignInProps = {
 
 export type handleSignInWithTokenProps = {
 	setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+	tokenPersistence: string;
 };
 
 export type HandleSignOutProps = {

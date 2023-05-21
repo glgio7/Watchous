@@ -20,7 +20,7 @@ export const handleSignIn = async ({
 		});
 
 		const { _id: id, name, username, token } = await response.data;
-		const user: IUser = { id, name, username, token };
+		const user: IUser = { id, name, username, token, email };
 
 		if (!id) {
 			throw new Error();
@@ -28,6 +28,7 @@ export const handleSignIn = async ({
 
 		setAuthenticated(true);
 		setUser(user);
+		localStorage.setItem("token", token);
 
 		navigate("/");
 	} catch (error) {
@@ -42,22 +43,23 @@ export const handleSignOut = async ({
 }: HandleSignOutProps) => {
 	setAuthenticated(false);
 	setUser(null);
+
+	localStorage.removeItem("token");
 };
 
 export const handleSignInWithToken = async ({
 	setUser,
+	tokenPersistence,
 }: handleSignInWithTokenProps) => {
 	axios
-		.post(`${process.env.REACT_APP_API_URL}/authtoken`, null, {
-			headers: {
-				// token: tokenPersistence,
-			},
+		.post(`${process.env.REACT_APP_API_URL}/auth/token`, {
+			token: tokenPersistence,
 		})
 		.then((response) => {
-			const { id, name, username, token } = response.data;
+			const { _id: id, name, username, token, email } = response.data;
 
 			console.log("Login bem-sucedido!");
-			setUser({ id, name, username, token });
+			setUser({ id, name, username, token, email });
 		})
 		.catch((error) => {
 			console.log(error);
