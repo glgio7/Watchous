@@ -11,6 +11,9 @@ import { MongoAddFreeMovieRepository } from "./repositories/movies/add-freemovie
 import { AddFreeMovieController } from "./controllers/movies/add-freemovie/add-freemovie";
 import { MongoGetFreeMoviesRepository } from "./repositories/movies/get-freemovies/mongo-get-freemovies";
 import { GetFreeMoviesController } from "./controllers/movies/get-freemovies/get-freemovies";
+import { MongoUpdateUserRepository } from "./repositories/users/update-user/mongo-update-user";
+import { UpdateUserController } from "./controllers/users/update-user/update-user";
+import { IUpdateUserParams } from "./controllers/users/update-user/protocols";
 
 export const createRoutes = () => {
 	const router = Router();
@@ -38,6 +41,23 @@ export const createRoutes = () => {
 
 		const { body, statusCode } = await createUserController.handle({
 			body: req.body,
+		});
+
+		res.status(statusCode).send(body);
+	});
+
+	router.put("/users/:id", async (req, res) => {
+		const { id } = req.body;
+		const updateUserParams: IUpdateUserParams = {
+			id,
+			...req.body,
+		};
+
+		const updateUserRepository = new MongoUpdateUserRepository();
+		const updateUserController = new UpdateUserController(updateUserRepository);
+
+		const { body, statusCode } = await updateUserController.handle({
+			body: updateUserParams,
 		});
 
 		res.status(statusCode).send(body);
