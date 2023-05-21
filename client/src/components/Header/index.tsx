@@ -28,9 +28,7 @@ export default function Header() {
 		setSearchValue,
 	} = useFromSearch();
 
-	const { authenticated, setAuthenticated, setUser, user } = useAuth();
-
-	console.log(user);
+	const { authenticated, setAuthenticated, setUser } = useAuth();
 
 	const search = (props: React.KeyboardEvent) => {
 		if (props.key === "Enter") {
@@ -86,7 +84,7 @@ export default function Header() {
 						<RiMenuFill className="menu" onClick={toggleMenu} />
 					) : (
 						<img
-							src={`/assets/${profileIcons[3]}`}
+							src={`/assets/${profileIcons[1]}`}
 							alt=""
 							className="profile-icon"
 							onClick={toggleMenu}
@@ -98,7 +96,10 @@ export default function Header() {
 				{authenticated && (
 					<RiLogoutBoxLine
 						className="logout-btn"
-						onClick={() => handleSignOut({ setAuthenticated, setUser })}
+						onClick={() => {
+							handleSignOut({ setAuthenticated, setUser });
+							setNavOpen(false);
+						}}
 					/>
 				)}
 				{authenticated ? (
@@ -134,7 +135,7 @@ export default function Header() {
 						setNavOpen(false), setSearchValue("");
 					}}
 				>
-					<li id="new">Grátis para Assistir</li>
+					<li id="new">Grátis no Youtube</li>
 				</Link>
 				<Link
 					to={"/credits"}

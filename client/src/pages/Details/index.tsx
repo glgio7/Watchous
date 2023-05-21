@@ -1,15 +1,16 @@
 import * as S from "./styles";
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { IMovieDetails } from "./types";
-import Loading from "../../components/Loading";
-import { RiHeartFill } from "react-icons/ri";
-import { IMovie } from "../../components/MovieCard/types";
 import Form from "../../components/Form";
 import InputContainer from "../../components/InputForm";
+import Loading from "../../components/Loading";
+import React, { useEffect, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { IMovieDetails } from "./types";
+import { RiHeartFill } from "react-icons/ri";
+import { IMovie } from "../../components/MovieCard/types";
 import { addFreeMovie } from "../../api/freemovies/add-freemovies";
 import { useFromSearch } from "../../hooks/useFromSearch";
 import { useFavorites } from "../../hooks/useFavorites";
+import { useAuth } from "../../hooks/useAuth";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -23,12 +24,9 @@ export default function Details() {
 	const [loadingForm, setLoadingForm] = useState<boolean>(false);
 
 	const { favorites, handleFavorite } = useFavorites();
-	const {
-		moviesFromSearch,
-		seriesFromSearch,
-		setSeriesFromSearch,
-		setMoviesFromSearch,
-	} = useFromSearch();
+	const { authenticated } = useAuth();
+	const navigate = useNavigate();
+	const fromSearch = useFromSearch();
 
 	if (player || formOpen) {
 		document.body.style.overflow = "hidden";
@@ -42,8 +40,8 @@ export default function Details() {
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
-		setMoviesFromSearch([]);
-		setSeriesFromSearch([]);
+		fromSearch.setMoviesFromSearch([]);
+		fromSearch.setSeriesFromSearch([]);
 		fetch(
 			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=videos,similar,images,reviews&language=pt-BR`
 		)
@@ -100,205 +98,209 @@ export default function Details() {
 	return (
 		<>
 			{!movie.genres && <Loading />}
-			{seriesFromSearch.length === 0 && moviesFromSearch.length === 0 && (
-				<S.Container background={`${baseImageURL}/${movie.background}`}>
-					<div className="fade"></div>
-					<section className="card-container">
-						<div className="container-info__top">
-							<span>{movie.title}</span>
-						</div>
-						<img
-							src={
-								movie.poster_path
-									? `${baseImageURL}/${movie.poster_path}`
-									: "/img/movie_placeholder.jpg"
-							}
-							alt={`Capa do filme ${movie.title}`}
-						/>
-						<div className="container-info__bottom">
-							<span>
-								<RiHeartFill
-									className={
-										favorites.some((item) => {
-											if (movie) {
-												return item.id === movie.id;
-											}
-										})
-											? "unfav-btn"
-											: "fav-btn"
-									}
-									onClick={() => movie && handleFavorite(movie as IMovie)}
-								/>
-								Favoritar
-							</span>
-							<span>
-								<img
-									src="/assets/youtube-btn.svg"
-									alt=""
-									className={"fav-btn"}
+			{fromSearch.seriesFromSearch.length === 0 &&
+				fromSearch.moviesFromSearch.length === 0 && (
+					<S.Container background={`${baseImageURL}/${movie.background}`}>
+						<div className="fade"></div>
+						<section className="card-container">
+							<div className="container-info__top">
+								<span>{movie.title}</span>
+							</div>
+							<img
+								src={
+									movie.poster_path
+										? `${baseImageURL}/${movie.poster_path}`
+										: "/img/movie_placeholder.jpg"
+								}
+								alt={`Capa do filme ${movie.title}`}
+							/>
+							<div className="container-info__bottom">
+								<span onClick={() => movie && handleFavorite(movie as IMovie)}>
+									<RiHeartFill
+										className={
+											favorites.some((item) => {
+												if (movie) {
+													return item.id === movie.id;
+												}
+											})
+												? "unfav-btn"
+												: "fav-btn"
+										}
+									/>
+									Favoritar
+								</span>
+								<span
 									onClick={() => {
-										setFormOpen(true);
+										authenticated ? setFormOpen(true) : navigate("/login");
 									}}
-								/>
-								Adicionar link do Youtube
-							</span>
-						</div>
-					</section>
-					<section className="overview-container">
-						<div className="container-info__top">
-							<span>Descrição</span>
-						</div>
-						<div className="overview-body">
-							<p>
-								{fullDescription ? movie.fullSinopse : movie.sinopse}
-								<button
-									className="sinopse-btn"
-									onClick={() => setFullDescription(!fullDescription)}
 								>
-									<span>{fullDescription ? "Ver menos" : "Ver mais"}</span>
-								</button>
-							</p>
-							<ul className="overview-list">
-								<li>
-									<h3>Data de lançamento</h3>
-									{movie.release}
-								</li>
-								<li>
-									<h3>Gênero</h3>
-									{movie.genres}
-								</li>
-								<li>
-									<h3>Nota da audiencia</h3>
-									{movie.vote_average !== 0
-										? movie.vote_average
-										: "Não avaliado."}
-								</li>
-								<li>
-									<h3>Filmes relacionados</h3>
-									<div className="related-movies">
-										{movie.related &&
-											movie.related.map((movie) => (
-												<Link
-													to={`/details/${movie.id}`}
-													key={movie.id}
-													className="related-movies__movie"
-												>
-													<img
-														src={
-															movie.poster_path
-																? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
-																: "/img/movie_placeholder.jpg"
-														}
-													/>
-													{movie.title.substring(0, 9) + "..."}
-												</Link>
-											))}
-									</div>
-								</li>
-
-								{movie.trailers && movie.trailers.length > 0 && (
+									<img
+										src="/assets/youtube-btn.svg"
+										alt=""
+										className={"fav-btn"}
+									/>
+									Adicionar link do Youtube
+								</span>
+							</div>
+						</section>
+						<section className="overview-container">
+							<div className="container-info__top">
+								<span>Descrição</span>
+							</div>
+							<div className="overview-body">
+								<p>
+									{fullDescription ? movie.fullSinopse : movie.sinopse}
+									<button
+										className="sinopse-btn"
+										onClick={() => setFullDescription(!fullDescription)}
+									>
+										<span>{fullDescription ? "Ver menos" : "Ver mais"}</span>
+									</button>
+								</p>
+								<ul className="overview-list">
 									<li>
-										<h3>Mais trailers</h3>
+										<h3>Data de lançamento</h3>
+										{movie.release}
+									</li>
+									<li>
+										<h3>Gênero</h3>
+										{movie.genres}
+									</li>
+									<li>
+										<h3>Nota da audiencia</h3>
+										{movie.vote_average !== 0
+											? movie.vote_average
+											: "Não avaliado."}
+									</li>
+									<li>
+										<h3>Filmes relacionados</h3>
 										<div className="related-movies">
-											{movie.trailers.map(
-												(item) =>
-													item.type === "Trailer" && (
-														<div
-															key={item.key}
-															className="related-movies__movie"
-															onClick={() => {
-																setMovie((prevState) => ({
-																	...prevState,
-																	mainTrailer: item.key,
-																}));
-																setPlayer(true);
-															}}
-														>
-															<img
-																src={
-																	movie.poster_path
-																		? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
-																		: "/img/movie_placeholder.jpg"
-																}
-															/>
-															{item.name && item.name.substring(0, 9) + "..."}
-														</div>
-													)
-											)}
+											{movie.related &&
+												movie.related.map((movie) => (
+													<Link
+														to={`/details/${movie.id}`}
+														key={movie.id}
+														className="related-movies__movie"
+													>
+														<img
+															src={
+																movie.poster_path
+																	? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
+																	: "/img/movie_placeholder.jpg"
+															}
+														/>
+														{movie.title.substring(0, 9) + "..."}
+													</Link>
+												))}
 										</div>
 									</li>
-								)}
-							</ul>
-						</div>
-						<div
-							className="container-info__bottom"
-							onClick={() => setPlayer(true)}
-						>
-							<button>Ver trailer</button>
-						</div>
-					</section>
-					{/* Add movie form container */}
-					{formOpen && (
-						<S.FormContainer active={formOpen}>
-							<button className="close-btn" onClick={() => setFormOpen(false)}>
+
+									{movie.trailers && movie.trailers.length > 0 && (
+										<li>
+											<h3>Mais trailers</h3>
+											<div className="related-movies">
+												{movie.trailers.map(
+													(item) =>
+														item.type === "Trailer" && (
+															<div
+																key={item.key}
+																className="related-movies__movie"
+																onClick={() => {
+																	setMovie((prevState) => ({
+																		...prevState,
+																		mainTrailer: item.key,
+																	}));
+																	setPlayer(true);
+																}}
+															>
+																<img
+																	src={
+																		movie.poster_path
+																			? `https://www.themoviedb.org/t/p/w154${movie.poster_path}`
+																			: "/img/movie_placeholder.jpg"
+																	}
+																/>
+																{item.name && item.name.substring(0, 9) + "..."}
+															</div>
+														)
+												)}
+											</div>
+										</li>
+									)}
+								</ul>
+							</div>
+							<div
+								className="container-info__bottom"
+								onClick={() => setPlayer(true)}
+							>
+								<button>Ver trailer</button>
+							</div>
+						</section>
+						{/* Add movie form container */}
+						{formOpen && (
+							<S.FormContainer active={formOpen}>
+								<button
+									className="close-btn"
+									onClick={() => setFormOpen(false)}
+								>
+									Fechar
+								</button>
+								<Form
+									handler={() => handleAddFreeMovie(movie)}
+									spanTip={[]}
+									route={""}
+									spanSubmit={"Adicionar"}
+									loading={loadingForm}
+								>
+									<InputContainer
+										label="Id"
+										type="text"
+										id="imdb"
+										value={movie.id!}
+										required
+										readonly
+									/>
+									<InputContainer
+										label="Titulo"
+										type="text"
+										id="title"
+										value={movie.title!}
+										required
+										readonly
+									/>
+									<InputContainer
+										label="Capa do Filme"
+										type="text"
+										id="imgUrl"
+										value={movie.poster_path}
+										required
+										readonly
+									/>
+									<InputContainer
+										label="Link do Youtube"
+										type="text"
+										id="youtubeUrl"
+										value={movie.youtubeUrl || ""}
+										onChange={(e) => addYoutubeUrl(e.target.value)}
+										required
+									/>
+								</Form>
+							</S.FormContainer>
+						)}
+
+						{/* Trailer visualizer */}
+						<S.IframeContainer active={player}>
+							<button className="close-btn" onClick={() => setPlayer(false)}>
 								Fechar
 							</button>
-							<Form
-								handler={() => handleAddFreeMovie(movie)}
-								spanTip={[]}
-								route={""}
-								spanSubmit={"Adicionar"}
-								loading={loadingForm}
-							>
-								<InputContainer
-									label="Id"
-									type="text"
-									id="imdb"
-									value={movie.id!}
-									required
-									readonly
-								/>
-								<InputContainer
-									label="Titulo"
-									type="text"
-									id="title"
-									value={movie.title!}
-									required
-									readonly
-								/>
-								<InputContainer
-									label="Capa do Filme"
-									type="text"
-									id="imgUrl"
-									value={movie.poster_path}
-									required
-									readonly
-								/>
-								<InputContainer
-									label="Link do Youtube"
-									type="text"
-									id="youtubeUrl"
-									value={movie.youtubeUrl || ""}
-									onChange={(e) => addYoutubeUrl(e.target.value)}
-									required
-								/>
-							</Form>
-						</S.FormContainer>
-					)}
-
-					{/* Trailer visualizer */}
-					<S.IframeContainer active={player}>
-						<button className="close-btn" onClick={() => setPlayer(false)}>
-							Fechar
-						</button>
-						<iframe
-							src={`https://www.youtube.com/embed/${movie.mainTrailer}`}
-							title="YouTube video player"
-							allowFullScreen
-						/>
-					</S.IframeContainer>
-				</S.Container>
-			)}
+							<iframe
+								src={`https://www.youtube.com/embed/${movie.mainTrailer}`}
+								title="YouTube video player"
+								allowFullScreen
+							/>
+						</S.IframeContainer>
+					</S.Container>
+				)}
 		</>
 	);
 }

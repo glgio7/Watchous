@@ -356,14 +356,16 @@ export const FormContainer = styled.div<{ active: boolean }>`
 		width: 50%;
 
 		border-radius: 10px;
-
-		/* position: absolute; */
 	}
 
 	@media screen and (max-width: 768px) {
 		top: 114px;
 
-		width: 80%;
+		width: 100%;
 		height: calc(100vh - 114px);
+
+		.close-btn {
+			width: 90%;
+		}
 	}
 `;

@@ -9,7 +9,7 @@ import Credits from "../pages/Credits";
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
-// import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/Dashboard";
 
 const AppRoutes = () => {
 	return (
@@ -27,14 +27,14 @@ const AppRoutes = () => {
 					</PrivateRoute>
 				}
 			/>
-			{/* <Route
+			<Route
 				path="/dashboard"
 				element={
 					<PrivateRoute>
 						<Dashboard />
 					</PrivateRoute>
 				}
-			/> */}
+			/>
 			<Route path="/credits" element={<Credits />} />
 			<Route path="*" element={<NotFound />} />
 		</Routes>
