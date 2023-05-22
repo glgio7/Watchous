@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
 
 export class MongoCreateUserRepository implements ICreateUserRepository {
 	async createUser(params: ICreateUserParams): Promise<IUser> {
-		const { email, password } = params;
+		const { email, password, createdAt } = params;
 		const userExists = await MongoClientUsers.db
 			.collection("users")
 			.findOne({ email });
@@ -18,10 +18,15 @@ export class MongoCreateUserRepository implements ICreateUserRepository {
 		}
 
 		const hashedPassword = await bcrypt.hash(password, 10);
+		const currentDate = new Date().toLocaleDateString();
 
 		const { insertedId } = await MongoClientUsers.db
 			.collection("users")
-			.insertOne({ ...params, password: hashedPassword });
+			.insertOne({
+				...params,
+				password: hashedPassword,
+				createdAt: currentDate,
+			});
 
 		const user = await MongoClientUsers.db
 			.collection<Omit<IUser, "id">>("users")

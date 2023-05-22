@@ -4,5 +4,7 @@ export interface IUser {
 	username: string;
 	email: string;
 	password: string;
+	createdAt: string;
 	token?: string;
+	profileIcon?: string;
 }

@@ -12,6 +12,7 @@ export interface ICreateUserParams {
 	username: string;
 	email: string;
 	password: string;
+	createdAt: string;
 }
 
 export interface ICreateUserRepository {
