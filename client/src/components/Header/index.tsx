@@ -7,13 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useFromSearch } from "../../hooks/useFromSearch";
 
 export default function Header() {
-	const profileIcons = [
-		"robot-icon.png",
-		"girl-icon.png",
-		"boy-icon.png",
-		"cat-icon.png",
-		"dog-icon.png",
-	];
+	const [profileIcon, setProfileIcon] = useState("robot-icon.png");
 
 	const [navOpen, setNavOpen] = useState(false);
 
@@ -28,7 +22,7 @@ export default function Header() {
 		setSearchValue,
 	} = useFromSearch();
 
-	const { authenticated, setAuthenticated, setUser } = useAuth();
+	const { authenticated, setAuthenticated, setUser, user } = useAuth();
 
 	const search = (props: React.KeyboardEvent) => {
 		if (props.key === "Enter") {
@@ -45,6 +39,12 @@ export default function Header() {
 	useEffect(() => {
 		setInput("");
 	}, [searchValue]);
+	useEffect(() => {
+		if (user) {
+			setProfileIcon(user.profileIcon!);
+		}
+		console.log(profileIcon);
+	}, [user]);
 
 	return (
 		<>
@@ -84,7 +84,7 @@ export default function Header() {
 						<RiMenuFill className="menu" onClick={toggleMenu} />
 					) : (
 						<img
-							src={`/assets/${profileIcons[1]}`}
+							src={`/assets/${profileIcon}`}
 							alt=""
 							className="profile-icon"
 							onClick={toggleMenu}

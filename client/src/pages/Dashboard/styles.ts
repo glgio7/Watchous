@@ -12,6 +12,7 @@ export const Container = styled.main`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 
 	.background {
 		z-index: -1;
@@ -28,6 +29,38 @@ export const Container = styled.main`
 		background-size: cover;
 		background-position: bottom;
 		background-attachment: fixed;
+	}
+
+	.pop-up {
+		position: absolute;
+		z-index: 9;
+
+		width: 280px;
+
+		border-radius: 10px;
+
+		padding: 0.5rem;
+
+		background-color: #000;
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		span {
+			font-weight: bold;
+
+			color: #ffa400;
+		}
+
+		select {
+			margin-top: 0.5rem;
+			width: 100%;
+
+			text-align: center;
+			background-color: #000;
+			color: #fff;
+		}
 	}
 
 	.profile-container {

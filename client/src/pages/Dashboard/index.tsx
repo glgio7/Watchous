@@ -6,14 +6,6 @@ import Form from "../../components/Form";
 import InputContainer from "../../components/InputForm";
 import { handleUpdateUser } from "../../api/users/update";
 
-const profileIcons = [
-	"robot-icon.png",
-	"girl-icon.png",
-	"boy-icon.png",
-	"cat-icon.png",
-	"dog-icon.png",
-];
-
 const Dashboard = () => {
 	const { user, setUser } = useAuth();
 
@@ -26,6 +18,16 @@ const Dashboard = () => {
 		readOnly: true,
 	});
 
+	const [newProfileIcon, setNewProfileIcon] =
+		useState<string>("robot-icon.png");
+
+	const [iconPicker, setIconPicker] = useState(false);
+
+	const handleChangeIcon = (e: string) => {
+		setIconPicker(false);
+		setNewProfileIcon(e);
+	};
+
 	useEffect(() => {
 		if (user) {
 			setNewName({
@@ -36,6 +38,7 @@ const Dashboard = () => {
 				value: user.email,
 				readOnly: true,
 			});
+			setNewProfileIcon(user.profileIcon!);
 		}
 	}, [user]);
 
@@ -50,6 +53,7 @@ const Dashboard = () => {
 								password: window.prompt("Confirme sua senha") || "",
 								name: newName.value,
 								email: newEmail.value,
+								profileIcon: newProfileIcon,
 							},
 							setUser,
 						});
@@ -62,13 +66,28 @@ const Dashboard = () => {
 						<div className="background"></div>
 						<div className="profile-container">
 							<img
-								src={`/assets/${profileIcons[1]}`}
+								src={`/assets/${newProfileIcon}`}
 								alt=""
 								className="profile-image__image"
 							/>
-							<RiEditFill className="profile-image__edit" />
+							<RiEditFill
+								className="profile-image__edit"
+								onClick={() => setIconPicker(true)}
+							/>
 							<h3>{`@${(user && user.username) || ""}`}</h3>
 							<span>{`Membro desde: ${(user && user.createdAt) || ""}`}</span>
+							{iconPicker && (
+								<div className="pop-up">
+									<span>Mudar ícone de perfil</span>
+									<select onChange={(e) => handleChangeIcon(e.target.value)}>
+										<option value="robot-icon.png">Default</option>
+										<option value="cat-icon.png">Cat</option>
+										<option value="girl-icon.png">Girl</option>
+										<option value="boy-icon.png">Boy</option>
+										<option value="dog-icon.png">Dog</option>
+									</select>
+								</div>
+							)}
 						</div>
 						<InputContainer
 							label="Nome"
