@@ -41,7 +41,7 @@ export default function Header() {
 	}, [searchValue]);
 	useEffect(() => {
 		if (user) {
-			setProfileIcon(user.profileIcon!);
+			setProfileIcon((user && user.profileIcon!) || "robot-icon.png");
 		}
 	}, [user]);
 

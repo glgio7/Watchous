@@ -38,7 +38,7 @@ const Dashboard = () => {
 				value: user.email,
 				readOnly: true,
 			});
-			setNewProfileIcon(user.profileIcon!);
+			setNewProfileIcon((user && user.profileIcon!) || "robot-icon.png");
 		}
 	}, [user]);
 
