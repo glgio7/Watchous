@@ -82,10 +82,11 @@ export const handleSignInWithToken = async ({
 				token,
 				email,
 				createdAt,
+				profileIcon,
 			} = response.data;
 
 			console.log("Login bem-sucedido!");
-			setUser({ id, name, username, token, email, createdAt });
+			setUser({ id, name, username, token, email, createdAt, profileIcon });
 			setAuthenticated(true);
 		})
 		.catch((error) => {

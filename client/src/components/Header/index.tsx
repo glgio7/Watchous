@@ -43,7 +43,6 @@ export default function Header() {
 		if (user) {
 			setProfileIcon(user.profileIcon!);
 		}
-		console.log(profileIcon);
 	}, [user]);
 
 	return (
