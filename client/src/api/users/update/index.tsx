@@ -5,6 +5,7 @@ import { IUser } from "../../../contexts/AuthContext/types";
 export interface IUpdateData {
 	id: string;
 	password: string;
+	newPassword?: string;
 	name?: string;
 	username?: string;
 	email?: string;
@@ -35,7 +36,7 @@ export const handleUpdateUser = async ({
 
 		const updatedUser = await response.data;
 
-		setUser(updatedUser);
+		setUser({ ...updatedUser, id: updatedUser._id });
 	} catch (error) {
 		console.log(error);
 		alert("Algo deu errado.");

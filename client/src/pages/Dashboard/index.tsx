@@ -9,12 +9,18 @@ import { handleUpdateUser } from "../../api/users/update";
 const Dashboard = () => {
 	const { user, setUser } = useAuth();
 
+	const [id, setId] = useState<string>("");
+
 	const [newName, setNewName] = useState({
 		value: "",
 		readOnly: true,
 	});
 	const [newEmail, setNewEmail] = useState({
 		value: "",
+		readOnly: true,
+	});
+	const [newPassword, setNewPassword] = useState({
+		value: "password",
 		readOnly: true,
 	});
 
@@ -39,6 +45,7 @@ const Dashboard = () => {
 				readOnly: true,
 			});
 			setNewProfileIcon((user && user.profileIcon!) || "robot-icon.png");
+			setId(user.id);
 		}
 	}, [user]);
 
@@ -49,11 +56,15 @@ const Dashboard = () => {
 					handler={() => {
 						handleUpdateUser({
 							updateData: {
-								id: user!.id,
+								id: id,
 								password: window.prompt("Confirme sua senha") || "",
 								name: newName.value,
 								email: newEmail.value,
 								profileIcon: newProfileIcon,
+								newPassword:
+									newPassword.value !== ("password" || "")
+										? newPassword.value
+										: undefined,
 							},
 							setUser,
 						});
@@ -128,6 +139,28 @@ const Dashboard = () => {
 								className="edit-input"
 								onClick={() =>
 									setNewEmail((prevState) => {
+										return { ...prevState, readOnly: false };
+									})
+								}
+							/>
+						</InputContainer>
+						<InputContainer
+							label="Senha"
+							type="password"
+							id="Senha"
+							value={newPassword.value}
+							required={false}
+							readonly={newPassword.readOnly}
+							onChange={(e) =>
+								setNewPassword((prevState) => {
+									return { ...prevState, value: e.target.value };
+								})
+							}
+						>
+							<RiEditFill
+								className="edit-input"
+								onClick={() =>
+									setNewPassword((prevState) => {
 										return { ...prevState, readOnly: false };
 									})
 								}
