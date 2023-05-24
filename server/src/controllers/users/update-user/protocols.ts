@@ -4,6 +4,7 @@ import { HttpRequest, HttpResponse } from "../../protocols";
 export interface IUpdateUserParams {
 	id: string;
 	password: string;
+	newPassword?: string;
 	name?: string;
 	username?: string;
 	email?: string;

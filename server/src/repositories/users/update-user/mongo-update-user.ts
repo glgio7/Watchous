@@ -22,15 +22,13 @@ export class MongoUpdateUserRepository implements IUpdateUserRepository {
 		// Partially update user with updateData properties
 		const updatedUser: Partial<IUser> = { ...user, ...updateData };
 
-		// Verify if there's "password" field, compare and hash a new password.
-		if (password) {
-			const passwordMatch = await bcrypt.compare(password, user.password);
-
-			if (!passwordMatch) {
-				throw new Error("Password invalid!");
-			}
-
-			const hashedPassword = await bcrypt.hash(password, 10);
+		const passwordMatch = await bcrypt.compare(password, user.password);
+		if (!passwordMatch) {
+			throw new Error("Invalid password!");
+			// Verify if there's "newPassword" field, compare and hash a new password.
+		}
+		if (updateData.newPassword !== undefined) {
+			const hashedPassword = await bcrypt.hash(updateData.newPassword, 10);
 			updatedUser.password = hashedPassword;
 		}
 
