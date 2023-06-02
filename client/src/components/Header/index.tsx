@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { RiMenuFill, RiSearchLine, RiLogoutBoxLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import * as S from "./styles";
@@ -23,12 +23,6 @@ export default function Header() {
 	} = useFromSearch();
 
 	const { authenticated, setAuthenticated, setUser, user } = useAuth();
-
-	const search = (props: React.KeyboardEvent) => {
-		if (props.key === "Enter") {
-			setSearchValue(input.replaceAll(" ", "+"));
-		}
-	};
 
 	if (navOpen) {
 		document.body.style.overflow = "hidden";
@@ -61,23 +55,23 @@ export default function Header() {
 						<img src={"/img/logo.png"} alt="Watchous" />
 					</h1>
 				</Link>
-				<div className="search-container">
+				<form
+					className="search-container"
+					onSubmit={(e) => {
+						e.preventDefault();
+						setSearchValue(input.replaceAll(" ", "+"));
+					}}
+				>
 					<input
 						type="text"
 						placeholder="Pesquisar"
 						onChange={(e) => setInput(e.target.value)}
 						value={input}
-						onKeyDown={(props) => {
-							search(props);
-						}}
 					/>
-					<RiSearchLine
-						className="search-container__icon"
-						onClick={() => {
-							setSearchValue(input);
-						}}
-					/>
-				</div>
+					<button type="submit" className="search-container__icon">
+						<RiSearchLine />
+					</button>
+				</form>
 				<div className="menu-container">
 					{authenticated == false ? (
 						<RiMenuFill className="menu" onClick={toggleMenu} />

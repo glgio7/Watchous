@@ -57,16 +57,25 @@ export const Header = styled.header`
 		}
 	}
 	.search-container__icon {
-		color: #fff;
-		background-color: #202020;
-		width: 1.5rem;
+		width: 2rem;
 		height: 2rem;
+
+		background-color: #202020;
+		color: #fff;
+
+		font-size: 1.25rem;
+
 		border-radius: 0px 3px 3px 0px;
-		font-size: 1rem;
+
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+
 		margin-left: 0.1rem;
+
 		cursor: pointer;
 		&:active {
-			outline: cornflowerblue solid thin;
+			color: #0030ff;
 		}
 	}
 
